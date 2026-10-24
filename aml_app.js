@@ -253,10 +253,10 @@ const AML_KYC_PARTNERS = [
     },
     {
         id: "KYC-14",
-        name: "TUBIA Edoardo",
-        type: "Gérant Associé",
+        name: "NEW LIFE S.à r.l.",
+        type: "Personne Morale (Sàrl)",
         country: "Luxembourg",
-        risk_score: 12,
+        risk_score: 14,
         risk_level: "Faible",
         risk_color: "emerald",
         ubo: "Edoardo Tubia",
@@ -264,9 +264,9 @@ const AML_KYC_PARTNERS = [
         shares: 135,
         shares_pct: "0,90 %",
         villa: "Villa F",
-        id_doc: "Passeport diplomatique / UE • Luxtrust Mobile",
-        verification_date: "01/05/2026",
-        source_funds: "Revenus de gérance et investissements",
+        id_doc: "Extrait RCSL B 17790 • RBE Certifié",
+        verification_date: "14/05/2026",
+        source_funds: "Fonds propres NEW LIFE Sàrl & investissements",
         bacen_compliance: "Conforme Bacen RDE-IED",
         status: "Validé"
     }

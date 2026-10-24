@@ -270,20 +270,20 @@ window.SOMBRA_RESORT_DATA = {
     {
       "id": "SH-11",
       "nr": 11,
-      "name": "TUBIA Edoardo",
-      "type": "Gérant & Associé initial",
-      "rcs": "-",
+      "name": "NEW LIFE S.à r.l.",
+      "type": "Société Sàrl",
+      "rcs": "B 17790",
       "shares": 135,
       "par_value": 135.0,
       "pct": 0.9,
       "villa": "Villa F",
-      "residence": "6 rue des Lilas, Strassen",
+      "residence": "Strassen, Luxembourg",
       "country": "Luxembourg",
       "bo": "Edoardo Tubia",
       "kyc_status": "Conforme",
       "pep": "Non",
-      "color": "#64748b",
-      "shares_history": "520 parts cédées le 30/06/2026 à New Life Sàrl. Détention indirecte via New Life Sàrl (2.245 parts, 14,97%)."
+      "color": "#10b981",
+      "shares_history": "135 parts de la Villa F (Casa F) détenues par NEW LIFE Sàrl (Bénéficiaire Effectif / UBO : Edoardo Tubia)."
     },
     {
       "id": "SH-12",
@@ -318,7 +318,7 @@ window.SOMBRA_RESORT_DATA = {
       "kyc_status": "Conforme",
       "pep": "Non",
       "color": "#10b981",
-      "shares_history": "1.725 parts initiales + 520 parts cédées par Edoardo Tubia le 30/06/2026 = 2.245 parts"
+      "shares_history": "2.245 parts de la Villa H + 135 parts de la Villa F = 2.380 parts au total (15,8667% du capital social de Sombra Resort Sàrl)"
     },
     {
       "id": "SH-14",
@@ -400,7 +400,7 @@ window.SOMBRA_RESORT_DATA = {
       "pct": 10.58,
       "owners": [
         "Silvia Tubia (1.452)",
-        "Edoardo Tubia (135)"
+        "NEW LIFE Sàrl (135)"
       ],
       "desc": "Villa familiale spacieuse avec terrasse en deck bois"
     },
@@ -420,7 +420,7 @@ window.SOMBRA_RESORT_DATA = {
       "shares": 2245,
       "pct": 14.9667,
       "owners": [
-        "New Life Sàrl (2.245)"
+        "NEW LIFE Sàrl (2.245)"
       ],
       "desc": "Villa Signature de grand luxe avec suite principale majestueuse"
     },

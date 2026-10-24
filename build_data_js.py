@@ -279,20 +279,20 @@ partners_data = [
     {
         "id": "SH-11",
         "nr": 11,
-        "name": "TUBIA Edoardo",
-        "type": "Gérant & Associé initial",
-        "rcs": "-",
+        "name": "NEW LIFE S.à r.l.",
+        "type": "Société Sàrl",
+        "rcs": "B 17790",
         "shares": 135,
         "par_value": 135.00,
         "pct": 0.9000,
         "villa": "Villa F",
-        "residence": "6 rue des Lilas, Strassen",
+        "residence": "Strassen, Luxembourg",
         "country": "Luxembourg",
         "bo": "Edoardo Tubia",
         "kyc_status": "Conforme",
         "pep": "Non",
-        "color": "#64748b",
-        "shares_history": "520 parts cédées le 30/06/2026 à New Life Sàrl. Détention indirecte via New Life Sàrl (2.245 parts, 14,97%)."
+        "color": "#10b981",
+        "shares_history": "135 parts de la Villa F (Casa F) détenues par NEW LIFE Sàrl (Bénéficiaire Effectif / UBO : Edoardo Tubia)."
     },
     {
         "id": "SH-12",
@@ -327,7 +327,7 @@ partners_data = [
         "kyc_status": "Conforme",
         "pep": "Non",
         "color": "#10b981",
-        "shares_history": "1.725 parts initiales + 520 parts cédées par Edoardo Tubia le 30/06/2026 = 2.245 parts"
+        "shares_history": "2.245 parts de la Villa H + 135 parts de la Villa F = 2.380 parts au total (15,8667% du capital social de Sombra Resort Sàrl)"
     },
     {
         "id": "SH-14",
@@ -354,9 +354,9 @@ villas_data = [
     { "id": "VILLA-C", "name": "Villa C", "shares": 2036, "pct": 13.5733, "owners": ["Cofre Luxembourg Wind S.A. (2.036)"], "desc": "Villa Master Grand Confort avec vue panoramique" },
     { "id": "VILLA-D", "name": "Villa D", "shares": 1512, "pct": 10.0800, "owners": ["Ingrid Lambert (763)", "Giancarlo Raggi (749)"], "desc": "Villa duplex de style contemporain et jardin zen" },
     { "id": "VILLA-E", "name": "Villa E", "shares": 1452, "pct": 9.6800, "owners": ["Enrico Tubia (1.452)"], "desc": "Villa haut standing avec intégration paysagère naturelle" },
-    { "id": "VILLA-F", "name": "Villa F", "shares": 1587, "pct": 10.5800, "owners": ["Silvia Tubia (1.452)", "Edoardo Tubia (135)"], "desc": "Villa familiale spacieuse avec terrasse en deck bois" },
+    { "id": "VILLA-F", "name": "Villa F", "shares": 1587, "pct": 10.5800, "owners": ["Silvia Tubia (1.452)", "NEW LIFE Sàrl (135)"], "desc": "Villa familiale spacieuse avec terrasse en deck bois" },
     { "id": "VILLA-G", "name": "Villa G", "shares": 1796, "pct": 11.9733, "owners": ["Susik Hemawiti (1.796)"], "desc": "Villa tropicale de style balinais avec bassin privatif" },
-    { "id": "VILLA-H", "name": "Villa H", "shares": 2245, "pct": 14.9667, "owners": ["New Life Sàrl (2.245)"], "desc": "Villa Signature de grand luxe avec suite principale majestueuse" },
+    { "id": "VILLA-H", "name": "Villa H", "shares": 2245, "pct": 14.9667, "owners": ["NEW LIFE Sàrl (2.245)"], "desc": "Villa Signature de grand luxe avec suite principale majestueuse" },
     { "id": "VILLA-I", "name": "Villa I", "shares": 1482, "pct": 9.8800, "owners": ["Michel Barbancey (1.482)"], "desc": "Villa d'architecte avec salon ouvert sur la canopée" }
 ]
 
