@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+        <script>
+        (function() {
+            try {
+                var isLight = localStorage.getItem('sr_theme') === 'light';
+                if (isLight) {
+                    document.documentElement.classList.add('theme-light');
+                } else {
+                    document.documentElement.classList.remove('theme-light');
+                }
+                var obs = new MutationObserver(function() {
+                    if (document.body) {
+                        if (isLight) document.body.classList.add('theme-light');
+                        else document.body.classList.remove('theme-light');
+                        obs.disconnect();
+                    }
+                });
+                obs.observe(document.documentElement, { childList: true });
+            } catch(e) {}
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conformité AML / LBC-FT & KYC - SOMBRA RESORT</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261023g">
+    <!-- Auth Guard -->
+    <script src="auth.js?v=20261023g"></script>
+    <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
+    <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="logo-img" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: 68px; height: 68px;">
+                    <div class="logo-title" style="letter-spacing: 2px; margin-top: 8px;">SOMBRA RESORT</div>
+                    <div class="logo-subtitle">Holding Sàrl • Lux</div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <!-- AREA SOCIÉTÉ -->
+                <div class="nav-section-title" data-i18n="nav_section_societe">AREA SOCIÉTÉ</div>
+                <div class="nav-item-container" data-page="index.html">
+                    <a href="index.html" class="nav-item">
+                        <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="menu-flag-icon">
+                        <span data-i18n="nav_societe">La Société</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('index.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                                                <div class="nav-item-container" data-page="partecipazioni.html">
+                    <a href="partecipazioni.html" class="nav-item ">
+                        <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="menu-flag-icon">
+                        <span data-i18n="nav_partecipazioni">Participation Sombra (Brésil)</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('partecipazioni.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA FINANCES -->
+                <div class="nav-section-title" data-i18n="nav_section_finances">AREA FINANCES</div>
+                <div class="nav-item-container" data-page="contabilita.html">
+                    <a href="contabilita.html" class="nav-item">
+                        <i class="fa-solid fa-book-bookmark text-blue"></i>
+                        <span data-i18n="nav_contabilita">Comptabilité PCN</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('contabilita.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="banca.html">
+                    <a href="banca.html" class="nav-item">
+                        <i class="fa-solid fa-building-columns text-cyan"></i>
+                        <span data-i18n="nav_banca">Comptes Bancaires</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('banca.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="ammortamenti.html">
+                    <a href="ammortamenti.html" class="nav-item">
+                        <i class="fa-solid fa-calculator text-emerald"></i>
+                        <span data-i18n="nav_ammortamenti">Amortissements</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('ammortamenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA DOCUMENTATION -->
+                <div class="nav-section-title" data-i18n="nav_section_documentation">AREA DOCUMENTATION</div>
+                <div class="nav-item-container" data-page="aml.html">
+                    <a href="aml.html" class="nav-item active">
+                        <i class="fa-solid fa-shield-halved text-emerald"></i>
+                        <span data-i18n="nav_aml">Conformité AML</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('aml.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="documenti.html">
+                    <a href="documenti.html" class="nav-item">
+                        <i class="fa-solid fa-folder-open text-amber"></i>
+                        <span data-i18n="nav_documenti">Documents & Archives</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('documenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="media.html">
+                    <a href="media.html" class="nav-item">
+                        <i class="fa-solid fa-photo-film text-cyan"></i>
+                        <span data-i18n="nav_media">Photos & Vidéos</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('media.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="footer-meta">
+                    <span data-i18n="last_update">Mise à jour :</span>
+                    <strong>23/10/2026</strong>
+                </div>
+                <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
+                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Topbar -->
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Menu (Échap)" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1 class="page-title">
+                            <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
+                            <span>CONFORMITÉ AML / LBC-FT & REGISTRE KYC</span>
+                        </h1>
+                        <div class="page-subtitle">Anti-Money Laundering & Lutte contre le Blanchiment (LBC-FT) • RBE Luxembourg</div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Improved Flag Language Selector -->
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')" title="Français">
+                            <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                        </button>
+                        <button class="lang-btn" data-lang="it" onclick="setLanguage('it')" title="Italiano">
+                            <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                        </button>
+                        <button class="lang-btn" data-lang="pt" onclick="setLanguage('pt')" title="Português">
+                            <img src="https://flagcdn.com/w40/br.png" alt="PT">
+                        </button>
+                        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" title="English">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="EN">
+                        </button>
+                    </div>
+
+                    <!-- Improved Light / Dark Theme Button -->
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Basculer Mode Clair/Sombre">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <div id="header-user-display" class="user-badge" style="cursor: pointer;" onclick="openUsersModal()"></div>
+
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()">
+                        <i class="fa-solid fa-power-off text-rose"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- AML Status Banner -->
+            <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="font-size: 1.25rem; color: var(--text-main);"><i class="fa-solid fa-shield-check text-emerald"></i> Statut Global de Conformité Réglementaire</h2>
+                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                        Loi du 12 novembre 2004 modifiée relative à la lutte contre le blanchiment • Déclarations RBE à jour
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <a href="uploads/Documenti/Sombra%20Resort%20-%20RBE%20Extrait%2004.2025.pdf" target="_blank" class="btn btn-secondary">
+                        <i class="fa-solid fa-file-pdf text-rose"></i> Extrait RBE Officiel
+                    </a>
+                    <span class="badge badge-emerald" style="padding: 8px 14px; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-circle-check"></i> 100% KYC Validé
+                    </span>
+                </div>
+            </div>
+
+            <!-- KYC Partners Table -->
+            <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem;">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-users text-cyan"></i> Registre KYC des Associés & Bénéficiaires Effectifs (UBO)</h2>
+                    <span class="badge badge-blue">14 Dossiers Contrôlés</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">Réf.</th>
+                                <th>Associé / Entité</th>
+                                <th style="width: 100px;">Villa</th>
+                                <th class="text-right" style="width: 130px;">Parts Détenues</th>
+                                <th>Bénéficiaire Effectif (UBO)</th>
+                                <th class="text-center" style="width: 80px;">PEP</th>
+                                <th class="text-center" style="width: 150px;">Score de Risque</th>
+                                <th class="text-center" style="width: 110px;">Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aml-partners-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Interactive Risk Simulator -->
+            <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem;">
+                <div class="section-header" style="margin-bottom: 1.25rem;">
+                    <div>
+                        <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-sliders text-emerald"></i> Simulateur Interactif de Score de Risque AML</h2>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">Évaluation dynamique selon les critères GAFI / CSSF / AED</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 1.5rem;">
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Juridiction de Résidence</label>
+                        <select id="sim-jurisdiction" class="form-control" onchange="calculateRiskSimulator()">
+                            <option value="low">Union Européenne (Luxembourg, UE) - Faible</option>
+                            <option value="medium">Place Financière Équivalente (Hong Kong) - Moyen</option>
+                            <option value="high">Pays Tiers / Émergent (Indonésie / Hors UE) - Élevé</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Personne Politiquement Exposée (PEP)</label>
+                        <select id="sim-pep" class="form-control" onchange="calculateRiskSimulator()">
+                            <option value="no">Non (Personne Privée Ordinaire)</option>
+                            <option value="yes">Oui (Mandat Public ou Lien Étroit)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Nature Juridique</label>
+                        <select id="sim-type" class="form-control" onchange="calculateRiskSimulator()">
+                            <option value="simple">Personne Physique Directe</option>
+                            <option value="corporate">Personne Morale Simple (Sàrl)</option>
+                            <option value="complex">Structure Corporate Complexe (S.A. / Trust)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">Volume d'Investissement (€)</label>
+                        <input type="number" id="sim-amount" class="form-control" value="100000" step="50000" oninput="calculateRiskSimulator()">
+                    </div>
+                </div>
+
+                <!-- Result Box -->
+                <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Résultat de l'Évaluation AML</div>
+                        <div style="display: flex; align-items: baseline; gap: 12px; margin-top: 4px;">
+                            <span id="sim-result-score" style="font-size: 28px; font-weight: 800; color: #34d399; font-family: monospace;">10/100</span>
+                            <span id="sim-result-badge" class="badge badge-emerald">Risque Faible</span>
+                        </div>
+                    </div>
+                    <div style="font-size: 12.5px; color: var(--text-muted); max-width: 500px; line-height: 1.5;">
+                        <i class="fa-solid fa-circle-info text-cyan"></i> Procédure de vigilance simplifiée applicable. Identification formelle de la pièce d'identité et justificatif de domicile de moins de 3 mois requis.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: KYC Detail -->
+    <div id="kycDetailModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card glass-panel" style="max-width: 650px; width: 95%;">
+            <div class="modal-header">
+                <div>
+                    <span class="badge badge-emerald" style="margin-bottom: 4px;">DOSSIER PERMANENT KYC</span>
+                    <h3 id="kyc-modal-name"><i class="fa-solid fa-user-shield text-emerald"></i> Détail de Conformité</h3>
+                </div>
+                <button class="btn-icon" onclick="closeKycModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="kyc-modal-body" class="modal-body" style="padding: 1.5rem;"></div>
+            <div class="modal-footer" style="padding: 1rem 1.5rem; text-align: right; border-top: 1px solid var(--border-color);">
+                <button class="btn btn-secondary" onclick="closeKycModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="data.js?v=20261023"></script>
+    <script src="i18n.js?v=20261023"></script>
+    <script src="aml_app.js?v=20261023g"></script>
+</body>
+</html>

@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+        <script>
+        (function() {
+            try {
+                var isLight = localStorage.getItem('sr_theme') === 'light';
+                if (isLight) {
+                    document.documentElement.classList.add('theme-light');
+                } else {
+                    document.documentElement.classList.remove('theme-light');
+                }
+                var obs = new MutationObserver(function() {
+                    if (document.body) {
+                        if (isLight) document.body.classList.add('theme-light');
+                        else document.body.classList.remove('theme-light');
+                        obs.disconnect();
+                    }
+                });
+                obs.observe(document.documentElement, { childList: true });
+            } catch(e) {}
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participation Sombra Resort Brasil Ltda - SOMBRA RESORT</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261023g">
+    <!-- Auth Guard -->
+    <script src="auth.js?v=20261023g"></script>
+    <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
+    <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="logo-img" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: 68px; height: 68px;">
+                    <div class="logo-title" style="letter-spacing: 2px; margin-top: 8px;">SOMBRA RESORT</div>
+                    <div class="logo-subtitle">Holding Sàrl • Lux</div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <!-- AREA SOCIÉTÉ -->
+                <div class="nav-section-title" data-i18n="nav_section_societe">AREA SOCIÉTÉ</div>
+                <div class="nav-item-container" data-page="index.html">
+                    <a href="index.html" class="nav-item">
+                        <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="menu-flag-icon">
+                        <span data-i18n="nav_societe">La Société</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('index.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                                                <div class="nav-item-container" data-page="partecipazioni.html">
+                    <a href="partecipazioni.html" class="nav-item active">
+                        <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="menu-flag-icon">
+                        <span data-i18n="nav_partecipazioni">Participation Sombra (Brésil)</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('partecipazioni.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA FINANCES -->
+                <div class="nav-section-title" data-i18n="nav_section_finances">AREA FINANCES</div>
+                <div class="nav-item-container" data-page="contabilita.html">
+                    <a href="contabilita.html" class="nav-item">
+                        <i class="fa-solid fa-book-bookmark text-blue"></i>
+                        <span data-i18n="nav_contabilita">Comptabilité PCN</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('contabilita.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="banca.html">
+                    <a href="banca.html" class="nav-item">
+                        <i class="fa-solid fa-building-columns text-cyan"></i>
+                        <span data-i18n="nav_banca">Comptes Bancaires</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('banca.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="ammortamenti.html">
+                    <a href="ammortamenti.html" class="nav-item">
+                        <i class="fa-solid fa-calculator text-emerald"></i>
+                        <span data-i18n="nav_ammortamenti">Amortissements</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('ammortamenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA DOCUMENTATION -->
+                <div class="nav-section-title" data-i18n="nav_section_documentation">AREA DOCUMENTATION</div>
+                <div class="nav-item-container" data-page="aml.html">
+                    <a href="aml.html" class="nav-item">
+                        <i class="fa-solid fa-shield-halved text-emerald"></i>
+                        <span data-i18n="nav_aml">Conformité AML</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('aml.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="documenti.html">
+                    <a href="documenti.html" class="nav-item">
+                        <i class="fa-solid fa-folder-open text-amber"></i>
+                        <span data-i18n="nav_documenti">Documents & Archives</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('documenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="media.html">
+                    <a href="media.html" class="nav-item">
+                        <i class="fa-solid fa-photo-film text-cyan"></i>
+                        <span data-i18n="nav_media">Photos & Vidéos</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('media.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="footer-meta">
+                    <span data-i18n="last_update">Mise à jour :</span>
+                    <strong>23/10/2026</strong>
+                </div>
+                <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
+                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Topbar -->
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Menu (Échap)" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1 class="page-title">
+                            <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
+                            <span>SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA</span>
+                        </h1>
+                        <div class="page-subtitle">Participation Étrangère Détenue à 100% • Natal / Praia de Pipa (RN, Brésil)</div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Improved Flag Language Selector -->
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')" title="Français">
+                            <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                        </button>
+                        <button class="lang-btn" data-lang="it" onclick="setLanguage('it')" title="Italiano">
+                            <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                        </button>
+                        <button class="lang-btn" data-lang="pt" onclick="setLanguage('pt')" title="Português">
+                            <img src="https://flagcdn.com/w40/br.png" alt="PT">
+                        </button>
+                        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" title="English">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="EN">
+                        </button>
+                    </div>
+
+                    <!-- Improved Light / Dark Theme Button -->
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Basculer Mode Clair/Sombre">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <div id="header-user-display" class="user-badge" style="cursor: pointer;" onclick="openUsersModal()"></div>
+
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()">
+                        <i class="fa-solid fa-power-off text-rose"></i>
+                    </button>
+                </div>
+            </header>
+            <!-- Subpage Tabs Bar (Separazione Pagine Partecipata) -->
+            <div class="glass-panel" style="padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; justify-content: flex-start; border-radius: 12px; background: rgba(15, 23, 42, 0.65);">
+                <div style="display: flex; align-items: center; gap: 8px; margin-right: 0.5rem;">
+                    <img src="https://flagcdn.com/w40/br.png" alt="Brésil" style="width: 22px; height: 16px; border-radius: 3px; object-fit: cover;">
+                    <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Sezioni Partecipata:</span>
+                </div>
+                <a href="partecipazioni.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 7px 16px; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-building-columns text-cyan"></i> 1. Scheda Società & Banche (Banco do Brasil)
+                </a>
+                <a href="bilancio_brasil.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 7px 16px; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-scale-balanced text-cyan"></i> 2. Bilancio (Balanço Patrimonial)
+                </a>
+                <a href="dre_brasil.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 7px 16px; display: inline-flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-chart-line text-emerald"></i> 3. Perdite e Profitti (DRE)
+                </a>
+            </div>
+
+
+            <!-- Key Indicators Cards Brazil -->
+            <div class="kpi-grid">
+                <div class="kpi-card glass-panel">
+                    <div class="kpi-icon-wrap bg-amber-glow">
+                        <i class="fa-solid fa-certificate text-amber"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-label">Capital Subscrito Estrangeiro</div>
+                        <div class="kpi-value text-amber">R$ 3.000.525,45</div>
+                        <div class="kpi-sub">Totalement souscrit par Sombra Sàrl Lux</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel">
+                    <div class="kpi-icon-wrap bg-emerald-glow">
+                        <i class="fa-solid fa-vault text-emerald"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-label">Ativo Total (Balanço 2025)</div>
+                        <div class="kpi-value text-emerald">R$ 5.298.710,03</div>
+                        <div class="kpi-sub">Aplicações financeiras R$ 976.766,78</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel">
+                    <div class="kpi-icon-wrap bg-purple-glow">
+                        <i class="fa-solid fa-scale-balanced text-cyan"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-label">Patrimônio Líquido 2025</div>
+                        <div class="kpi-value text-cyan">R$ 3.967.288,96</div>
+                        <div class="kpi-sub">Capital + Lucros R$ 966.763,51</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel">
+                    <div class="kpi-icon-wrap bg-blue-glow">
+                        <i class="fa-solid fa-chart-line-up text-emerald"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-label">Resultado Financeiro (DRE 2025)</div>
+                        <div class="kpi-value text-emerald">+ R$ 135.280,27</div>
+                        <div class="kpi-sub">Rendements bruts de placements</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Corporate & Operational Identity -->
+            <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="glass-panel" style="padding: 1.5rem;">
+                    <div class="section-header" style="margin-bottom: 1rem;">
+                        <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-passport text-amber"></i> Fiche d'Identité de la Filiale Brésilienne</h2>
+                        <span class="badge badge-amber">Receita Federal do Brasil</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
+                        <div><strong style="color: var(--text-muted);">Nom de l'Entreprise :</strong> <span style="font-weight: 600; color: var(--text-main);">SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA</span></div>
+                        <div><strong style="color: var(--text-muted);">CNPJ Matriz :</strong> <span class="badge badge-blue">43.730.206/0001-80</span></div>
+                        <div><strong style="color: var(--text-muted);">Junta Comercial (JUCERN) :</strong> <span>N° 24200911503 (30/09/2021)</span></div>
+                        <div><strong style="color: var(--text-muted);">Natureza Jurídica :</strong> <span>206-2 - Sociedade Empresária Limitada</span></div>
+                        <div><strong style="color: var(--text-muted);">Sócio Único (100%) :</strong> <span style="color: #34d399; font-weight: 600;">Sombra e Agua Fresca Resort S.à r.l. (Luxembourg)</span></div>
+                        <div><strong style="color: var(--text-muted);">Administrateur au Brésil :</strong> <span style="color: #38bdf8; font-weight: 600;">Edoardo Tubia</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Activité Principale (CNAE) :</strong> <span>68.22-6-00 - Gestão e administração da propriedade imobiliária</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Siège Légal :</strong> <span>Rua Doutor Poty Nobrega, 1946, Sala 305 Cond. Emp. Int. Trade Center, Lagoa Nova, Natal - RN, CEP 59.056-180</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Compte Bancaire :</strong> <span>Banco do Brasil S.A. • Agência 1066-9 (Goianinha) • C/C 48649-3</span></div>
+                    </div>
+
+                    <div style="margin-top: 1.25rem; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="uploads/Partecipazione/CNPJ 2021.pdf" target="_blank" class="btn btn-secondary">
+                            <i class="fa-solid fa-file-pdf text-rose"></i> Cartão CNPJ
+                        </a>
+                        <a href="uploads/Partecipazione/CONTRATO REGISTRATO.pdf" target="_blank" class="btn btn-secondary">
+                            <i class="fa-solid fa-file-pdf text-rose"></i> Contrato JUCERN
+                        </a>
+                        <a href="uploads/Partecipazione/153.22 I_P CONTRATO POUSADA SOMBRA E AGUA FRESCA.pdf" target="_blank" class="btn btn-secondary">
+                            <i class="fa-solid fa-handshake text-emerald"></i> Contrat Hôtel Sombra
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Resort Hospitality Profile -->
+                <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="section-header" style="margin-bottom: 0.75rem;">
+                            <h2 style="font-size: 1.15rem; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                                <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra" style="width: 24px; height: 24px; object-fit: contain;">
+                                <span>Sombra e Agua Fresca Resort</span>
+                            </h2>
+                            <span class="badge badge-emerald">Praia de Pipa • RN</span>
+                        </div>
+                        <div style="font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 1rem;">
+                            Le complexe <strong>Sombra Resort Brasil</strong> est situé à <strong>Praia de Pipa</strong> (Tibau do Sul), destination balnéaire et touristique de renommée internationale au Brésil.
+                        </div>
+                        <ul style="font-size: 12.5px; color: var(--text-muted); line-height: 1.8; padding-left: 1.25rem;">
+                            <li><strong style="color: var(--text-main);">10 Villas de Prestige :</strong> 9 villas exclusives attribuées aux investisseurs de la holding luxembourgeoise.</li>
+                            <li><strong style="color: var(--text-main);">Partenariat Opérationnel :</strong> Synergie avec le renommé <em>Hôtel Sombra e Água Fresca</em> pour la conciergerie, maintenance et commercialisation hôtelière.</li>
+                            <li><strong style="color: var(--text-main);">Cadre Naturel :</strong> Intégration paysagère tropicale, à quelques pas de la mer, espaces détente et sécurité privée 24/7.</li>
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 12px; font-size: 12px; color: #34d399;">
+                        <i class="fa-solid fa-shield-check"></i> Actif foncier et immobilier entièrement consolidé sous la holding luxembourgeoise.
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- SECTION COMPTES BANCAIRES FILIALE BRÉSIL (BANCO DO BRASIL) -->
+            <div id="sec-brasil-banks" class="glass-panel" style="padding: 1.5rem; margin-bottom: 1.5rem; border-top: 3px solid #10b981;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <img src="https://flagcdn.com/w40/br.png" alt="Brésil" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.3);">
+                            <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">
+                                <i class="fa-solid fa-building-columns text-emerald"></i> Comptes Bancaires au Brésil & Trésorerie (Banco do Brasil S.A.)
+                            </h2>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                            Gestion bancaire de la filiale Sombra Resort Brasil Sociedade Unipessoal Ltda • Agência 1066-9 (Goianinha - RN)
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <a href="uploads/Partecipazione/Sombra Resort conta Banco Brasil.xlsx" download class="btn btn-secondary" style="font-size: 13px;">
+                            <i class="fa-solid fa-file-excel text-emerald"></i> Télécharger l'Excel Officiel (2 Comptes)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- The Two Bank Accounts Cards Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+                    <!-- 1. Conta Corrente Ordinario (circa 40.000 R$) -->
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 1.25rem; position: relative;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <span class="badge badge-blue" style="font-size: 10px; margin-bottom: 6px;">COMPTE COURANT OPÉRATIONNEL</span>
+                                <div style="font-weight: 800; font-size: 16px; color: var(--text-main);">C/C Ordinário Banco do Brasil</div>
+                                <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;">
+                                    Conta: <strong>48649-3</strong> • Agência: <strong>1066-9</strong>
+                                </div>
+                            </div>
+                            <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(56, 189, 248, 0.15); display: flex; align-items: center; justify-content: center;">
+                                <i class="fa-solid fa-wallet text-cyan" style="font-size: 20px;"></i>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Solde Actuel Disponible</div>
+                            <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
+                                <div style="font-size: 26px; font-weight: 800; color: #38bdf8; font-family: monospace;">R$ 40.703,63</div>
+                                <div style="font-size: 13px; color: var(--text-muted); font-family: monospace;">≈ 6.898,92 €</div>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
+                                Encaissement des loyers Hôtel Sombra (JM Empreendimentos SCP 21.578 R$), honoraires et dépenses d'exploitation.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Conto Investimento (circa 1.700.000 R$) -->
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 1.25rem; position: relative;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <span class="badge badge-amber" style="font-size: 10px; margin-bottom: 6px;">COMPTE DE PLACEMENT & RÉSERVES</span>
+                                <div style="font-weight: 800; font-size: 16px; color: var(--text-main);">Fundo de Investimento BB (RF)</div>
+                                <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;">
+                                    Aplicação Financeira • Rendements DI
+                                </div>
+                            </div>
+                            <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center;">
+                                <i class="fa-solid fa-vault text-amber" style="font-size: 20px;"></i>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Solde Actuel Placements</div>
+                            <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
+                                <div style="font-size: 26px; font-weight: 800; color: #fbbf24; font-family: monospace;">R$ 1.702.354,95</div>
+                                <div style="font-size: 13px; color: var(--text-muted); font-family: monospace;">≈ 288.534,74 €</div>
+                            </div>
+                            <div style="font-size: 12px; color: #34d399; margin-top: 6px; line-height: 1.4;">
+                                <i class="fa-solid fa-arrow-trend-up"></i> Rendements bruts de juros : <strong>+15.176 R$ à +17.203 R$ / mois</strong> (+141.245 R$ cumulés en 2026).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Total Consolidé Trésorerie Brésilienne -->
+                    <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 12px; padding: 1.25rem; position: relative;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <span class="badge badge-emerald" style="font-size: 10px; margin-bottom: 6px;">TOTAL TRÉSORERIE BRÉSIL</span>
+                                <div style="font-weight: 800; font-size: 16px; color: var(--text-main);">Consolidé Banco do Brasil</div>
+                                <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;">
+                                    Taux de change indicatif : 1 EUR = 5,90 BRL
+                                </div>
+                            </div>
+                            <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(16, 185, 129, 0.2); display: flex; align-items: center; justify-content: center;">
+                                <i class="fa-solid fa-coins text-emerald" style="font-size: 20px;"></i>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Total Actif Monétaire</div>
+                            <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
+                                <div style="font-size: 26px; font-weight: 800; color: #34d399; font-family: monospace;">R$ 1.743.058,58</div>
+                                <div style="font-size: 14px; font-weight: 700; color: #38bdf8; font-family: monospace;">= 295.433,66 €</div>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
+                                Liquidité totale immédiatement mobilisable au crédit de la filiale brésilienne 100% détenue.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation for Bank Ledgers -->
+                <div style="display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+                    <button class="part-bank-tab-btn active" onclick="switchPartBankTab('cc')">
+                        <i class="fa-solid fa-receipt text-cyan"></i> 1. Conta Corrente (40.703,63 R$)
+                    </button>
+                    <button class="part-bank-tab-btn" onclick="switchPartBankTab('inv')">
+                        <i class="fa-solid fa-chart-line text-amber"></i> 2. Conto Investimento (1.702.354,95 R$)
+                    </button>
+                    <button class="part-bank-tab-btn" onclick="switchPartBankTab('hist')">
+                        <i class="fa-solid fa-clock-rotate-left text-emerald"></i> 3. Évolution des Soldes (2021 - 2026)
+                    </button>
+                </div>
+
+                <!-- TAB 1: Conta Corrente Ledger -->
+                <div id="part-bank-tab-cc" class="table-responsive" style="display: block;">
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+                        Dernières opérations du compte courant opérationnel (loyers perçus, honoraires, frais bancaires) :
+                    </div>
+                    <table class="data-table" style="font-size: 12.5px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 105px;">Date</th>
+                                <th style="width: 70px;">N°</th>
+                                <th>Description de l'Opération</th>
+                                <th style="width: 160px;">Catégorie</th>
+                                <th>Tiers / Contrepartie</th>
+                                <th class="text-right" style="width: 150px;">Montant</th>
+                                <th class="text-right" style="width: 160px;">Solde Progressif</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-09-30</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#255</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Pagamento contratto affitto</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Produtos</td>
+            <td style="font-size: 12px; color: var(--text-main);">140852-6 SCP - JM EMPREENDIMENTOS IMOBILIARIO SCP LTDA</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 21.578,02
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ 40.703,63
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-09-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#254</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">JJ Assessoria Contabil</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -361,31
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ 19.125,61
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-09-08</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#253</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Tarifa Pacote de Serviços</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Bancarias</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ 19.486,92
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-09-04</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#252</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">LT Soluçoes Corporativas e Contabeis</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -1.621,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ 19.580,02
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-09-04</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#251</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">LT Soluçoes Corporativas e Contabeis</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ 21.201,02
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-28</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#250</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Pagamento contratto affitto</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Produtos</td>
+            <td style="font-size: 12px; color: var(--text-main);">140852-6 SCP - JM EMPREENDIMENTOS IMOBILIARIO SCP LTDA</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 21.578,02
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ 21.578,02
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#249</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#248</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">JJ Assessoria Contabil</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -377,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#247</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 2.091,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#246</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Tarifa Pacote de Serviços</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Bancarias</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -2.091,10
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#245</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">Essencial Gestao Empresarial Ltda</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -1.621,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -1.998,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#244</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">Essencial Gestao Empresarial Ltda</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -377,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#243</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 2.375,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#242</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">JJ Assessoria Contabil</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -2.375,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#241</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">Essencial Gestao Empresarial Ltda</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -1.621,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -1.998,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#240</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">Essencial Gestao Empresarial Ltda</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -377,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-06</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#239</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-06</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#238</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Tarifa Pacote de Serviços</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Bancarias</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -93,10
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-17</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#237</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 935,39
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-17</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#236</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Domiciliazione societaria</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Varias</td>
+            <td style="font-size: 12px; color: var(--text-main);">Seahub Coworking</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -935,39
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -935,39
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#235</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-10</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#234</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">JJ Assessoria Contabil</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -377,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#233</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 2.091,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#232</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Tarifa Pacote de Serviços</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Bancarias</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -2.091,10
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#231</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">Essencial Gestao Empresarial Ltda</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -1.621,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -1.998,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-05</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#230</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">Essencial Gestao Empresarial Ltda</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -377,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-11</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#229</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-11</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#228</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Honorario Contabeis</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Gestao Empresarial</td>
+            <td style="font-size: 12px; color: var(--text-main);">JJ Assessoria Contabil</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -377,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-06</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#227</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Resgate</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -0,00
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-06</td>
+            <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#226</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Tarifa Pacote de Serviços</td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Bancarias</td>
+            <td style="font-size: 12px; color: var(--text-main);">B.B.</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #38bdf8; font-size: 13px; font-weight: 700;">
+                R$ -93,10
+            </td>
+        </tr>
+    
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TAB 2: Conto Investimento Ledger -->
+                <div id="part-bank-tab-inv" class="table-responsive" style="display: none;">
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+                        Historique des rendements mensuels bruts, impôts retenus à la source (IRRF) et rachats de trésorerie :
+                    </div>
+                    <table class="data-table" style="font-size: 12.5px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 105px;">Date</th>
+                                <th style="width: 70px;">N°</th>
+                                <th>Description du Mouvement</th>
+                                <th style="width: 160px;">Nature</th>
+                                <th>Détail / Type</th>
+                                <th class="text-right" style="width: 150px;">Montant</th>
+                                <th class="text-right" style="width: 160px;">Solde Placements</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-09-30</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#193</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 15.176,21
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.702.354,95
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#192</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Imposto de Renda</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">DESPESAS TRIBUTARIAS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">IRRF</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -10,71
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.687.178,74
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#191</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 15.667,56
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.687.189,45
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-10</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#190</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.671.521,89
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-05</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#189</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -2.091,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.671.898,89
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#188</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Imposto de Renda</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">DESPESAS TRIBUTARIAS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">IRRF</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -6,63
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.673.989,99
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#187</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 17.203,96
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.673.996,62
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-10</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#186</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -2.375,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.656.792,66
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-07-06</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#185</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.659.167,66
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-30</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#184</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Imposto de Renda</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">DESPESAS TRIBUTARIAS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">IRRF</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -2,33
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.659.260,76
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-30</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#183</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 15.694,11
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.659.263,09
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-17</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#182</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -935,39
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.643.568,98
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-10</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#181</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.644.504,37
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-05</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#180</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -2.091,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.644.881,37
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#179</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Imposto de Renda</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">DESPESAS TRIBUTARIAS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">IRRF</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -18.558,85
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.646.972,47
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#178</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 15.241,93
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.665.531,32
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-11</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#177</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.650.289,39
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-06</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#176</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -93,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.650.666,39
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-05-05</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#175</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -1.998,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.650.759,49
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-04-30</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#174</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Imposto de Renda</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">DESPESAS TRIBUTARIAS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">IRRF</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -10,01
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.652.757,49
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-04-30</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#173</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 15.246,12
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.652.767,50
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-04-10</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#172</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -377,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.637.521,38
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-04-06</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#171</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -81,40
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.637.898,38
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-04-02</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#170</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Resgate</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">RESGATE</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Despesas Gerais</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -758,56
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.637.979,78
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-03-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#169</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 17.189,88
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.638.738,34
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-02-27</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#168</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 13.803,51
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.621.548,46
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-01-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#167</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 16.022,22
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.607.744,95
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2025-12-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#166</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Imposto de Renda</td>
+            <td style="font-size: 12px;"><span class="badge badge-amber">DESPESAS TRIBUTARIAS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">IRRF</td>
+            <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
+                R$ -29,10
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.591.722,73
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2025-12-31</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#165</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Rendimento Bruto</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">JUROS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Receitas Financeiras</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 15.590,85
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.591.751,83
+            </td>
+        </tr>
+    
+        <tr>
+            <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2025-12-15</td>
+            <td class="text-bold text-amber" style="font-family: monospace; font-size: 12px;">#164</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Aplicaçao</td>
+            <td style="font-size: 12px;"><span class="badge badge-emerald">INVESTIMENTOS</span></td>
+            <td style="font-size: 12px; color: var(--text-muted);">Aplicaçao</td>
+            <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
+                +R$ 200.000,00
+            </td>
+            <td class="text-right" style="font-family: monospace; color: #fbbf24; font-size: 13px; font-weight: 700;">
+                R$ 1.576.160,98
+            </td>
+        </tr>
+    
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- TAB 3: Evolution Historique des Soldes -->
+                <div id="part-bank-tab-hist" class="table-responsive" style="display: none;">
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+                        Synthèse de l'évolution des soldes bancaires de la filiale au 31 décembre de chaque exercice :
+                    </div>
+                    <table class="data-table" style="font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <th>Période d'Arrêté</th>
+                                <th class="text-right" style="width: 180px;">Conta Corrente (C/C)</th>
+                                <th class="text-right" style="width: 200px;">Conto Investimento (Placements)</th>
+                                <th class="text-right" style="width: 200px;">Total Trésorerie R$</th>
+                                <th class="text-right" style="width: 180px;">Équivalent EUR</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+    <tr>
+        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2021</td>
+        <td class="text-right" style="font-family: monospace;">R$ 0,00</td>
+        <td class="text-right" style="font-family: monospace;">R$ 70,79</td>
+        <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 70,79</td>
+        <td class="text-right text-muted" style="font-family: monospace;">11,20 €</td>
+    </tr>
+    <tr>
+        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2022</td>
+        <td class="text-right" style="font-family: monospace;">R$ 255.109,77</td>
+        <td class="text-right" style="font-family: monospace;">R$ 609.935,21</td>
+        <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 865.044,98</td>
+        <td class="text-right text-muted" style="font-family: monospace;">154.472,32 €</td>
+    </tr>
+    <tr>
+        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2023</td>
+        <td class="text-right" style="font-family: monospace;">R$ 0,00</td>
+        <td class="text-right" style="font-family: monospace;">R$ 934.919,59</td>
+        <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 934.919,59</td>
+        <td class="text-right text-muted" style="font-family: monospace;">176.399,92 €</td>
+    </tr>
+    <tr>
+        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2024</td>
+        <td class="text-right" style="font-family: monospace;">R$ 0,00</td>
+        <td class="text-right" style="font-family: monospace;">R$ 976.766,78</td>
+        <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 976.766,78</td>
+        <td class="text-right text-muted" style="font-family: monospace;">162.794,46 €</td>
+    </tr>
+    <tr>
+        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2025</td>
+        <td class="text-right" style="font-family: monospace;">R$ 8.856,39</td>
+        <td class="text-right" style="font-family: monospace;">R$ 1.591.722,73</td>
+        <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 1.600.579,12</td>
+        <td class="text-right text-muted" style="font-family: monospace;">266.763,19 €</td>
+    </tr>
+    <tr style="background: rgba(16, 185, 129, 0.12); font-weight: 800;">
+        <td style="color: #34d399;">Situation Actuelle 2026 (Extrait Banco do Brasil)</td>
+        <td class="text-right" style="font-family: monospace; color: #38bdf8;">R$ 40.703,63</td>
+        <td class="text-right" style="font-family: monospace; color: #fbbf24;">R$ 1.702.354,95</td>
+        <td class="text-right text-emerald" style="font-family: monospace; font-size: 15px;">R$ 1.743.058,58</td>
+        <td class="text-right text-emerald" style="font-family: monospace; font-size: 14px;">295.433,66 €</td>
+    </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <script>
+                function switchPartBankTab(tabName) {
+                    const tabs = ['cc', 'inv', 'hist'];
+                    tabs.forEach(t => {
+                        const tabContent = document.getElementById('part-bank-tab-' + t);
+                        if (tabContent) tabContent.style.display = (t === tabName) ? 'block' : 'none';
+                    });
+                    const btns = document.querySelectorAll('.part-bank-tab-btn');
+                    btns.forEach((btn, idx) => {
+                        btn.classList.toggle('active', tabs[idx] === tabName);
+                    });
+                }
+            </script>
+
+
+                                    <!-- Quick Link Banners to Separate Bilancio and DRE Pages -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; margin-bottom: 2rem;">
+                <div class="glass-panel" style="padding: 1.5rem; border-left: 4px solid var(--accent-cyan); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                            <span class="badge badge-cyan">Stato Patrimoniale Separato</span>
+                            <span class="badge badge-emerald">Certificato 2024 vs 2025</span>
+                        </div>
+                        <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-scale-balanced text-cyan"></i> Balanço Patrimonial (Bilancio Brasile)
+                        </h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                            Consulta la pagina dedicata del Bilancio Patrimoniale ufficiale (Ativo Total R$ 5.298.710,03, Patrimônio Líquido R$ 3.967.288,96) con l'apertura a tendina per ogni singola voce e sottoconto.
+                        </p>
+                    </div>
+                    <div style="margin-top: 1.25rem;">
+                        <a href="bilancio_brasil.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-arrow-right"></i> Apri Pagina Bilancio Brasile
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="padding: 1.5rem; border-left: 4px solid var(--accent-emerald); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                            <span class="badge badge-emerald">Conto Economico Separato</span>
+                            <span class="badge badge-cyan">Perdite e Profitti Certificati</span>
+                        </div>
+                        <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-chart-line text-emerald"></i> DRE - Demonstração do Resultado do Exercício
+                        </h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+                            Consulta la pagina dedicata di Perdite e Profitti (Rendimenti Banco do Brasil +R$ 135.280,27, Utile Netto Certificato DRE +R$ 137.310,45) con l'apertura a tendina delle singole fatture e proventi.
+                        </p>
+                    </div>
+                    <div style="margin-top: 1.25rem;">
+                        <a href="dre_brasil.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-arrow-right"></i> Apri Pagina Perdite e Profitti Brasile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<!-- Core Scripts -->
+    <script src="data.js?v=20261023"></script>
+    <script src="i18n.js?v=20261023"></script>
+    <script src="app.js?v=20261023g"></script>
+</body>
+</html>

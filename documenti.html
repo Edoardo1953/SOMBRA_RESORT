@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+        <script>
+        (function() {
+            try {
+                var isLight = localStorage.getItem('sr_theme') === 'light';
+                if (isLight) {
+                    document.documentElement.classList.add('theme-light');
+                } else {
+                    document.documentElement.classList.remove('theme-light');
+                }
+                var obs = new MutationObserver(function() {
+                    if (document.body) {
+                        if (isLight) document.body.classList.add('theme-light');
+                        else document.body.classList.remove('theme-light');
+                        obs.disconnect();
+                    }
+                });
+                obs.observe(document.documentElement, { childList: true });
+            } catch(e) {}
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents & Archives Officielles - SOMBRA RESORT</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261023g">
+    <!-- Auth Guard -->
+    <script src="auth.js?v=20261023g"></script>
+    <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
+    <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="logo-img" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: 68px; height: 68px;">
+                    <div class="logo-title" style="letter-spacing: 2px; margin-top: 8px;">SOMBRA RESORT</div>
+                    <div class="logo-subtitle">Holding Sàrl • Lux</div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <!-- AREA SOCIÉTÉ -->
+                <div class="nav-section-title" data-i18n="nav_section_societe">AREA SOCIÉTÉ</div>
+                <div class="nav-item-container" data-page="index.html">
+                    <a href="index.html" class="nav-item">
+                        <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="menu-flag-icon">
+                        <span data-i18n="nav_societe">La Société</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('index.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                                                <div class="nav-item-container" data-page="partecipazioni.html">
+                    <a href="partecipazioni.html" class="nav-item ">
+                        <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="menu-flag-icon">
+                        <span data-i18n="nav_partecipazioni">Participation Sombra (Brésil)</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('partecipazioni.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA FINANCES -->
+                <div class="nav-section-title" data-i18n="nav_section_finances">AREA FINANCES</div>
+                <div class="nav-item-container" data-page="contabilita.html">
+                    <a href="contabilita.html" class="nav-item">
+                        <i class="fa-solid fa-book-bookmark text-blue"></i>
+                        <span data-i18n="nav_contabilita">Comptabilité PCN</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('contabilita.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="banca.html">
+                    <a href="banca.html" class="nav-item">
+                        <i class="fa-solid fa-building-columns text-cyan"></i>
+                        <span data-i18n="nav_banca">Comptes Bancaires</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('banca.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="ammortamenti.html">
+                    <a href="ammortamenti.html" class="nav-item">
+                        <i class="fa-solid fa-calculator text-emerald"></i>
+                        <span data-i18n="nav_ammortamenti">Amortissements</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('ammortamenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA DOCUMENTATION -->
+                <div class="nav-section-title" data-i18n="nav_section_documentation">AREA DOCUMENTATION</div>
+                <div class="nav-item-container" data-page="aml.html">
+                    <a href="aml.html" class="nav-item">
+                        <i class="fa-solid fa-shield-halved text-emerald"></i>
+                        <span data-i18n="nav_aml">Conformité AML</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('aml.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="documenti.html">
+                    <a href="documenti.html" class="nav-item active">
+                        <i class="fa-solid fa-folder-open text-amber"></i>
+                        <span data-i18n="nav_documenti">Documents & Archives</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('documenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="media.html">
+                    <a href="media.html" class="nav-item">
+                        <i class="fa-solid fa-photo-film text-cyan"></i>
+                        <span data-i18n="nav_media">Photos & Vidéos</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('media.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="footer-meta">
+                    <span data-i18n="last_update">Mise à jour :</span>
+                    <strong>23/10/2026</strong>
+                </div>
+                <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
+                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Topbar -->
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Menu (Échap)" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1 class="page-title">
+                            <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
+                            <span>DOCUMENTS & ARCHIVES OFFICIELLES</span>
+                        </h1>
+                        <div class="page-subtitle">Actes Statutaires, Bilans Certifiés, Extraits RCSL/RBE & Filiale Brésilienne</div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Improved Flag Language Selector -->
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')" title="Français">
+                            <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                        </button>
+                        <button class="lang-btn" data-lang="it" onclick="setLanguage('it')" title="Italiano">
+                            <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                        </button>
+                        <button class="lang-btn" data-lang="pt" onclick="setLanguage('pt')" title="Português">
+                            <img src="https://flagcdn.com/w40/br.png" alt="PT">
+                        </button>
+                        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" title="English">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="EN">
+                        </button>
+                    </div>
+
+                    <!-- Improved Light / Dark Theme Button -->
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Basculer Mode Clair/Sombre">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <div id="header-user-display" class="user-badge" style="cursor: pointer;" onclick="openUsersModal()"></div>
+
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()">
+                        <i class="fa-solid fa-power-off text-rose"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Toolbar & Filter Tabs -->
+            <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+                    <!-- Category Buttons -->
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary doc-cat-btn active" data-cat="all" onclick="filterDocCategory('all')">
+                            Tous les Documents
+                        </button>
+                        <button class="btn btn-secondary doc-cat-btn" data-cat="Statuti" onclick="filterDocCategory('Statuti')">
+                            Statuts & Actes
+                        </button>
+                        <button class="btn btn-secondary doc-cat-btn" data-cat="Bilanci" onclick="filterDocCategory('Bilanci')">
+                            Bilans PCN
+                        </button>
+                        <button class="btn btn-secondary doc-cat-btn" data-cat="Certificati" onclick="filterDocCategory('Certificati')">
+                            RCS & RBE
+                        </button>
+                        <button class="btn btn-secondary doc-cat-btn" data-cat="Partecipazione" onclick="filterDocCategory('Partecipazione')">
+                            Filiale Brésil
+                        </button>
+                        <button class="btn btn-secondary doc-cat-btn" data-cat="Trésorerie" onclick="filterDocCategory('Trésorerie')">
+                            Banques & Excels
+                        </button>
+                    </div>
+
+                    <!-- Search & Upload Action -->
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <div style="position: relative;">
+                            <input type="text" class="form-control" placeholder="Rechercher document, réf..." style="padding-left: 32px; width: 230px;" oninput="onDocSearchInput(this.value)">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 12px;"></i>
+                        </div>
+                        <button class="btn btn-primary" onclick="openUploadDocModal()">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Téléverser Document
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; color: var(--text-muted);">
+                    <div id="docs-count-badge">Chargement...</div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 45px;">Type</th>
+                                <th>Titre du Document & Description</th>
+                                <th style="width: 140px;">Rubrique</th>
+                                <th style="width: 130px;">Référence</th>
+                                <th style="width: 110px;">Date</th>
+                                <th style="width: 90px;">Taille</th>
+                                <th class="text-center" style="width: 120px;">Statut</th>
+                                <th class="text-center" style="width: 90px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="docs-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Preview Document -->
+    <div id="docPreviewModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card glass-panel" style="max-width: 950px; width: 95%;">
+            <div class="modal-header">
+                <h3 id="doc-preview-title"><i class="fa-solid fa-eye text-emerald"></i> Aperçu Document</h3>
+                <button class="btn-icon" onclick="closeDocPreviewModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="doc-preview-container" class="modal-body" style="padding: 1rem;"></div>
+            <div class="modal-footer" style="padding: 0.75rem 1.5rem; text-align: right; border-top: 1px solid var(--border-color);">
+                <button class="btn btn-secondary" onclick="closeDocPreviewModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Upload Document -->
+    <div id="uploadDocModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card glass-panel" style="max-width: 500px; width: 90%;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-cloud-arrow-up text-emerald"></i> Téléverser un Document</h3>
+                <button class="btn-icon" onclick="closeUploadDocModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleDocUpload(event)">
+                <div class="modal-body" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Fichier (PDF, Excel)</label>
+                        <input type="file" id="upload-file-input" class="form-control" accept=".pdf,.xlsx,.xls,.doc,.docx" required>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Rubrique</label>
+                        <select id="upload-category" class="form-control" required>
+                            <option value="Statuti">Statuts & Actes</option>
+                            <option value="Bilanci">Bilans PCN</option>
+                            <option value="Certificati">Certificats & RBE</option>
+                            <option value="Partecipazione">Filiale Brésil</option>
+                            <option value="Trésorerie">Trésorerie & Banques</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Description / Commentaires</label>
+                        <input type="text" id="upload-desc" class="form-control" placeholder="Description sommaire du document...">
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 1rem 1.5rem; text-align: right; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeUploadDocModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer dans l'Archive</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="data.js?v=20261023"></script>
+    <script src="i18n.js?v=20261023"></script>
+    <script src="doc_storage.js?v=20261023"></script>
+    <script src="documenti_app.js?v=20261023g"></script>
+</body>
+</html>

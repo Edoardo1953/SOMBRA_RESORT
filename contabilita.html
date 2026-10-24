@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+        <script>
+        (function() {
+            try {
+                var isLight = localStorage.getItem('sr_theme') === 'light';
+                if (isLight) {
+                    document.documentElement.classList.add('theme-light');
+                } else {
+                    document.documentElement.classList.remove('theme-light');
+                }
+                var obs = new MutationObserver(function() {
+                    if (document.body) {
+                        if (isLight) document.body.classList.add('theme-light');
+                        else document.body.classList.remove('theme-light');
+                        obs.disconnect();
+                    }
+                });
+                obs.observe(document.documentElement, { childList: true });
+            } catch(e) {}
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comptabilité PCN & Bilans Comparatifs - SOMBRA RESORT</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS for Excel export -->
+    <script src="xlsx.full.min.js"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261023h">
+    <!-- Auth Guard -->
+    <script src="auth.js?v=20261023g"></script>
+    <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
+    <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="logo-img" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: 68px; height: 68px;">
+                    <div class="logo-title" style="letter-spacing: 2px; margin-top: 8px;">SOMBRA RESORT</div>
+                    <div class="logo-subtitle">Holding Sàrl • Lux</div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <!-- AREA SOCIÉTÉ -->
+                <div class="nav-section-title" data-i18n="nav_section_societe">AREA SOCIÉTÉ</div>
+                <div class="nav-item-container" data-page="index.html">
+                    <a href="index.html" class="nav-item">
+                        <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="menu-flag-icon">
+                        <span data-i18n="nav_societe">La Société</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('index.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                                                <div class="nav-item-container" data-page="partecipazioni.html">
+                    <a href="partecipazioni.html" class="nav-item ">
+                        <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="menu-flag-icon">
+                        <span data-i18n="nav_partecipazioni">Participation Sombra (Brésil)</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('partecipazioni.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA FINANCES -->
+                <div class="nav-section-title" data-i18n="nav_section_finances">AREA FINANCES</div>
+                <div class="nav-item-container" data-page="contabilita.html">
+                    <a href="contabilita.html" class="nav-item active">
+                        <i class="fa-solid fa-book-bookmark text-blue"></i>
+                        <span data-i18n="nav_contabilita">Comptabilité PCN</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('contabilita.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="banca.html">
+                    <a href="banca.html" class="nav-item">
+                        <i class="fa-solid fa-building-columns text-cyan"></i>
+                        <span data-i18n="nav_banca">Comptes Bancaires</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('banca.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="ammortamenti.html">
+                    <a href="ammortamenti.html" class="nav-item">
+                        <i class="fa-solid fa-calculator text-emerald"></i>
+                        <span data-i18n="nav_ammortamenti">Amortissements</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('ammortamenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA DOCUMENTATION -->
+                <div class="nav-section-title" data-i18n="nav_section_documentation">AREA DOCUMENTATION</div>
+                <div class="nav-item-container" data-page="aml.html">
+                    <a href="aml.html" class="nav-item">
+                        <i class="fa-solid fa-shield-halved text-emerald"></i>
+                        <span data-i18n="nav_aml">Conformité AML</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('aml.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="documenti.html">
+                    <a href="documenti.html" class="nav-item">
+                        <i class="fa-solid fa-folder-open text-amber"></i>
+                        <span data-i18n="nav_documenti">Documents & Archives</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('documenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="media.html">
+                    <a href="media.html" class="nav-item">
+                        <i class="fa-solid fa-photo-film text-cyan"></i>
+                        <span data-i18n="nav_media">Photos & Vidéos</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('media.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="footer-meta">
+                    <span data-i18n="last_update">Mise à jour :</span>
+                    <strong>23/10/2026</strong>
+                </div>
+                <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
+                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Topbar -->
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Menu (Échap)" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1 class="page-title">
+                            <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
+                            <span>COMPTABILITÉ PCN & BILANS COMPARATIFS</span>
+                        </h1>
+                        <div class="page-subtitle">Plan Comptable Normalisé (PCN Luxembourg) • Liasse eCDF</div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Improved Flag Language Selector -->
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')" title="Français">
+                            <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                        </button>
+                        <button class="lang-btn" data-lang="it" onclick="setLanguage('it')" title="Italiano">
+                            <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                        </button>
+                        <button class="lang-btn" data-lang="pt" onclick="setLanguage('pt')" title="Português">
+                            <img src="https://flagcdn.com/w40/br.png" alt="PT">
+                        </button>
+                        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" title="English">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="EN">
+                        </button>
+                    </div>
+
+                    <!-- Improved Light / Dark Theme Button -->
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Basculer Mode Clair/Sombre">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <div id="header-user-display" class="user-badge" style="cursor: pointer;" onclick="openUsersModal()"></div>
+
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()">
+                        <i class="fa-solid fa-power-off text-rose"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Control Bar (Modes & Year Selectors) -->
+            <div class="glass-panel" style="padding: 1.25rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <div class="btn-group">
+                        <button id="btn-mode-single" class="btn btn-secondary active" onclick="setComptaMode('single')">
+                            <i class="fa-solid fa-calendar-day"></i> Vue par Année
+                        </button>
+                        <button id="btn-mode-comparatif" class="btn btn-secondary" onclick="setComptaMode('comparatif')">
+                            <i class="fa-solid fa-code-compare"></i> Comparateur
+                        </button>
+                    </div>
+
+                    <!-- Single Year Control -->
+                    <div id="control-single-year" style="display: flex; align-items: center; gap: 8px; margin-left: 10px;">
+                        <span style="font-size: 13px; color: var(--text-muted);">Exercice :</span>
+                        <select id="select-single-year" class="form-control" style="width: 130px;" onchange="onYearChange()">
+                            <option value="2026">2026 (YTD)</option>
+                            <option value="2025" selected>2025 (Déposé)</option>
+                            <option value="2024">2024 (Déposé)</option>
+                        </select>
+                    </div>
+
+                    <!-- Compare Years Control -->
+                    <div id="control-compare-years" style="display: none; align-items: center; gap: 8px; margin-left: 10px;">
+                        <span style="font-size: 13px; color: var(--text-muted);">Année 1 :</span>
+                        <select id="select-compare-y1" class="form-control" style="width: 110px;" onchange="onCompareYearsChange()">
+                            <option value="2024" selected>2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                        <span style="font-size: 13px; color: var(--text-muted);">vs Année 2 :</span>
+                        <select id="select-compare-y2" class="form-control" style="width: 110px;" onchange="onCompareYearsChange()">
+                            <option value="2025" selected>2025</option>
+                            <option value="2026">2026 YTD</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" onclick="exportComptaExcel()">
+                        <i class="fa-solid fa-file-excel"></i> Télécharger Excel PCN
+                    </button>
+                    <a href="uploads/Documenti/SOMBRA%20E%20AGUA%20FRESCA%20RESORT%20S%C3%80RL%20-%20Bilan%20et%20P&P%20%20%20d%C3%A9taill%C3%A9s%20(comparatif)%2031122025%20v2.pdf" target="_blank" class="btn btn-secondary">
+                        <i class="fa-solid fa-file-pdf text-rose"></i> Bilan PDF Certifié
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div style="display: flex; gap: 8px; margin-bottom: 1.25rem;">
+                <button class="btn btn-secondary compta-tab-btn active" data-tab="actif" onclick="switchComptaTab('actif')">
+                    <i class="fa-solid fa-building"></i> Bilan Actif (Classes 2 à 5)
+                </button>
+                <button class="btn btn-secondary compta-tab-btn" data-tab="passif" onclick="switchComptaTab('passif')">
+                    <i class="fa-solid fa-scale-balanced"></i> Bilan Passif (Classes 1 à 4)
+                </button>
+                <button class="btn btn-secondary compta-tab-btn" data-tab="pnl" onclick="switchComptaTab('pnl')">
+                    <i class="fa-solid fa-chart-line"></i> Pertes & Profits (P&L)
+                </button>
+                <button class="btn btn-secondary compta-tab-btn" data-tab="gl" onclick="switchComptaTab('gl')">
+                    <i class="fa-solid fa-list-check"></i> Grand-Livre PCN
+                </button>
+            </div>
+
+            <!-- SECTION 1: BILAN ACTIF -->
+            <section id="sec-compta-actif" class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem;">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-circle-check text-emerald"></i> Bilan Actif - Plan Comptable Normalisé</h2>
+                    <span class="badge badge-emerald">Normes Luxembourgeoises PCN</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead id="compta-actif-thead"></thead>
+                        <tbody id="compta-actif-tbody"></tbody>
+                        <tfoot id="compta-actif-total"></tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 2: BILAN PASSIF -->
+            <section id="sec-compta-passif" class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem; display: none;">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-scale-balanced text-amber"></i> Capitaux Propres & Passif</h2>
+                    <span class="badge badge-amber">Normes Luxembourgeoises PCN</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead id="compta-passif-thead"></thead>
+                        <tbody id="compta-passif-tbody"></tbody>
+                        <tfoot id="compta-passif-total"></tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 3: PERTES ET PROFITS -->
+            <section id="sec-compta-pnl" class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem; display: none;">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-arrow-trend-down text-rose"></i> Compte de Profits et Pertes Abrégé</h2>
+                    <span class="badge badge-rose">Exercices 2024 / 2025</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead id="compta-pnl-thead"></thead>
+                        <tbody id="compta-pnl-tbody"></tbody>
+                        <tfoot id="compta-pnl-total"></tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 4: GRAND LIVRE -->
+            <section id="sec-compta-gl" class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem; display: none;">
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-book-journal-whills text-cyan"></i> Grand-Livre Général des Écritures</h2>
+                    <span class="badge badge-blue">Relevé des Mouvements PCN</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px;">Date</th>
+                                <th style="width: 100px;">Réf. Écriture</th>
+                                <th>Libellé de l'Opération</th>
+                                <th style="width: 120px;">Compte</th>
+                                <th>Tiers / Associé</th>
+                                <th class="text-right" style="width: 140px;">Mouvement</th>
+                                <th class="text-right" style="width: 140px;">Solde</th>
+                            </tr>
+                        </thead>
+                        <tbody id="compta-gl-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="data.js?v=20261023"></script>
+    <script src="i18n.js?v=20261023"></script>
+    <script src="contabilita_app.js?v=20261023h"></script>
+</body>
+</html>

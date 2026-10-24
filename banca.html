@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+        <script>
+        (function() {
+            try {
+                var isLight = localStorage.getItem('sr_theme') === 'light';
+                if (isLight) {
+                    document.documentElement.classList.add('theme-light');
+                } else {
+                    document.documentElement.classList.remove('theme-light');
+                }
+                var obs = new MutationObserver(function() {
+                    if (document.body) {
+                        if (isLight) document.body.classList.add('theme-light');
+                        else document.body.classList.remove('theme-light');
+                        obs.disconnect();
+                    }
+                });
+                obs.observe(document.documentElement, { childList: true });
+            } catch(e) {}
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comptes Bancaires & Trésorerie - SOMBRA RESORT</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS -->
+    <script src="xlsx.full.min.js"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261023g">
+    <!-- Auth Guard -->
+    <script src="auth.js?v=20261023g"></script>
+    <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
+    <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="logo-img" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: 68px; height: 68px;">
+                    <div class="logo-title" style="letter-spacing: 2px; margin-top: 8px;">SOMBRA RESORT</div>
+                    <div class="logo-subtitle">Holding Sàrl • Lux</div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <!-- AREA SOCIÉTÉ -->
+                <div class="nav-section-title" data-i18n="nav_section_societe">AREA SOCIÉTÉ</div>
+                <div class="nav-item-container" data-page="index.html">
+                    <a href="index.html" class="nav-item">
+                        <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="menu-flag-icon">
+                        <span data-i18n="nav_societe">La Société</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('index.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                                                <div class="nav-item-container" data-page="partecipazioni.html">
+                    <a href="partecipazioni.html" class="nav-item ">
+                        <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="menu-flag-icon">
+                        <span data-i18n="nav_partecipazioni">Participation Sombra (Brésil)</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('partecipazioni.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA FINANCES -->
+                <div class="nav-section-title" data-i18n="nav_section_finances">AREA FINANCES</div>
+                <div class="nav-item-container" data-page="contabilita.html">
+                    <a href="contabilita.html" class="nav-item">
+                        <i class="fa-solid fa-book-bookmark text-blue"></i>
+                        <span data-i18n="nav_contabilita">Comptabilité PCN</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('contabilita.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="banca.html">
+                    <a href="banca.html" class="nav-item active">
+                        <i class="fa-solid fa-building-columns text-cyan"></i>
+                        <span data-i18n="nav_banca">Comptes Bancaires</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('banca.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="ammortamenti.html">
+                    <a href="ammortamenti.html" class="nav-item">
+                        <i class="fa-solid fa-calculator text-emerald"></i>
+                        <span data-i18n="nav_ammortamenti">Amortissements</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('ammortamenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA DOCUMENTATION -->
+                <div class="nav-section-title" data-i18n="nav_section_documentation">AREA DOCUMENTATION</div>
+                <div class="nav-item-container" data-page="aml.html">
+                    <a href="aml.html" class="nav-item">
+                        <i class="fa-solid fa-shield-halved text-emerald"></i>
+                        <span data-i18n="nav_aml">Conformité AML</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('aml.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="documenti.html">
+                    <a href="documenti.html" class="nav-item">
+                        <i class="fa-solid fa-folder-open text-amber"></i>
+                        <span data-i18n="nav_documenti">Documents & Archives</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('documenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="media.html">
+                    <a href="media.html" class="nav-item">
+                        <i class="fa-solid fa-photo-film text-cyan"></i>
+                        <span data-i18n="nav_media">Photos & Vidéos</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('media.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="footer-meta">
+                    <span data-i18n="last_update">Mise à jour :</span>
+                    <strong>23/10/2026</strong>
+                </div>
+                <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
+                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Topbar -->
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Menu (Échap)" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1 class="page-title">
+                            <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
+                            <span>COMPTES BANCAIRES & GRAND-LIVRE DE TRÉSORERIE</span>
+                        </h1>
+                        <div class="page-subtitle">Comptes Bancaires de la Holding Luxembourgeoise • Trésorerie EUR</div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Improved Flag Language Selector -->
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')" title="Français">
+                            <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                        </button>
+                        <button class="lang-btn" data-lang="it" onclick="setLanguage('it')" title="Italiano">
+                            <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                        </button>
+                        <button class="lang-btn" data-lang="pt" onclick="setLanguage('pt')" title="Português">
+                            <img src="https://flagcdn.com/w40/br.png" alt="PT">
+                        </button>
+                        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" title="English">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="EN">
+                        </button>
+                    </div>
+
+                    <!-- Improved Light / Dark Theme Button -->
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Basculer Mode Clair/Sombre">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <div id="header-user-display" class="user-badge" style="cursor: pointer;" onclick="openUsersModal()"></div>
+
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()">
+                        <i class="fa-solid fa-power-off text-rose"></i>
+                    </button>
+                </div>
+            </header>
+
+                        <!-- Bank Accounts Cards -->
+            <div class="kpi-grid">
+                <!-- Total Trésorerie EUR -->
+                <div class="kpi-card glass-panel" style="border-top: 3px solid #3b82f6;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <span class="badge badge-blue" style="font-size: 10px; margin-bottom: 4px;">TRÉSORERIE HOLDING</span>
+                            <div style="font-weight: 700; color: var(--text-main); font-size: 15px;">Total Trésorerie EUR</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Comptes bancaires Luxembourg</div>
+                        </div>
+                        <i class="fa-solid fa-vault text-blue" style="font-size: 24px;"></i>
+                    </div>
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 11px; color: var(--text-muted);">Liquidités Disponibles</div>
+                        <div id="bal-total-eur" style="font-size: 20px; font-weight: 800; color: #60a5fa; font-family: monospace;">8.508,43 €</div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Comptes Revolut + Olky Pay</div>
+                    </div>
+                </div>
+
+                <!-- Revolut Business -->
+                <div class="kpi-card glass-panel" style="border-top: 3px solid #10b981;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <span class="badge badge-emerald" style="font-size: 10px; margin-bottom: 4px;">ACTIF OPÉRATIONNEL</span>
+                            <div style="font-weight: 700; color: var(--text-main); font-size: 15px;">Revolut Business EUR</div>
+                            <div style="font-size: 11px; color: var(--text-muted); font-family: monospace;">LT34 3250 0953 8055 9528</div>
+                        </div>
+                        <i class="fa-solid fa-credit-card text-emerald" style="font-size: 24px;"></i>
+                    </div>
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 11px; color: var(--text-muted);">Solde Disponible EUR</div>
+                        <div id="bal-rev" style="font-size: 20px; font-weight: 800; color: #34d399; font-family: monospace;">8.508,43 €</div>
+                        <div style="font-size: 11px; color: #38bdf8; margin-top: 2px;">Compte principal de gestion holding</div>
+                    </div>
+                </div>
+
+                <!-- Olky Pay -->
+                <div class="kpi-card glass-panel" style="border-top: 3px solid #64748b;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <span class="badge badge-secondary" style="font-size: 10px; margin-bottom: 4px;">CLÔTURÉ (21/05/2026)</span>
+                            <div style="font-weight: 700; color: var(--text-main); font-size: 15px;">Olky Pay (Luxembourg)</div>
+                            <div style="font-size: 11px; color: var(--text-muted); font-family: monospace;">LU66 6060 0020 0000 3953</div>
+                        </div>
+                        <i class="fa-solid fa-building-columns text-muted" style="font-size: 24px;"></i>
+                    </div>
+                    <div style="margin-top: 14px;">
+                        <div style="font-size: 11px; color: var(--text-muted);">Solde Final / Actuel</div>
+                        <div id="bal-olky" style="font-size: 20px; font-weight: 800; color: #94a3b8; font-family: monospace;">0,00 €</div>
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Solde 2025 : 10.193,23 € (166 écritures)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner indicating Brazilian Accounts have been moved to Participation page -->
+            <div style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 14px 20px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="https://flagcdn.com/w40/br.png" alt="Brésil" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.3);">
+                    <div>
+                        <div style="font-weight: 700; color: #fbbf24; font-size: 14px;">Comptes Bancaires de la Filiale Brésilienne (Banco do Brasil)</div>
+                        <div style="font-size: 12.5px; color: var(--text-muted);">Les comptes bancaires en R$ (C/C 40.703,63 R$ & Compte Investissement 1.702.354,95 R$) sont consultables directement dans la fiche de participation.</div>
+                    </div>
+                </div>
+                <a href="partecipazioni.html#sec-brasil-banks" class="btn btn-secondary" style="border-color: rgba(245, 158, 11, 0.5); color: #fbbf24; font-size: 13px;">
+                    <i class="fa-solid fa-arrow-right"></i> Voir les Comptes au Brésil
+                </a>
+            </div>
+
+            <!-- Toolbar & Ledger -->
+            <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+                    <!-- Filter Bank Buttons -->
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary bank-filter-btn active" data-bank="all" onclick="filterByBank('all')">
+                            Tous les Comptes
+                        </button>
+                        <button class="btn btn-secondary bank-filter-btn" data-bank="revolut" onclick="filterByBank('revolut')">
+                            Revolut EUR
+                        </button>
+                        <button class="btn btn-secondary bank-filter-btn" data-bank="olky" onclick="filterByBank('olky')">
+                            Olky Pay Lux
+                        </button>
+                        
+                    </div>
+
+                    <!-- Search & Actions -->
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <div style="position: relative;">
+                            <input type="text" class="form-control" placeholder="Rechercher écriture, tiers, ID..." style="padding-left: 32px; width: 240px;" oninput="onSearchInput(this.value)">
+                            <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 12px;"></i>
+                        </div>
+                        <button class="btn btn-secondary" onclick="openAddTxModal()">
+                            <i class="fa-solid fa-plus text-emerald"></i> Nouvelle Écriture
+                        </button>
+                        <button class="btn btn-primary" onclick="exportBankExcel()">
+                            <i class="fa-solid fa-file-excel"></i> Export Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 12px; color: var(--text-muted);">
+                    <div id="bank-tx-count">Chargement des opérations...</div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px;">Date</th>
+                                <th style="width: 90px;">Réf.</th>
+                                <th style="width: 130px;">Compte</th>
+                                <th>Description / Libellé</th>
+                                <th>Associé / Contrepartie</th>
+                                <th class="text-right" style="width: 150px;">Montant</th>
+                                <th class="text-right" style="width: 150px;">Solde Cumulé</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bank-tx-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Add Transaction -->
+    <div id="addTxModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card glass-panel" style="max-width: 500px; width: 90%;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-pen-to-square text-emerald"></i> Saisie Nouvelle Écriture Bancaire</h3>
+                <button class="btn-icon" onclick="closeAddTxModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveNewTransaction(event)">
+                <div class="modal-body" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 12px;">
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Compte Bancaire</label>
+                        <select id="tx-bank" class="form-control" required>
+                            <option value="revolut">Revolut Business EUR</option>
+                            <option value="olky">Olky Pay Luxembourg</option>
+                            
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Description</label>
+                        <input type="text" id="tx-desc" class="form-control" placeholder="Ex: Financement Soci, Frais abbonement..." required>
+                    </div>
+                    <div>
+                        <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Tiers / Associé</label>
+                        <input type="text" id="tx-tier" class="form-control" placeholder="Ex: Tubia Edoardo, Fiduciaire..." required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Date Comptable</label>
+                            <input type="date" id="tx-date" class="form-control" required>
+                        </div>
+                        <div>
+                            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Montant (signé)</label>
+                            <input type="number" step="0.01" id="tx-amount" class="form-control" placeholder="Ex: 500.00 ou -50.00" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 1rem 1.5rem; text-align: right; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px;">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddTxModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="data.js?v=20261023"></script>
+    <script src="i18n.js?v=20261023"></script>
+    <script src="banca_app.js?v=20261023g"></script>
+</body>
+</html>

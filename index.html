@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+        <script>
+        (function() {
+            try {
+                var isLight = localStorage.getItem('sr_theme') === 'light';
+                if (isLight) {
+                    document.documentElement.classList.add('theme-light');
+                } else {
+                    document.documentElement.classList.remove('theme-light');
+                }
+                var obs = new MutationObserver(function() {
+                    if (document.body) {
+                        if (isLight) document.body.classList.add('theme-light');
+                        else document.body.classList.remove('theme-light');
+                        obs.disconnect();
+                    }
+                });
+                obs.observe(document.documentElement, { childList: true });
+            } catch(e) {}
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOMBRA RESORT Sàrl - Holding de Participations</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261023g">
+    <!-- Auth Guard -->
+    <script src="auth.js?v=20261023g"></script>
+    <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
+    <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="logo-img" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: 68px; height: 68px;">
+                    <div class="logo-title" style="letter-spacing: 2px; margin-top: 8px;">SOMBRA RESORT</div>
+                    <div class="logo-subtitle">Holding Sàrl • Lux</div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <!-- AREA SOCIÉTÉ -->
+                <div class="nav-section-title" data-i18n="nav_section_societe">AREA SOCIÉTÉ</div>
+                <div class="nav-item-container" data-page="index.html">
+                    <a href="index.html" class="nav-item active">
+                        <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="menu-flag-icon">
+                        <span data-i18n="nav_societe">La Société</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('index.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                                                <div class="nav-item-container" data-page="partecipazioni.html">
+                    <a href="partecipazioni.html" class="nav-item ">
+                        <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="menu-flag-icon">
+                        <span data-i18n="nav_partecipazioni">Participation Sombra (Brésil)</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('partecipazioni.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA FINANCES -->
+                <div class="nav-section-title" data-i18n="nav_section_finances">AREA FINANCES</div>
+                <div class="nav-item-container" data-page="contabilita.html">
+                    <a href="contabilita.html" class="nav-item">
+                        <i class="fa-solid fa-book-bookmark text-blue"></i>
+                        <span data-i18n="nav_contabilita">Comptabilité PCN</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('contabilita.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="banca.html">
+                    <a href="banca.html" class="nav-item">
+                        <i class="fa-solid fa-building-columns text-cyan"></i>
+                        <span data-i18n="nav_banca">Comptes Bancaires</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('banca.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="ammortamenti.html">
+                    <a href="ammortamenti.html" class="nav-item">
+                        <i class="fa-solid fa-calculator text-emerald"></i>
+                        <span data-i18n="nav_ammortamenti">Amortissements</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('ammortamenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA DOCUMENTATION -->
+                <div class="nav-section-title" data-i18n="nav_section_documentation">AREA DOCUMENTATION</div>
+                <div class="nav-item-container" data-page="aml.html">
+                    <a href="aml.html" class="nav-item">
+                        <i class="fa-solid fa-shield-halved text-emerald"></i>
+                        <span data-i18n="nav_aml">Conformité AML</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('aml.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="documenti.html">
+                    <a href="documenti.html" class="nav-item">
+                        <i class="fa-solid fa-folder-open text-amber"></i>
+                        <span data-i18n="nav_documenti">Documents & Archives</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('documenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="media.html">
+                    <a href="media.html" class="nav-item">
+                        <i class="fa-solid fa-photo-film text-cyan"></i>
+                        <span data-i18n="nav_media">Photos & Vidéos</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('media.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="footer-meta">
+                    <span data-i18n="last_update">Mise à jour :</span>
+                    <strong id="sidebar-updated-at">23/10/2026</strong>
+                </div>
+                <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
+                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Topbar -->
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Menu (Échap)" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1 class="page-title">
+                            <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
+                            <span>SOMBRA E AGUA FRESCA RESORT S.à r.l.</span>
+                        </h1>
+                        <div class="page-subtitle" data-i18n="header_holding_subtitle">Société Holding de Participations - Luxembourg</div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Improved Flag Language Selector -->
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')" title="Français">
+                            <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                        </button>
+                        <button class="lang-btn" data-lang="it" onclick="setLanguage('it')" title="Italiano">
+                            <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                        </button>
+                        <button class="lang-btn" data-lang="pt" onclick="setLanguage('pt')" title="Português">
+                            <img src="https://flagcdn.com/w40/br.png" alt="PT">
+                        </button>
+                        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')" title="English">
+                            <img src="https://flagcdn.com/w40/gb.png" alt="EN">
+                        </button>
+                    </div>
+
+                    <!-- Improved Light / Dark Theme Button -->
+                    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Basculer Mode Clair/Sombre">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <!-- User status -->
+                    <div id="header-user-display" class="user-badge" style="cursor: pointer;" onclick="openUsersModal()"></div>
+
+                    <!-- Logout -->
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()">
+                        <i class="fa-solid fa-power-off text-rose"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- KPI Dashboard Summary Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card glass-panel">
+                    <div class="kpi-icon-wrap bg-emerald-glow">
+                        <i class="fa-solid fa-landmark text-emerald"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-label" data-i18n="stats_capital">Capital Social Souscrit</div>
+                        <div class="kpi-value text-emerald">15.000,00 €</div>
+                        <div class="kpi-sub">15.000 parts de 1,00 € • 100% Libéré</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel" style="cursor: pointer;" onclick="openSchemaSocietarioModal()" title="Cliquer pour afficher le Schéma Corporatif">
+                    <div class="kpi-icon-wrap bg-blue-glow">
+                        <i class="fa-solid fa-hotel text-cyan"></i>
+                    </div>
+                    <div class="kpi-content" style="flex: 1;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="kpi-label" data-i18n="stats_villas">Villas Détenues (Attribuées)</div>
+                            <span class="badge badge-blue" style="font-size: 10px; padding: 1px 5px;"><i class="fa-solid fa-sitemap"></i> Schéma</span>
+                        </div>
+                        <div class="kpi-value text-cyan">9 Villas</div>
+                        <div class="kpi-sub" style="margin-bottom: 2px;">Villas A à I • Sombra Resort Brasil</div>
+                        <button type="button" class="btn-kpi-schema" onclick="event.stopPropagation(); openSchemaSocietarioModal();" title="Ouvrir le Schéma Corporatif & Détention">
+                            <i class="fa-solid fa-sitemap"></i> Schéma Corporatif
+                        </button>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel">
+                    <div class="kpi-icon-wrap bg-amber-glow">
+                        <i class="fa-solid fa-building-flag text-amber"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-label" data-i18n="stats_filiale">Participation Filiale Brésil</div>
+                        <div class="kpi-value text-amber">100,00 %</div>
+                        <div class="kpi-sub">Sombra Resort Brasil Ltda • R$ 3,00M</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-panel">
+                    <div class="kpi-icon-wrap bg-purple-glow">
+                        <i class="fa-solid fa-file-invoice-dollar text-emerald"></i>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-label" data-i18n="stats_actif">Total Actif du Bilan PCN</div>
+                        <div class="kpi-value text-emerald">1.135.851,14 €</div>
+                        <div class="kpi-sub">Immob. financières 1.004.968,24 €</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAIN SECTION: Side by Side Cap Table (Left) and Charts (Right) -->
+            <div class="societe-main-grid" id="societe-main-grid">
+                <!-- LEFT COLUMN: Cap Table -->
+                <div class="glass-panel" style="padding: 1.25rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+                        <div>
+                            <h2 style="font-size: 1.15rem; color: var(--text-main);" data-i18n="cap_table_title">Registre des Associés & Cap Table</h2>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">15.000 parts sociales (15.000 €) • 9 villas attribuées</div>
+                        </div>
+
+                        <div style="display: flex; gap: 6px;">
+                            <button id="tab-btn-partners" class="btn btn-secondary active" style="padding: 0.35rem 0.65rem; font-size: 12px;" onclick="switchCapTableView('partners')">
+                                <i class="fa-solid fa-user-group"></i> Associés (13)
+                            </button>
+                            <button id="tab-btn-villas" class="btn btn-secondary" style="padding: 0.35rem 0.65rem; font-size: 12px;" onclick="switchCapTableView('villas')">
+                                <i class="fa-solid fa-hotel"></i> Villas (9)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Table View: Partners (Tight layout without wasted space) -->
+                    <!-- Toolbar Filtro e Ordinamento per Villa -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 8px; background: rgba(255, 255, 255, 0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;"><i class="fa-solid fa-filter text-emerald"></i> Filtre Villa :</span>
+                            <select id="select-villa-filter" class="form-control" style="width: 145px; font-size: 12px; padding: 4px 8px; height: 30px;" onchange="onVillaFilterChange(this.value)">
+                                <option value="ALL" selected>Toutes les Villas</option>
+                                <option value="Villa A">Villa A (2)</option>
+                                <option value="Villa B">Villa B (3)</option>
+                                <option value="Villa C">Villa C (1)</option>
+                                <option value="Villa D">Villa D (2)</option>
+                                <option value="Villa E">Villa E (1)</option>
+                                <option value="Villa F">Villa F (2)</option>
+                                <option value="Villa G">Villa G (1)</option>
+                                <option value="Villa H">Villa H (1)</option>
+                                <option value="Villa I">Villa I (1)</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;"><i class="fa-solid fa-arrow-down-a-z text-cyan"></i> Ordre :</span>
+                            <select id="select-partner-sort" class="form-control" style="width: 175px; font-size: 12px; padding: 4px 8px; height: 30px;" onchange="onPartnerSortChange(this.value)">
+                                <option value="villa" selected>Par Villa (A → I)</option>
+                                <option value="pct">Par Quota % (Décroissant)</option>
+                                <option value="name">Par Nom (A → Z)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="partners-table-container" class="table-responsive">
+                        <table class="data-table table-tight">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px;" class="text-center">#</th>
+                                    <th>Associé / Entité</th>
+                                    <th class="text-center" style="width: 95px;">Villa</th>
+                                    <th class="text-right" style="width: 70px;">Parts</th>
+                                    <th class="text-right" style="width: 75px;">Détention</th>
+                                    <th class="text-right" style="width: 80px;">Valeur</th>
+                                    <th class="text-center" style="width: 75px;">KYC</th>
+                                </tr>
+                            </thead>
+                            <tbody id="partners-table-body"></tbody>
+                            <tfoot id="partners-table-total"></tfoot>
+                        </table>
+                    </div>
+
+                    <!-- Table View: Villas -->
+                    <div id="villas-table-container" class="table-responsive" style="display: none;">
+                        <table class="data-table table-tight">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px;" class="text-center">Villa</th>
+                                    <th>Propriétaire(s) Associé(s)</th>
+                                    <th class="text-right" style="width: 90px;">Parts Total</th>
+                                    <th class="text-right" style="width: 85px;">% Capital</th>
+                                    <th class="text-center" style="width: 80px;">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody id="villas-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Charts Container with Drag & Drop and Resizing -->
+                <div id="charts-main-column" class="charts-column-container">
+                    <!-- Charts Interactive Toolbar -->
+                    <div class="charts-toolbar">
+                        <div class="charts-toolbar-group">
+                            <button type="button" class="charts-toolbar-btn btn-accent" onclick="invertChartsOrder()" title="Inverti la posizione dei due grafici">
+                                <i class="fa-solid fa-arrow-down-up-across-line"></i> Inverti Ordine
+                            </button>
+                        </div>
+
+                        <!-- Resizing Controls (Vertical Height & Horizontal Width) -->
+                        <div class="charts-toolbar-group">
+                            <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;" title="Altezza Grafici">
+                                <i class="fa-solid fa-arrows-up-down text-emerald"></i>
+                            </span>
+                            <button type="button" class="charts-toolbar-btn" onclick="adjustChartsHeight(-30)" title="Riduci altezza grafici">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <span id="chart-height-indicator" style="font-size: 11px; font-weight: 700; min-width: 42px; text-align: center; color: var(--text-main);">260px</span>
+                            <button type="button" class="charts-toolbar-btn" onclick="adjustChartsHeight(+30)" title="Aumenta altezza grafici">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+
+                            <span style="display: inline-block; width: 1px; height: 16px; background: rgba(255,255,255,0.15); margin: 0 4px;"></span>
+
+                            <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;" title="Larghezza Grafici">
+                                <i class="fa-solid fa-arrows-left-right text-cyan"></i>
+                            </span>
+                            <button type="button" class="charts-toolbar-btn" onclick="cycleChartsWidth(-1)" title="Riduci larghezza colonna grafici">
+                                <i class="fa-solid fa-compress"></i>
+                            </button>
+                            <span id="chart-width-indicator" style="font-size: 11px; font-weight: 700; min-width: 58px; text-align: center; color: var(--text-main);">Standard</span>
+                            <button type="button" class="charts-toolbar-btn" onclick="cycleChartsWidth(+1)" title="Allarga colonna grafici">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+
+                            <button type="button" id="btn-toggle-stack" class="charts-toolbar-btn" onclick="toggleStackedChartsLayout()" title="Disponi grafici sotto la tabella (100% larghezza affiancati)">
+                                <i class="fa-solid fa-table-columns"></i> Sotto
+                            </button>
+
+                            <button type="button" class="charts-toolbar-btn" onclick="resetChartsSizing()" title="Ripristina dimensioni e layout standard">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Donut Chart 1: Par Associé -->
+                    <div id="card-chart-partners" class="glass-panel chart-draggable-card" draggable="true" data-card-id="card-chart-partners">
+                        <div class="chart-card-header">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div class="chart-drag-handle" title="Trascina per spostare o invertire">
+                                    <i class="fa-solid fa-grip-vertical"></i> Sposta
+                                </div>
+                                <h3 style="font-size: 0.95rem; color: var(--text-main); font-weight: 700; margin: 0;">
+                                    <i class="fa-solid fa-chart-pie text-emerald"></i> Répartition par Associé
+                                </h3>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="badge badge-emerald" style="font-size: 10px;">13 Associés</span>
+                                <button type="button" class="charts-toolbar-btn" onclick="invertChartsOrder()" title="Inverti posizione con l'altro grafico" style="padding: 2px 6px;">
+                                    <i class="fa-solid fa-arrow-down-up-across-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-canvas-wrapper" style="position: relative; height: 260px;">
+                            <canvas id="capTableDonutChart"></canvas>
+                        </div>
+                        <div class="chart-corner-resizer" title="Trascina per allargare o ridimensionare in altezza">
+                            <i class="fa-solid fa-arrow-down-right-and-arrow-up-left-from-center"></i>
+                        </div>
+                    </div>
+
+                    <!-- Donut Chart 2: Par Villa -->
+                    <div id="card-chart-villas" class="glass-panel chart-draggable-card" draggable="true" data-card-id="card-chart-villas">
+                        <div class="chart-card-header">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <div class="chart-drag-handle" title="Trascina per spostare o invertire">
+                                    <i class="fa-solid fa-grip-vertical"></i> Sposta
+                                </div>
+                                <h3 style="font-size: 0.95rem; color: var(--text-main); font-weight: 700; margin: 0;">
+                                    <i class="fa-solid fa-house-chimney text-cyan"></i> Répartition des 9 Villas
+                                </h3>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span class="badge badge-blue" style="font-size: 10px;">9 Villas Attribuées</span>
+                                <button type="button" class="charts-toolbar-btn" onclick="invertChartsOrder()" title="Inverti posizione con l'altro grafico" style="padding: 2px 6px;">
+                                    <i class="fa-solid fa-arrow-down-up-across-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-canvas-wrapper" style="position: relative; height: 260px;">
+                            <canvas id="villasDonutChart"></canvas>
+                        </div>
+                        <div class="chart-corner-resizer" title="Trascina per allargare o ridimensionare in altezza">
+                            <i class="fa-solid fa-arrow-down-right-and-arrow-up-left-from-center"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LOWER SECTION: Fiche d'Identité Juridique & Filiale Détenue (Moved below the table & charts) -->
+            <div style="display: grid; grid-template-columns: 1.55fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <!-- Fiche d'Identité Juridique -->
+                <div class="glass-panel" style="padding: 1.5rem;">
+                    <div class="section-header" style="margin-bottom: 1rem;">
+                        <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-id-card text-emerald"></i> Fiche d'Identité Juridique</h2>
+                        <span class="badge badge-emerald">SOPARFI LUXEMBOURG</span>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
+                        <div><strong style="color: var(--text-muted);">Dénomination :</strong> <span style="font-weight: 600; color: var(--text-main);">SOMBRA E AGUA FRESCA RESORT S.à r.l.</span></div>
+                        <div><strong style="color: var(--text-muted);">Forme Juridique :</strong> <span>Société à responsabilité limitée</span></div>
+                        <div><strong style="color: var(--text-muted);">RCS Luxembourg :</strong> <span class="badge badge-blue">B 263.295</span></div>
+                        <div><strong style="color: var(--text-muted);">Matricule National :</strong> <span>2021 2400 671</span></div>
+                        <div><strong style="color: var(--text-muted);">Date de Constitution :</strong> <span>20/12/2021 (Immat. 14/01/2022)</span></div>
+                        <div><strong style="color: var(--text-muted);">Code NACE :</strong> <span>64.202 - Soparfi</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Siège Social :</strong> <span>17, rue Beaumont, L-1219 Luxembourg</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Conseil de Gérance :</strong> <span style="color: #34d399; font-weight: 600;">TUBIA Edoardo</span> & <span style="color: #38bdf8; font-weight: 600;">VIGNOLLE Giorgio</span> (Gérants)</div>
+                    </div>
+
+                    <div style="margin-top: 1.25rem; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" onclick="openSchemaSocietarioModal()">
+                            <i class="fa-solid fa-sitemap text-emerald"></i> Organigramme Détention Luxembourg / Brésil
+                        </button>
+                        <a href="documenti.html" class="btn btn-secondary">
+                            <i class="fa-solid fa-file-lines text-cyan"></i> Voir Acte & RCS
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Filiale Détenue -->
+                <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div class="section-header" style="margin-bottom: 0.75rem;">
+                            <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-building-circle-check text-amber"></i> Filiale Détenue</h2>
+                            <span class="badge badge-amber">100% Détenue</span>
+                        </div>
+                        <div style="font-weight: 700; color: #fbbf24; font-size: 14px; margin-bottom: 4px;">SOMBRA RESORT BRASIL LTDA</div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">CNPJ : 43.730.206/0001-80 • JUCERN 24200911503</div>
+                        <div style="font-size: 12.5px; line-height: 1.6; color: var(--text-main);">
+                            Actif d'hospitality haut standing à <strong>Praia de Pipa</strong> (Tibau do Sul, RN). 
+                            Capital souscrit par la holding : <strong>R$ 3.000.525,45</strong>. 
+                            Complexe résidentiel comprenant 9 villas attribuées aux associés.
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <a href="partecipazioni.html" class="btn btn-primary btn-block">
+                            <i class="fa-solid fa-arrow-right"></i> Consulter la Filiale Brésil
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Corporate Organigramme Full Screen Overlay -->
+    <div id="schemaSocietarioModal" class="modal-backdrop" style="display: none;" onclick="onSchemaBackdropClick(event)">
+        <div class="modal-card glass-panel" style="max-width: 1100px; width: 96%; max-height: 92vh;">
+            <div class="modal-header" style="padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-sitemap text-emerald"></i>
+                        <span>Schéma Corporatif & Détention Internationale</span>
+                    </h3>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                        Structure corporative et participative : Holding Luxembourg • Filiale Brésil • S.C.P. • Copropriété
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="schema-hint-pill"><i class="fa-solid fa-arrow-pointer text-amber"></i> Survolez une entité pour afficher les associés et détails</span>
+                    <button type="button" class="btn-icon" onclick="closeSchemaSocietarioModal()" title="Fermer (Échap)" style="font-size: 1.1rem; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; cursor: pointer;">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal-body" style="padding: 1.5rem; overflow-y: auto;">
+                <!-- Main Diagram Canvas Grid -->
+                <div class="org-diagram-canvas">
+                    <!-- TOP ROW -->
+                    <div class="org-row org-row-top">
+                        <!-- Left Top: J.M. Empreendimentos -->
+                        <div class="org-col org-col-left">
+                            <div class="org-node-card org-node-jm" tabindex="0">
+                                <div class="org-node-header">
+                                    <div class="org-node-title">J.M. Empreendimentos Imobiliarios e Hoteleiros LTDA</div>
+                                    <img src="https://flagcdn.com/w40/br.png" alt="Brasil" class="org-flag">
+                                </div>
+                                <div class="org-node-country">Brésil</div>
+                                <div class="org-node-cnpj">CNPJ: 07.059.083/0001-33</div>
+                                <div class="org-node-role role-ostensivo">Socio OSTENSIVO 40%</div>
+                                <div class="org-node-hint-pill"><i class="fa-solid fa-arrow-pointer"></i> Survoler pour les détails de l'associé</div>
+
+                                <!-- Hover Popup: J.M. Details -->
+                                <div class="org-hover-popup popup-jm">
+                                    <div class="popup-header">
+                                        <i class="fa-solid fa-hotel text-amber"></i> J.M. Empreendimentos Imobiliarios e Hoteleiros LTDA
+                                    </div>
+                                    <div class="popup-body">
+                                        <div class="popup-row"><strong>Pays :</strong> <span>Brésil 🇧🇷</span></div>
+                                        <div class="popup-row"><strong>CNPJ :</strong> <span>07.059.083/0001-33</span></div>
+                                        <div class="popup-row"><strong>Rôle dans la S.C.P. :</strong> <span class="badge badge-amber">Associé Gérant Ostensible (40%)</span></div>
+                                        <div class="popup-row"><strong>Activité :</strong> <span>Exploitation hôtelière de l'Hôtel Sombra e Água Fresca & Resort</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Top: Sombra e Agua Fresca Resort Sàrl (Luxembourg) -->
+                        <div class="org-col org-col-right">
+                            <div class="org-node-card org-node-lux" tabindex="0">
+                                <div class="org-node-header">
+                                    <div class="org-node-title">Sombra e Agua Fresca Resort Sàrl</div>
+                                    <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="org-flag">
+                                </div>
+                                <div class="org-node-country">Luxembourg</div>
+                                <div class="org-node-cnpj">CNPJ: 08.353.637/0001-73 • RCS B 263.295</div>
+                                <div class="org-node-role role-holding">Holding SOPARFI • 100% Contrôle Filiale</div>
+                                <div class="org-node-hint-pill"><i class="fa-solid fa-users"></i> Survoler pour le registre des associés (13 Associés)</div>
+
+                                <!-- Hover Popup: Full Cap Table -->
+                                <div class="org-hover-popup popup-lux">
+                                    <div class="popup-header">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <span><i class="fa-solid fa-users-viewfinder text-emerald"></i> Registre des Associés — Sombra e Agua Fresca Resort Sàrl</span>
+                                            <span class="badge badge-emerald">15.000 parts (100%)</span>
+                                        </div>
+                                    </div>
+                                    <div class="popup-table-wrap">
+                                        <table class="popup-cap-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-right">Shares</th>
+                                                    <th class="text-right">%</th>
+                                                    <th class="text-center">Villas</th>
+                                                    <th>Shareholder</th>
+                                                    <th>Country</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-right font-mono">659</td>
+                                                    <td class="text-right font-mono">4.3933%</td>
+                                                    <td class="text-center font-bold text-emerald">A</td>
+                                                    <td class="font-bold">CHRISTINE ANNE OLIVEIRA DA COSTA</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">659</td>
+                                                    <td class="text-right font-mono">4.3933%</td>
+                                                    <td class="text-center font-bold text-emerald">A</td>
+                                                    <td class="font-bold">JENS LIESEN</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">600</td>
+                                                    <td class="text-right font-mono">4.0000%</td>
+                                                    <td class="text-center font-bold text-cyan">B</td>
+                                                    <td class="font-bold">GABRIEL ALEXANDER VIGNOLLE</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">600</td>
+                                                    <td class="text-right font-mono">4.0000%</td>
+                                                    <td class="text-center font-bold text-cyan">B</td>
+                                                    <td class="font-bold">MATTEO DOMINIK VIGNOLLE</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">372</td>
+                                                    <td class="text-right font-mono">2.4800%</td>
+                                                    <td class="text-center font-bold text-cyan">B</td>
+                                                    <td class="font-bold">GIORGIO VIGNOLLE</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr class="highlight-row">
+                                                    <td class="text-right font-mono font-bold">2,036</td>
+                                                    <td class="text-right font-mono font-bold">13.5733%</td>
+                                                    <td class="text-center font-bold text-blue">C</td>
+                                                    <td class="font-bold">COFRE LUXEMBOURG WIND S.A.</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">749</td>
+                                                    <td class="text-right font-mono">4.9933%</td>
+                                                    <td class="text-center font-bold text-indigo">D</td>
+                                                    <td class="font-bold">GIANCARLO RAGGI</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">763</td>
+                                                    <td class="text-right font-mono">5.0867%</td>
+                                                    <td class="text-center font-bold text-indigo">D</td>
+                                                    <td class="font-bold">INGRID MONIQUE YVONNE LAMBERT</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">1,452</td>
+                                                    <td class="text-right font-mono">9.6800%</td>
+                                                    <td class="text-center font-bold text-purple">E</td>
+                                                    <td class="font-bold">ENRICO TUBIA</td>
+                                                    <td>Hong Kong</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">1,452</td>
+                                                    <td class="text-right font-mono">9.6800%</td>
+                                                    <td class="text-center font-bold text-fuchsia">F</td>
+                                                    <td class="font-bold">SILVIA TUBIA</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">135</td>
+                                                    <td class="text-right font-mono">0.9000%</td>
+                                                    <td class="text-center font-bold text-fuchsia">F</td>
+                                                    <td class="font-bold">TUBIA Edoardo</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr class="highlight-row">
+                                                    <td class="text-right font-mono font-bold">1,796</td>
+                                                    <td class="text-right font-mono font-bold">11.9733%</td>
+                                                    <td class="text-center font-bold text-amber">G</td>
+                                                    <td class="font-bold">SUSIK HEMAWITI</td>
+                                                    <td>Indonesia</td>
+                                                </tr>
+                                                <tr class="highlight-row">
+                                                    <td class="text-right font-mono font-bold">2,245</td>
+                                                    <td class="text-right font-mono font-bold">14.9670%</td>
+                                                    <td class="text-center font-bold text-amber">H</td>
+                                                    <td class="font-bold">NEW LIFE Sàrl</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right font-mono">1,482</td>
+                                                    <td class="text-right font-mono">9.8800%</td>
+                                                    <td class="text-center font-bold text-lime">I</td>
+                                                    <td class="font-bold">MICHEL BARBANCEY</td>
+                                                    <td>Luxembourg</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td class="text-right font-bold">15,000</td>
+                                                    <td class="text-right font-bold">100.00%</td>
+                                                    <td class="text-center font-bold">9 Villas</td>
+                                                    <td colspan="2" class="font-bold">Total Capital Social Souscrit & Libéré</td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONNECTOR ARROWS ROW: J.M. -> S.C.P. (Left) and Lux -> Brasil (Right) -->
+                    <div class="org-connector-row">
+                        <div class="org-connector-cell left">
+                            <div class="org-arrow-down">
+                                <i class="fa-solid fa-arrow-down text-amber"></i>
+                                <span class="connector-label">Participation 40%</span>
+                            </div>
+                        </div>
+                        <div class="org-connector-cell right">
+                            <div class="org-arrow-down">
+                                <i class="fa-solid fa-arrow-down text-emerald"></i>
+                                <span class="connector-label text-emerald">Détention Directe 100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MIDDLE ROW -->
+                    <div class="org-row org-row-mid">
+                        <!-- Middle Left: S.C.P. -->
+                        <div class="org-col org-col-left">
+                            <div class="org-node-card org-node-scp" tabindex="0">
+                                <div class="org-node-header">
+                                    <div class="org-node-title">S.C.P. - J.M. Empreendimentos Imobiliarios e Hoteleiros</div>
+                                    <img src="https://flagcdn.com/w40/br.png" alt="Brasil" class="org-flag">
+                                </div>
+                                <div class="org-node-subtitle">Sociedade em Conta de Participação</div>
+                                <div class="org-node-cnpj">CNPJ: 29.422.944/0001-39</div>
+                                <div class="org-node-role role-gestore">GÉRANT DU RESORT</div>
+                                <div class="org-node-hint-pill"><i class="fa-solid fa-arrow-pointer"></i> Survoler pour la composition de la S.C.P.</div>
+
+                                <!-- Hover Popup: SCP Details -->
+                                <div class="org-hover-popup popup-scp">
+                                    <div class="popup-header">
+                                        <i class="fa-solid fa-handshake text-purple"></i> Composition de la Sociedade em Conta de Participação (S.C.P.)
+                                    </div>
+                                    <div class="popup-body">
+                                        <div class="popup-row"><strong>CNPJ :</strong> <span>29.422.944/0001-39</span></div>
+                                        <div class="popup-row"><strong>Associé Ostensible (40%) :</strong> <span>J.M. Empreendimentos Imobiliarios e Hoteleiros LTDA</span></div>
+                                        <div class="popup-row"><strong>Associé Participant (60%) :</strong> <span>Sombra Resort Brasil Sociedade Unipessoal Ltda</span></div>
+                                        <div class="popup-row"><strong>Objet & Exploitation :</strong> <span>Exploitation hôtelière de l'ensemble du complexe ; perception des recettes et rétrocession périodique sous forme de dividendes à l'associé participant.</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cross Connector: Sombra Brasil Ltda -> S.C.P. (Socio Partecipante 60%) -->
+                        <div class="org-diagonal-connector">
+                            <div class="scp-partner-link">
+                                <i class="fa-solid fa-arrow-left"></i>
+                                <span>Associé PARTICIPANT 60%</span>
+                            </div>
+                        </div>
+
+                        <!-- Middle Right: Sombra Resort Brasil Ltda -->
+                        <div class="org-col org-col-right">
+                            <div class="org-node-card org-node-brasil" tabindex="0">
+                                <div class="org-node-header">
+                                    <div class="org-node-title">Sombra Resort Brasil Sociedade Unipessoal Ltda</div>
+                                    <img src="https://flagcdn.com/w40/br.png" alt="Brasil" class="org-flag">
+                                </div>
+                                <div class="org-node-country">Brésil</div>
+                                <div class="org-node-cnpj">CNPJ: 43.730.206/0001-80 • JUCERN 24200911503</div>
+                                <div class="org-node-role role-brasil">Associé PARTICIPANT 60% (dans la S.C.P.)</div>
+                                <div class="org-node-hint-pill"><i class="fa-solid fa-arrow-pointer"></i> Survoler pour les détails de la filiale</div>
+
+                                <!-- Hover Popup: Brasil Ltda Details -->
+                                <div class="org-hover-popup popup-brasil">
+                                    <div class="popup-header">
+                                        <i class="fa-solid fa-building-flag text-cyan"></i> Sombra Resort Brasil Sociedade Unipessoal Ltda
+                                    </div>
+                                    <div class="popup-body">
+                                        <div class="popup-row"><strong>Associé Unique (100%) :</strong> <span>Sombra e Agua Fresca Resort Sàrl (Luxembourg)</span></div>
+                                        <div class="popup-row"><strong>Capital Souscrit :</strong> <span class="font-mono text-emerald font-bold">R$ 3.000.525,45 (100%)</span></div>
+                                        <div class="popup-row"><strong>Administrateur au Brésil :</strong> <span>Edoardo Tubia</span></div>
+                                        <div class="popup-row"><strong>Détention Copropriété :</strong> <span>90% (9 Villas : A à I)</span></div>
+                                        <div class="popup-row"><strong>Participation S.C.P. :</strong> <span>60% Associé Participant</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONNECTOR ROW TO CONDOMINIO -->
+                    <div class="org-connector-to-condo">
+                        <div class="connector-gestore">
+                            <i class="fa-solid fa-arrow-down text-purple"></i>
+                            <span>GÉRANT</span>
+                        </div>
+                        <div class="connector-90pct">
+                            <i class="fa-solid fa-arrow-down text-cyan"></i>
+                            <span class="text-cyan font-bold">90% Copropriété</span>
+                        </div>
+                        <div class="connector-10pct">
+                            <i class="fa-solid fa-arrow-left text-blue"></i>
+                            <span class="text-blue font-bold">10% Copropriété</span>
+                        </div>
+                    </div>
+
+                    <!-- BOTTOM ROW: Condominio & Lorisi/Panzetti -->
+                    <div class="org-row org-row-bottom">
+                        <!-- Bottom Left: Condominio Sombra Resort Brasil -->
+                        <div class="org-col org-col-condo">
+                            <div class="org-node-card org-node-condo" tabindex="0">
+                                <div class="condo-icon-box">
+                                    <i class="fa-solid fa-house-chimney"></i>
+                                </div>
+                                <div class="condo-details" style="flex: 1;">
+                                    <div class="org-node-title condo-title">CONDOMINIO SOMBRA RESORT BRASIL</div>
+                                    <div class="condo-sub">Praia de Pipa • Tibau do Sul (RN) • 10 Villas</div>
+                                    <div class="condo-split">
+                                        <span class="badge badge-emerald">90% Sombra Resort Brasil Ltda (9 Villas)</span>
+                                        <span class="badge badge-blue">10% Lorisi - Panzetti (1 Villa)</span>
+                                    </div>
+                                </div>
+                                <div class="org-node-hint-pill"><i class="fa-solid fa-arrow-pointer"></i> Détails de l'actif</div>
+
+                                <!-- Hover Popup: Condominio -->
+                                <div class="org-hover-popup popup-condo">
+                                    <div class="popup-header">
+                                        <i class="fa-solid fa-house-chimney text-emerald"></i> Condominio Sombra Resort Brasil
+                                    </div>
+                                    <div class="popup-body">
+                                        <div class="popup-row"><strong>Localisation :</strong> <span>Praia de Pipa, Tibau do Sul (Rio Grande do Norte, Brésil)</span></div>
+                                        <div class="popup-row"><strong>Actif Total :</strong> <span>10 Villas de prestige</span></div>
+                                        <div class="popup-row"><strong>90% Propriété :</strong> <span>Sombra Resort Brasil Ltda (Villas A à I)</span></div>
+                                        <div class="popup-row"><strong>10% Propriété :</strong> <span>Luigi Lorisi & Elisa Panzetti (1 Villa)</span></div>
+                                        <div class="popup-row"><strong>Exploitation hôtelière :</strong> <span>Déléguée à la S.C.P.</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Right: Luigi Lorisi & Elisa Panzetti -->
+                        <div class="org-col org-col-privati">
+                            <div class="org-node-card org-node-privati" tabindex="0">
+                                <div class="privati-icon">
+                                    <i class="fa-solid fa-user-group"></i>
+                                </div>
+                                <div class="privati-content" style="flex: 1;">
+                                    <div class="org-node-header">
+                                        <div class="org-node-title">Luigi LORISI / Elisa PANZETTI</div>
+                                        <img src="https://flagcdn.com/w40/it.png" alt="Italia" class="org-flag">
+                                    </div>
+                                    <div class="privati-cpfs">
+                                        <div>Lorisi CPF: 013.615.354-23</div>
+                                        <div>Panzetti CPF: 016.205.874-83</div>
+                                    </div>
+                                    <div class="org-node-role role-privati">Détention Copropriété : 10%</div>
+                                </div>
+                                <div class="org-node-hint-pill"><i class="fa-solid fa-arrow-pointer"></i> Détails copropriétaires</div>
+
+                                <!-- Hover Popup: Lorisi & Panzetti -->
+                                <div class="org-hover-popup popup-privati">
+                                    <div class="popup-header">
+                                        <i class="fa-solid fa-user-group text-blue"></i> Luigi Lorisi & Elisa Panzetti
+                                    </div>
+                                    <div class="popup-body">
+                                        <div class="popup-row"><strong>Nationalité :</strong> <span>Italie 🇮🇹</span></div>
+                                        <div class="popup-row"><strong>CPF Luigi Lorisi :</strong> <span>013.615.354-23</span></div>
+                                        <div class="popup-row"><strong>CPF Elisa Panzetti :</strong> <span>016.205.874-83</span></div>
+                                        <div class="popup-row"><strong>Titularité :</strong> <span>Propriétaires de 10% de la copropriété (1 Villa)</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EXPLANATORY FOOTER NOTES (FROM USER IMAGE) -->
+                <div class="schema-corp-explanatory-notes">
+                    <div class="note-item">
+                        <i class="fa-solid fa-circle-check text-emerald"></i>
+                        <span><strong>Subrogation Contractuelle :</strong> Sombra Resort Brasil Sociedade Unipessoal LTDA s'est substituée à <em>Sombra e Agua Fresca Resort Limited BVI</em> (retirée) dans le contrat initial de constitution de la S.C.P.</span>
+                    </div>
+                    <div class="note-item">
+                        <i class="fa-solid fa-hand-holding-dollar text-amber"></i>
+                        <span><strong>Flux Financiers & Dividendes :</strong> La S.C.P. assure l'exploitation du RESORT et reverse annuellement les loyers selon les accords, sous forme de <em>Dividendes</em> à Sombra Resort Brasil Sociedade Unipessoal Ltda.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="padding: 0.85rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color);">
+                <div style="font-size: 11.5px; color: var(--text-muted);">
+                    <i class="fa-solid fa-shield-halved text-emerald"></i> Struttura societaria conforme Registre de Commerce et des Sociétés (Luxembourg) & Receita Federal do Brasil
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="closeSchemaSocietarioModal()" style="font-weight: 600;">
+                    <i class="fa-solid fa-xmark"></i> Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Core Scripts -->
+    <script src="data.js?v=20261023"></script>
+    <script src="i18n.js?v=20261023"></script>
+    <script src="app.js?v=20261023g"></script>
+</body>
+</html>

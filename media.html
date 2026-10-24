@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script>
+        (function() {
+            try {
+                var isLight = localStorage.getItem('sr_theme') === 'light';
+                if (isLight) {
+                    document.documentElement.classList.add('theme-light');
+                } else {
+                    document.documentElement.classList.remove('theme-light');
+                }
+                var obs = new MutationObserver(function() {
+                    if (document.body) {
+                        if (isLight) document.body.classList.add('theme-light');
+                        else document.body.classList.remove('theme-light');
+                        obs.disconnect();
+                    }
+                });
+                obs.observe(document.documentElement, { childList: true });
+            } catch(e) {}
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photos & Vidéos - SOMBRA RESORT</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=20261023g">
+    <!-- Auth Guard -->
+    <script src="auth.js?v=20261023g"></script>
+    <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
+    <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo-container">
+                <a href="index.html" style="text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="logo-img" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.4); width: 68px; height: 68px;">
+                    <div class="logo-title" style="letter-spacing: 2px; margin-top: 8px;">SOMBRA RESORT</div>
+                    <div class="logo-subtitle">Holding Sàrl • Lux</div>
+                </a>
+            </div>
+
+            <nav class="nav-menu">
+                <!-- AREA SOCIÉTÉ -->
+                <div class="nav-section-title" data-i18n="nav_section_societe">AREA SOCIÉTÉ</div>
+                <div class="nav-item-container" data-page="index.html">
+                    <a href="index.html" class="nav-item">
+                        <img src="https://flagcdn.com/w40/lu.png" alt="Luxembourg" class="menu-flag-icon">
+                        <span data-i18n="nav_societe">La Société</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('index.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="partecipazioni.html">
+                    <a href="partecipazioni.html" class="nav-item">
+                        <img src="https://flagcdn.com/w40/br.png" alt="Brésil" class="menu-flag-icon">
+                        <span data-i18n="nav_partecipazioni">Participation Sombra (Brésil)</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('partecipazioni.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA FINANCES -->
+                <div class="nav-section-title" data-i18n="nav_section_finances">AREA FINANCES</div>
+                <div class="nav-item-container" data-page="contabilita.html">
+                    <a href="contabilita.html" class="nav-item">
+                        <i class="fa-solid fa-book-bookmark text-blue"></i>
+                        <span data-i18n="nav_contabilita">Comptabilité PCN</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('contabilita.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="banca.html">
+                    <a href="banca.html" class="nav-item">
+                        <i class="fa-solid fa-building-columns text-cyan"></i>
+                        <span data-i18n="nav_banca">Comptes Bancaires</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('banca.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="ammortamenti.html">
+                    <a href="ammortamenti.html" class="nav-item">
+                        <i class="fa-solid fa-calculator text-emerald"></i>
+                        <span data-i18n="nav_ammortamenti">Amortissements</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('ammortamenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+
+                <!-- AREA DOCUMENTATION -->
+                <div class="nav-section-title" data-i18n="nav_section_documentation">AREA DOCUMENTATION</div>
+                <div class="nav-item-container" data-page="aml.html">
+                    <a href="aml.html" class="nav-item">
+                        <i class="fa-solid fa-shield-halved text-emerald"></i>
+                        <span data-i18n="nav_aml">Conformité AML / LBC-FT</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('aml.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="documenti.html">
+                    <a href="documenti.html" class="nav-item">
+                        <i class="fa-solid fa-folder-open text-amber"></i>
+                        <span data-i18n="nav_documenti">Documents & Archives</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('documenti.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+                <div class="nav-item-container" data-page="media.html">
+                    <a href="media.html" class="nav-item active">
+                        <i class="fa-solid fa-photo-film text-cyan"></i>
+                        <span data-i18n="nav_media">Photos & Vidéos</span>
+                    </a>
+                    <button type="button" class="nav-eye-toggle-btn nav-eye-active" title="Visible Utilisateur" onclick="togglePageVisibility('media.html', event)">
+                        <i class="fa-solid fa-eye" style="color: #10b981;"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="footer-meta">
+                    <span data-i18n="last_update">Mise à jour :</span>
+                    <strong id="sidebar-updated-at">24/10/2026</strong>
+                </div>
+                <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
+                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header Topbar -->
+            <header class="topbar glass-panel">
+                <div class="topbar-left">
+                    <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" title="Menu (Échap)" onclick="toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title-box">
+                        <h1 class="page-title">
+                            <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
+                            <span>Photos & Vidéos du Resort</span>
+                        </h1>
+                        <div class="page-subtitle">Galerie Multimédia Officielle • Visites des Villas & Diaporama Sonorisé</div>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="lang-selector">
+                        <button class="lang-btn active" data-lang="fr" onclick="setLanguage('fr')" title="Français">
+                            <img src="https://flagcdn.com/w40/fr.png" alt="FR">
+                        </button>
+                        <button class="lang-btn" data-lang="it" onclick="setLanguage('it')" title="Italiano">
+                            <img src="https://flagcdn.com/w40/it.png" alt="IT">
+                        </button>
+                    </div>
+
+                    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Basculer Thème Clair/Sombre">
+                        <i class="fa-solid fa-sun icon-sun"></i>
+                        <i class="fa-solid fa-moon icon-moon"></i>
+                    </button>
+
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()" title="Déconnexion">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- MEDIA DASHBOARD BANNER -->
+            <div class="media-banner-panel glass-panel">
+                <div class="media-banner-left">
+                    <div class="media-banner-badge">
+                        <i class="fa-solid fa-photo-film text-cyan"></i> ESPACE MULTIMÉDIA RESORT
+                    </div>
+                    <h2 class="media-banner-title">
+                        Galerie & Diaporama Sonorisé
+                    </h2>
+                    <p class="media-banner-desc">
+                        Explorez en haute définition les photos exclusives des Villas (F, G, H, I), les visites vidéo du Resort, et profitez du diaporama interactivo avec musique d'ambiance brésilienne & jazz.
+                    </p>
+                    <div class="media-banner-stats">
+                        <div class="media-stat-item">
+                            <span class="media-stat-val text-cyan" id="statTotalMedia">23</span>
+                            <span class="media-stat-lbl">Total Médias</span>
+                        </div>
+                        <div class="media-stat-item">
+                            <span class="media-stat-val text-emerald" id="statTotalPhotos">21</span>
+                            <span class="media-stat-lbl">Photos HD</span>
+                        </div>
+                        <div class="media-stat-item">
+                            <span class="media-stat-val text-amber" id="statTotalVideos">2</span>
+                            <span class="media-stat-lbl">Visites Vidéo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="media-banner-right">
+                    <!-- Prominent Diaporama Launcher Button -->
+                    <button type="button" class="btn-diaporama-main-launch" onclick="startDiaporama()">
+                        <i class="fa-solid fa-play"></i>
+                        <div style="text-align: left;">
+                            <div style="font-size: 15px; font-weight: 800;">Lancer le Diaporama</div>
+                            <div style="font-size: 11px; opacity: 0.9; font-weight: 500;">Plein écran • Avancement auto & Musique MP3</div>
+                        </div>
+                    </button>
+
+                    <!-- Upload Button -->
+                    <button type="button" class="btn btn-secondary btn-block" onclick="openUploadModal()" style="font-size: 12.5px; padding: 8px 14px; justify-content: center; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-cloud-arrow-up text-cyan"></i>
+                        <span>Téléverser Photos / Vidéos</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- MUSIC & CONTROLS TOOLBAR -->
+            <div class="media-audio-toolbar glass-panel">
+                <div class="media-audio-player-box">
+                    <div class="music-wave-bars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <button type="button" class="btn-audio-play-round" onclick="toggleMusicPlayback()" title="Lire / Pause musique">
+                        <i class="fa-solid fa-play" id="btnAudioMainIcon"></i>
+                    </button>
+                    <div class="music-info-meta">
+                        <div class="music-track-label">Musique Diaporama :</div>
+                        <div class="music-track-title" id="headerTrackTitle">Norman Brown - Out'a Nowhere</div>
+                    </div>
+                    <div class="music-track-select-wrap">
+                        <select id="headerMusicTrackSelect" class="form-control form-control-sm" onchange="onAudioTrackChange(this.value)" style="max-width: 280px; font-size: 12px;">
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="triggerCustomAudioUpload()" title="Charger un MP3 personnel">
+                        <i class="fa-solid fa-folder-music text-amber"></i> <span style="font-size: 11px;">Ajouter MP3</span>
+                    </button>
+                    <input type="file" id="customAudioInput" accept="audio/mp3,audio/*" style="display: none;" onchange="handleCustomAudioFile(this)">
+                </div>
+
+                <div class="media-toolbar-right">
+                    <button type="button" class="btn-restore-deleted" onclick="restoreAllDeletedMedia()" title="Restaurer tous les médias supprimés">
+                        <i class="fa-solid fa-rotate-left"></i> Restaurer Médias
+                    </button>
+                </div>
+            </div>
+
+            <!-- FILTER TOOLBAR & SEARCH -->
+            <div class="media-filters-bar glass-panel">
+                <div class="media-filter-group">
+                    <button type="button" class="media-type-tab active" data-type="all" onclick="setTypeFilter('all', this)">
+                        <i class="fa-solid fa-border-all"></i> Tout Afficher
+                    </button>
+                    <button type="button" class="media-type-tab" data-type="photo" onclick="setTypeFilter('photo', this)">
+                        <i class="fa-solid fa-image"></i> Photos
+                    </button>
+                    <button type="button" class="media-type-tab" data-type="video" onclick="setTypeFilter('video', this)">
+                        <i class="fa-solid fa-video"></i> Vidéos
+                    </button>
+                </div>
+
+                <div class="media-villa-pills">
+                    <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700; margin-right: 4px;">Villas :</span>
+                    <button type="button" class="media-villa-pill active" data-villa="all" onclick="setVillaFilter('all', this)">Toutes</button>
+                    <button type="button" class="media-villa-pill" data-villa="Villa F" onclick="setVillaFilter('Villa F', this)">Villa F</button>
+                    <button type="button" class="media-villa-pill" data-villa="Villa G" onclick="setVillaFilter('Villa G', this)">Villa G</button>
+                    <button type="button" class="media-villa-pill" data-villa="Villa H" onclick="setVillaFilter('Villa H', this)">Villa H</button>
+                    <button type="button" class="media-villa-pill" data-villa="Villa I" onclick="setVillaFilter('Villa I', this)">Villa I</button>
+                    <button type="button" class="media-villa-pill" data-villa="Resort" onclick="setVillaFilter('Resort', this)">Resort</button>
+                </div>
+
+                <div class="media-search-wrap">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="mediaSearchInput" class="form-control form-control-sm media-search-input" placeholder="Rechercher par titre, villa..." oninput="onSearchInput(this.value)">
+                </div>
+            </div>
+
+            <div class="media-dnd-hint">
+                <i class="fa-solid fa-grip-vertical text-cyan"></i>
+                <span><strong>Astuce :</strong> Vous pouvez glisser-déposer les photos et vidéos pour personnaliser l'ordre d'affichage et l'ordre du diaporama. Cliquez sur l'icône crayon pour modifier le titre d'un média.</span>
+            </div>
+
+            <!-- MAIN MEDIA GRID -->
+            <div id="mediaGrid" class="media-grid-container">
+                <!-- Media Cards dynamically populated by media_app.js -->
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================================================
+         FULLSCREEN DIAPORAMA (SLIDESHOW) OVERLAY WITH AUDIO MP3
+         ========================================================================== -->
+    <div id="diaporamaOverlay" class="diaporama-fullscreen-overlay" style="display: none;">
+        <!-- Top Controls Bar -->
+        <div class="diaporama-top-bar">
+            <div class="diaporama-info">
+                <span class="badge badge-emerald" id="diaporamaVilla">Villa F</span>
+                <span class="diaporama-title" id="diaporamaTitle">Titre de la photo</span>
+                <span class="diaporama-counter" id="diaporamaCounter">Slide 1 / 21</span>
+            </div>
+
+            <!-- Music Bar in Diaporama -->
+            <div class="diaporama-music-bar">
+                <div class="music-wave-bars">
+                    <span></span><span></span><span></span>
+                </div>
+                <span class="diaporama-track-name" id="diaporamaTrackTitle">Norman Brown - Celebration</span>
+                <button type="button" class="btn-icon-subtle" onclick="toggleMusicPlayback()" title="Lecture/Pause musique">
+                    <i class="fa-solid fa-play-pause"></i>
+                </button>
+                <button type="button" id="btnToggleMute" class="btn-icon-subtle" onclick="toggleMusicMute()" title="Couper le son">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+                <input type="range" min="0" max="1" step="0.05" value="0.65" class="diaporama-vol-slider" oninput="onAudioVolumeChange(this.value)" title="Volume">
+                <select id="diaporamaTrackSelect" class="form-control form-control-sm diaporama-track-select" onchange="onAudioTrackChange(this.value)">
+                </select>
+            </div>
+
+            <!-- Diaporama Speed & Close -->
+            <div class="diaporama-top-actions">
+                <div class="diaporama-speed-select-wrap">
+                    <span style="font-size: 11px; color: #94a3b8;">Vitesse :</span>
+                    <select class="form-control form-control-sm" onchange="setDiaporamaSpeed(this.value)" style="width: 75px; font-size: 11px; padding: 2px 4px; height: 26px;">
+                        <option value="3000">3s</option>
+                        <option value="4000" selected>4s</option>
+                        <option value="6000">6s</option>
+                        <option value="9000">9s</option>
+                    </select>
+                </div>
+                <button type="button" class="btn-diaporama-icon" onclick="toggleDiaporamaFullscreen()" title="Plein écran (F)">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+                <button type="button" class="btn-diaporama-close" onclick="closeDiaporama()" title="Quitter le Diaporama (Échap)">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide Progress Bar -->
+        <div class="diaporama-progress-track">
+            <div id="diaporamaProgress" class="diaporama-progress-fill"></div>
+        </div>
+
+        <!-- Main Slide Image Area -->
+        <div class="diaporama-stage">
+            <button type="button" class="diaporama-arrow-btn arrow-prev" onclick="prevSlide()" title="Photo Précédente (Flèche Gauche)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <div class="diaporama-img-wrap">
+                <img id="diaporamaImg" src="" alt="Diaporama Sombra Resort" class="diaporama-slide-img">
+            </div>
+
+            <button type="button" class="diaporama-arrow-btn arrow-next" onclick="nextSlide()" title="Photo Suivante (Flèche Droite)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Bottom Play/Pause Controls Bar -->
+        <div class="diaporama-bottom-bar">
+            <button type="button" class="btn-diaporama-control" onclick="prevSlide()" title="Précédent">
+                <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <button type="button" id="btnDiaporamaPlay" class="btn-diaporama-control btn-play-main" onclick="toggleDiaporamaPlay()" title="Lecture / Pause (Espace)">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+            <button type="button" class="btn-diaporama-control" onclick="nextSlide()" title="Suivant">
+                <i class="fa-solid fa-forward-step"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         LIGHTBOX MODAL (PHOTO UNIQUE)
+         ========================================================================== -->
+    <div id="photoLightboxModal" class="modal-backdrop" style="display: none;">
+        <div class="lightbox-container">
+            <div class="lightbox-header">
+                <div>
+                    <span class="badge badge-emerald" id="lightboxVilla">Villa F</span>
+                    <span class="lightbox-title" id="lightboxTitle">Titre de la photo</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="lightbox-counter" id="lightboxCounter">1 / 21</span>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="startDiaporama(allPhotos[currentLightboxIndex].id)" title="Lancer le diaporama depuis cette photo">
+                        <i class="fa-solid fa-play"></i> Diaporama
+                    </button>
+                    <a id="lightboxDownloadBtn" href="" download class="btn btn-secondary btn-sm" title="Télécharger la photo">
+                        <i class="fa-solid fa-download"></i>
+                    </a>
+                    <button type="button" class="btn-icon" onclick="closeLightbox()" title="Fermer (Échap)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="lightbox-body">
+                <button type="button" class="lightbox-nav-btn nav-prev" onclick="prevLightboxPhoto()" title="Précédent">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="lightbox-img-wrap">
+                    <img id="lightboxImg" src="" alt="Agrandissement photo" class="lightbox-main-img">
+                </div>
+                <button type="button" class="lightbox-nav-btn nav-next" onclick="nextLightboxPhoto()" title="Suivant">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         VIDEO THEATER MODAL
+         ========================================================================== -->
+    <div id="videoTheaterModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card glass-panel" style="max-width: 960px; width: 95%;">
+            <div class="modal-header">
+                <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-video text-cyan"></i>
+                    <span id="videoTheaterTitle">Vidéo du Resort</span>
+                </h3>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <a id="videoTheaterDownloadBtn" href="" download class="btn btn-secondary btn-sm" title="Télécharger la vidéo">
+                        <i class="fa-solid fa-download"></i> Télécharger
+                    </a>
+                    <button type="button" class="btn-icon" onclick="closeVideoTheater()" title="Fermer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" style="padding: 1rem; background: #000000; text-align: center; border-radius: 0 0 14px 14px;">
+                <video id="videoTheaterPlayer" controls playsinline style="width: 100%; max-height: 72vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);"></video>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         UPLOAD MODAL (FACILE DRAG & DROP)
+         ========================================================================== -->
+    <div id="uploadModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card glass-panel" style="max-width: 580px; width: 95%;">
+            <div class="modal-header">
+                <h3 style="font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-cloud-arrow-up text-cyan"></i> Téléverser des Médias
+                </h3>
+                <button type="button" class="btn-icon" onclick="closeUploadModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" style="padding: 1.5rem;">
+                <div style="margin-bottom: 1rem;">
+                    <label style="font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Associer à une Villa / Section :</label>
+                    <select id="uploadVillaSelect" class="form-control">
+                        <option value="Resort">Resort & Extérieurs</option>
+                        <option value="Villa F">Villa F</option>
+                        <option value="Villa G">Villa G</option>
+                        <option value="Villa H">Villa H</option>
+                        <option value="Villa I">Villa I</option>
+                        <option value="Villa A">Villa A</option>
+                        <option value="Villa B">Villa B</option>
+                        <option value="Villa C">Villa C</option>
+                        <option value="Villa D">Villa D</option>
+                        <option value="Villa E">Villa E</option>
+                    </select>
+                </div>
+
+                <div class="media-dropzone" onclick="document.getElementById('hiddenUploadInput').click()" 
+                     ondragover="event.preventDefault(); this.classList.add('dropzone-hover')" 
+                     ondragleave="this.classList.remove('dropzone-hover')" 
+                     ondrop="event.preventDefault(); this.classList.remove('dropzone-hover'); if (event.dataTransfer.files) processUploadedFiles(Array.from(event.dataTransfer.files));">
+                    <i class="fa-solid fa-photo-film dropzone-icon"></i>
+                    <div style="font-weight: 700; font-size: 14px; margin-top: 8px; color: var(--text-main);">
+                        Glissez-déposez vos fichiers ici
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                        Photos (JPG, PNG), Vidéos (MP4) ou Musiques (MP3)
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" style="margin-top: 12px;">
+                        <i class="fa-solid fa-folder-open"></i> Parcourir les fichiers
+                    </button>
+                    <input type="file" id="hiddenUploadInput" multiple accept="image/*,video/*,audio/*" style="display: none;" onchange="handleFileInputChange(this)">
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 1rem 1.5rem; justify-content: flex-end;">
+                <button type="button" class="btn btn-secondary" onclick="closeUploadModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         EDIT TITLE MODAL
+         ========================================================================== -->
+    <div id="editTitleModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-card glass-panel" style="max-width: 480px; width: 95%;">
+            <div class="modal-header">
+                <h3 style="font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-pen-to-square text-cyan"></i> Modifier le Titre
+                </h3>
+                <button type="button" class="btn-icon" onclick="closeEditTitleModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" style="padding: 1.25rem;">
+                <input type="hidden" id="modalEditMediaId" value="">
+                <div style="margin-bottom: 1rem;">
+                    <label style="font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Titre du média :</label>
+                    <input type="text" id="modalEditTitleInput" class="form-control" placeholder="Entrez le titre du média..." onkeydown="if(event.key==='Enter') saveModalTitle()">
+                </div>
+                <div>
+                    <label style="font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Villa attribuée :</label>
+                    <select id="modalEditVillaSelect" class="form-control">
+                        <option value="Resort">Resort & Extérieurs</option>
+                        <option value="Villa F">Villa F</option>
+                        <option value="Villa G">Villa G</option>
+                        <option value="Villa H">Villa H</option>
+                        <option value="Villa I">Villa I</option>
+                        <option value="Villa A">Villa A</option>
+                        <option value="Villa B">Villa B</option>
+                        <option value="Villa C">Villa C</option>
+                        <option value="Villa D">Villa D</option>
+                        <option value="Villa E">Villa E</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 0.85rem 1.25rem; justify-content: flex-end; gap: 8px;">
+                <button type="button" class="btn btn-secondary" onclick="closeEditTitleModal()">Annuler</button>
+                <button type="button" class="btn btn-primary" onclick="saveModalTitle()">
+                    <i class="fa-solid fa-check"></i> Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Persistent Audio Element -->
+    <audio id="diaporamaAudio" preload="auto" loop></audio>
+
+    <!-- Core Scripts -->
+    <script src="media_data.js?v=20261024"></script>
+    <script src="i18n.js?v=20261024"></script>
+    <script src="media_app.js?v=20261024"></script>
+</body>
+</html>
