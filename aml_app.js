@@ -31,7 +31,7 @@ const AML_KYC_PARTNERS = [
         risk_score: 22,
         risk_level: "Faible",
         risk_color: "emerald",
-        ubo: "Michel Barbancey / Actionnariat Institutionnel",
+        ubo: "Baguanier Henri (100%)",
         pep: "Non",
         shares: 2036,
         shares_pct: "13,57 %",

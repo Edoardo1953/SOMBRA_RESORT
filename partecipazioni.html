@@ -33,9 +33,11 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css?v=20261023g">
     <!-- Auth Guard -->
-    <script src="auth.js?v=20261023g"></script>
+    <script src="auth.js?v=20261025_v4"></script>
     <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
     <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+    <!-- i18n Core Engine -->
+    <script src="i18n.js?v=20261025_v4"></script>
 </head>
 <body>
     <div class="app-container">
@@ -138,7 +140,7 @@
                     <strong>23/10/2026</strong>
                 </div>
                 <button class="btn btn-secondary btn-block" style="margin-top: 10px;" onclick="openUsersModal()">
-                    <i class="fa-solid fa-users-gear"></i> Sécurité & Accès
+                    <i class="fa-solid fa-users-gear"></i> <span data-i18n="btn_security_access">Segurança & Acessos</span>
                 </button>
             </div>
         </aside>
@@ -156,7 +158,7 @@
                             <img src="brand_assets/sombra_palma_solo.png?v=palma" alt="Logo Sombra Resort" class="topbar-page-logo">
                             <span>SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA</span>
                         </h1>
-                        <div class="page-subtitle">Participation Étrangère Détenue à 100% • Natal / Praia de Pipa (RN, Brésil)</div>
+                        <div class="page-subtitle" data-i18n="part_header_subtitle">Participação Estrangeira Detida a 100% • Natal / Praia de Pipa (RN, Brasil)</div>
                     </div>
                 </div>
 
@@ -184,7 +186,7 @@
 
                     <div id="header-user-display" class="user-badge" style="cursor: pointer;" onclick="openUsersModal()"></div>
 
-                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()">
+                    <button class="btn btn-secondary btn-sm" onclick="logoutUser()" data-i18n-title="btn_logout" title="Sair">
                         <i class="fa-solid fa-power-off text-rose"></i>
                     </button>
                 </div>
@@ -192,17 +194,17 @@
             <!-- Subpage Tabs Bar (Separazione Pagine Partecipata) -->
             <div class="glass-panel" style="padding: 0.85rem 1.25rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; justify-content: flex-start; border-radius: 12px; background: rgba(15, 23, 42, 0.65);">
                 <div style="display: flex; align-items: center; gap: 8px; margin-right: 0.5rem;">
-                    <img src="https://flagcdn.com/w40/br.png" alt="Brésil" style="width: 22px; height: 16px; border-radius: 3px; object-fit: cover;">
-                    <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Sezioni Partecipata:</span>
+                    <img src="https://flagcdn.com/w40/br.png" alt="Brasil" style="width: 22px; height: 16px; border-radius: 3px; object-fit: cover;">
+                    <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="part_subpage_title">Seções da Filial Brasil:</span>
                 </div>
                 <a href="partecipazioni.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 7px 16px; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-building-columns text-cyan"></i> 1. Scheda Società & Banche (Banco do Brasil)
+                    <i class="fa-solid fa-building-columns text-cyan"></i> <span data-i18n="part_tab_scheda">1. Ficha da Empresa & Bancos (Banco do Brasil)</span>
                 </a>
                 <a href="bilancio_brasil.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 7px 16px; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-scale-balanced text-cyan"></i> 2. Bilancio (Balanço Patrimonial)
+                    <i class="fa-solid fa-scale-balanced text-cyan"></i> <span data-i18n="part_tab_bilancio">2. Balanço Patrimonial</span>
                 </a>
                 <a href="dre_brasil.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 7px 16px; display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-chart-line text-emerald"></i> 3. Perdite e Profitti (DRE)
+                    <i class="fa-solid fa-chart-line text-emerald"></i> <span data-i18n="part_tab_dre">3. Demonstração do Resultado (DRE)</span>
                 </a>
             </div>
 
@@ -214,9 +216,9 @@
                         <i class="fa-solid fa-certificate text-amber"></i>
                     </div>
                     <div class="kpi-content">
-                        <div class="kpi-label">Capital Subscrito Estrangeiro</div>
+                        <div class="kpi-label" data-i18n="part_kpi_capital_label">Capital Subscrito Estrangeiro</div>
                         <div class="kpi-value text-amber">R$ 3.000.525,45</div>
-                        <div class="kpi-sub">Totalement souscrit par Sombra Sàrl Lux</div>
+                        <div class="kpi-sub" data-i18n="part_kpi_capital_sub">Totalmente subscrito por Sombra Sàrl Lux</div>
                     </div>
                 </div>
 
@@ -225,9 +227,9 @@
                         <i class="fa-solid fa-vault text-emerald"></i>
                     </div>
                     <div class="kpi-content">
-                        <div class="kpi-label">Ativo Total (Balanço 2025)</div>
+                        <div class="kpi-label" data-i18n="part_kpi_ativo_label">Ativo Total (Balanço 2025)</div>
                         <div class="kpi-value text-emerald">R$ 5.298.710,03</div>
-                        <div class="kpi-sub">Aplicações financeiras R$ 976.766,78</div>
+                        <div class="kpi-sub" data-i18n="part_kpi_ativo_sub">Aplicações financeiras R$ 976.766,78</div>
                     </div>
                 </div>
 
@@ -236,9 +238,9 @@
                         <i class="fa-solid fa-scale-balanced text-cyan"></i>
                     </div>
                     <div class="kpi-content">
-                        <div class="kpi-label">Patrimônio Líquido 2025</div>
+                        <div class="kpi-label" data-i18n="part_kpi_pl_label">Patrimônio Líquido 2025</div>
                         <div class="kpi-value text-cyan">R$ 3.967.288,96</div>
-                        <div class="kpi-sub">Capital + Lucros R$ 966.763,51</div>
+                        <div class="kpi-sub" data-i18n="part_kpi_pl_sub">Capital + Lucros Acumulados R$ 966.763,51</div>
                     </div>
                 </div>
 
@@ -247,9 +249,9 @@
                         <i class="fa-solid fa-chart-line-up text-emerald"></i>
                     </div>
                     <div class="kpi-content">
-                        <div class="kpi-label">Resultado Financeiro (DRE 2025)</div>
+                        <div class="kpi-label" data-i18n="part_kpi_res_label">Resultado Financeiro (DRE 2025)</div>
                         <div class="kpi-value text-emerald">+ R$ 135.280,27</div>
-                        <div class="kpi-sub">Rendements bruts de placements</div>
+                        <div class="kpi-sub" data-i18n="part_kpi_res_sub">Rendimentos brutos de aplicações</div>
                     </div>
                 </div>
             </div>
@@ -258,31 +260,31 @@
             <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                 <div class="glass-panel" style="padding: 1.5rem;">
                     <div class="section-header" style="margin-bottom: 1rem;">
-                        <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-passport text-amber"></i> Fiche d'Identité de la Filiale Brésilienne</h2>
+                        <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-passport text-amber"></i> <span data-i18n="part_fiche_title">Ficha Cadastral da Filial Brasileira</span></h2>
                         <span class="badge badge-amber">Receita Federal do Brasil</span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
-                        <div><strong style="color: var(--text-muted);">Nom de l'Entreprise :</strong> <span style="font-weight: 600; color: var(--text-main);">SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA</span></div>
-                        <div><strong style="color: var(--text-muted);">CNPJ Matriz :</strong> <span class="badge badge-blue">43.730.206/0001-80</span></div>
-                        <div><strong style="color: var(--text-muted);">Junta Comercial (JUCERN) :</strong> <span>N° 24200911503 (30/09/2021)</span></div>
-                        <div><strong style="color: var(--text-muted);">Natureza Jurídica :</strong> <span>206-2 - Sociedade Empresária Limitada</span></div>
-                        <div><strong style="color: var(--text-muted);">Sócio Único (100%) :</strong> <span style="color: #34d399; font-weight: 600;">Sombra e Agua Fresca Resort S.à r.l. (Luxembourg)</span></div>
-                        <div><strong style="color: var(--text-muted);">Administrateur au Brésil :</strong> <span style="color: #38bdf8; font-weight: 600;">Edoardo Tubia</span></div>
-                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Activité Principale (CNAE) :</strong> <span>68.22-6-00 - Gestão e administração da propriedade imobiliária</span></div>
-                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Siège Légal :</strong> <span>Rua Doutor Poty Nobrega, 1946, Sala 305 Cond. Emp. Int. Trade Center, Lagoa Nova, Natal - RN, CEP 59.056-180</span></div>
-                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Compte Bancaire :</strong> <span>Banco do Brasil S.A. • Agência 1066-9 (Goianinha) • C/C 48649-3</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="part_fiche_nom">Razão Social :</strong> <span style="font-weight: 600; color: var(--text-main);">SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="part_fiche_cnpj">CNPJ Matriz :</strong> <span class="badge badge-blue">43.730.206/0001-80</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="part_fiche_junta">Junta Comercial (JUCERN) :</strong> <span>N° 24200911503 (30/09/2021)</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="part_fiche_nature">Natureza Jurídica :</strong> <span>206-2 - Sociedade Empresária Limitada</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="part_fiche_socio">Sócio Único (100%) :</strong> <span style="color: #34d399; font-weight: 600;">Sombra e Agua Fresca Resort S.à r.l. (Luxembourg)</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="part_fiche_admin">Administrador no Brasil :</strong> <span style="color: #38bdf8; font-weight: 600;">Edoardo Tubia</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);" data-i18n="part_fiche_activite">Atividade Principal (CNAE) :</strong> <span>68.22-6-00 - Gestão e administração da propriedade imobiliária</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);" data-i18n="part_fiche_siege">Sede Social :</strong> <span>Rua Doutor Poty Nobrega, 1946, Sala 305 Cond. Emp. Int. Trade Center, Lagoa Nova, Natal - RN, CEP 59.056-180</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);" data-i18n="part_fiche_banque">Conta Bancária :</strong> <span>Banco do Brasil S.A. • Agência 1066-9 (Goianinha) • C/C 48649-3</span></div>
                     </div>
 
                     <div style="margin-top: 1.25rem; display: flex; gap: 10px; flex-wrap: wrap;">
                         <a href="uploads/Partecipazione/CNPJ 2021.pdf" target="_blank" class="btn btn-secondary">
-                            <i class="fa-solid fa-file-pdf text-rose"></i> Cartão CNPJ
+                            <i class="fa-solid fa-file-pdf text-rose"></i> <span data-i18n="part_btn_cnpj">Cartão CNPJ</span>
                         </a>
                         <a href="uploads/Partecipazione/CONTRATO REGISTRATO.pdf" target="_blank" class="btn btn-secondary">
-                            <i class="fa-solid fa-file-pdf text-rose"></i> Contrato JUCERN
+                            <i class="fa-solid fa-file-pdf text-rose"></i> <span data-i18n="part_btn_jucern">Contrato JUCERN</span>
                         </a>
                         <a href="uploads/Partecipazione/153.22 I_P CONTRATO POUSADA SOMBRA E AGUA FRESCA.pdf" target="_blank" class="btn btn-secondary">
-                            <i class="fa-solid fa-handshake text-emerald"></i> Contrat Hôtel Sombra
+                            <i class="fa-solid fa-handshake text-emerald"></i> <span data-i18n="part_btn_contrat_hotel">Contrato Hotel Sombra</span>
                         </a>
                     </div>
                 </div>
@@ -297,18 +299,18 @@
                             </h2>
                             <span class="badge badge-emerald">Praia de Pipa • RN</span>
                         </div>
-                        <div style="font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 1rem;">
-                            Le complexe <strong>Sombra Resort Brasil</strong> est situé à <strong>Praia de Pipa</strong> (Tibau do Sul), destination balnéaire et touristique de renommée internationale au Brésil.
+                        <div style="font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 1rem;" data-i18n="part_resort_desc">
+                            O complexo <strong>Sombra Resort Brasil</strong> está localizado na <strong>Praia de Pipa</strong> (Tibau do Sul), destino turístico e litorâneo de renome internacional no Brasil.
                         </div>
                         <ul style="font-size: 12.5px; color: var(--text-muted); line-height: 1.8; padding-left: 1.25rem;">
-                            <li><strong style="color: var(--text-main);">10 Villas de Prestige :</strong> 9 villas exclusives attribuées aux investisseurs de la holding luxembourgeoise.</li>
-                            <li><strong style="color: var(--text-main);">Partenariat Opérationnel :</strong> Synergie avec le renommé <em>Hôtel Sombra e Água Fresca</em> pour la conciergerie, maintenance et commercialisation hôtelière.</li>
-                            <li><strong style="color: var(--text-main);">Cadre Naturel :</strong> Intégration paysagère tropicale, à quelques pas de la mer, espaces détente et sécurité privée 24/7.</li>
+                            <li data-i18n="part_resort_item1"><strong style="color: var(--text-main);">10 Vilas de Prestígio :</strong> 9 vilas exclusivas atribuídas aos investidores da holding de Luxemburgo.</li>
+                            <li data-i18n="part_resort_item2"><strong style="color: var(--text-main);">Parceria Operacional :</strong> Sinergia com o renomado <em>Hotel Sombra e Água Fresca</em> para serviços de concierge, manutenção e comercialização hoteleira.</li>
+                            <li data-i18n="part_resort_item3"><strong style="color: var(--text-main);">Ambiente Natural :</strong> Integração paisagística tropical, a poucos passos do mar, áreas de lazer e segurança privada 24/7.</li>
                         </ul>
                     </div>
 
-                    <div style="margin-top: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 12px; font-size: 12px; color: #34d399;">
-                        <i class="fa-solid fa-shield-check"></i> Actif foncier et immobilier entièrement consolidé sous la holding luxembourgeoise.
+                    <div style="margin-top: 1rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 12px; font-size: 12px; color: #34d399;" data-i18n="part_resort_callout">
+                        <i class="fa-solid fa-shield-check"></i> Ativo fundiário e imobiliário integralmente consolidado sob a holding de Luxemburgo.
                     </div>
                 </div>
             </div>
@@ -321,16 +323,16 @@
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <img src="https://flagcdn.com/w40/br.png" alt="Brésil" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.3);">
                             <h2 style="font-size: 1.25rem; color: var(--text-main); margin: 0;">
-                                <i class="fa-solid fa-building-columns text-emerald"></i> Comptes Bancaires au Brésil & Trésorerie (Banco do Brasil S.A.)
+                                <i class="fa-solid fa-building-columns text-emerald"></i> <span data-i18n="part_banks_title">Contas Bancárias no Brasil & Tesouraria (Banco do Brasil S.A.)</span>
                             </h2>
                         </div>
-                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
-                            Gestion bancaire de la filiale Sombra Resort Brasil Sociedade Unipessoal Ltda • Agência 1066-9 (Goianinha - RN)
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;" data-i18n="part_banks_subtitle">
+                            Gestão bancária da filial Sombra Resort Brasil Sociedade Unipessoal Ltda • Agência 1066-9 (Goianinha - RN)
                         </div>
                     </div>
                     <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                         <a href="uploads/Partecipazione/Sombra Resort conta Banco Brasil.xlsx" download class="btn btn-secondary" style="font-size: 13px;">
-                            <i class="fa-solid fa-file-excel text-emerald"></i> Télécharger l'Excel Officiel (2 Comptes)
+                            <i class="fa-solid fa-file-excel text-emerald"></i> <span data-i18n="part_banks_btn_excel">Baixar Excel Oficial (2 Contas)</span>
                         </a>
                     </div>
                 </div>
@@ -341,7 +343,7 @@
                     <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 1.25rem; position: relative;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <div>
-                                <span class="badge badge-blue" style="font-size: 10px; margin-bottom: 6px;">COMPTE COURANT OPÉRATIONNEL</span>
+                                <span class="badge badge-blue" style="font-size: 10px; margin-bottom: 6px;" data-i18n="part_card_cc_badge">CONTA CORRENTE OPERACIONAL</span>
                                 <div style="font-weight: 800; font-size: 16px; color: var(--text-main);">C/C Ordinário Banco do Brasil</div>
                                 <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;">
                                     Conta: <strong>48649-3</strong> • Agência: <strong>1066-9</strong>
@@ -353,13 +355,13 @@
                         </div>
 
                         <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Solde Actuel Disponible</div>
+                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="part_card_cc_label">Saldo Atual Disponível</div>
                             <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
                                 <div style="font-size: 26px; font-weight: 800; color: #38bdf8; font-family: monospace;">R$ 40.703,63</div>
                                 <div style="font-size: 13px; color: var(--text-muted); font-family: monospace;">≈ 6.898,92 €</div>
                             </div>
-                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
-                                Encaissement des loyers Hôtel Sombra (JM Empreendimentos SCP 21.578 R$), honoraires et dépenses d'exploitation.
+                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;" data-i18n="part_card_cc_note">
+                                Recebimento dos aluguéis Hotel Sombra (JM Empreendimentos SCP 21.578 R$), honorários e despesas operacionais.
                             </div>
                         </div>
                     </div>
@@ -368,10 +370,10 @@
                     <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 1.25rem; position: relative;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <div>
-                                <span class="badge badge-amber" style="font-size: 10px; margin-bottom: 6px;">COMPTE DE PLACEMENT & RÉSERVES</span>
+                                <span class="badge badge-amber" style="font-size: 10px; margin-bottom: 6px;" data-i18n="part_card_inv_badge">CONTA DE APLICAÇÃO & RESERVAS</span>
                                 <div style="font-weight: 800; font-size: 16px; color: var(--text-main);">Fundo de Investimento BB (RF)</div>
-                                <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;">
-                                    Aplicação Financeira • Rendements DI
+                                <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;" data-i18n="part_card_inv_sub">
+                                    Aplicação Financeira • Rendimentos DI
                                 </div>
                             </div>
                             <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center;">
@@ -380,13 +382,13 @@
                         </div>
 
                         <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Solde Actuel Placements</div>
+                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="part_card_inv_label">Saldo Atual em Aplicações</div>
                             <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
                                 <div style="font-size: 26px; font-weight: 800; color: #fbbf24; font-family: monospace;">R$ 1.702.354,95</div>
                                 <div style="font-size: 13px; color: var(--text-muted); font-family: monospace;">≈ 288.534,74 €</div>
                             </div>
-                            <div style="font-size: 12px; color: #34d399; margin-top: 6px; line-height: 1.4;">
-                                <i class="fa-solid fa-arrow-trend-up"></i> Rendements bruts de juros : <strong>+15.176 R$ à +17.203 R$ / mois</strong> (+141.245 R$ cumulés en 2026).
+                            <div style="font-size: 12px; color: #34d399; margin-top: 6px; line-height: 1.4;" data-i18n="part_card_inv_note">
+                                <i class="fa-solid fa-arrow-trend-up"></i> Rendimentos brutos de juros: <strong>+15.176 R$ a +17.203 R$ / mês</strong> (+141.245 R$ acumulados em 2026).
                             </div>
                         </div>
                     </div>
@@ -395,10 +397,10 @@
                     <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 12px; padding: 1.25rem; position: relative;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                             <div>
-                                <span class="badge badge-emerald" style="font-size: 10px; margin-bottom: 6px;">TOTAL TRÉSORERIE BRÉSIL</span>
-                                <div style="font-weight: 800; font-size: 16px; color: var(--text-main);">Consolidé Banco do Brasil</div>
-                                <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;">
-                                    Taux de change indicatif : 1 EUR = 5,90 BRL
+                                <span class="badge badge-emerald" style="font-size: 10px; margin-bottom: 6px;" data-i18n="part_card_tot_badge">TOTAL TESOURARIA BRASIL</span>
+                                <div style="font-weight: 800; font-size: 16px; color: var(--text-main);" data-i18n="part_card_tot_title">Consolidado Banco do Brasil</div>
+                                <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;" data-i18n="part_card_tot_fx">
+                                    Câmbio indicativo: 1 EUR = 5,90 BRL
                                 </div>
                             </div>
                             <div style="width: 42px; height: 42px; border-radius: 10px; background: rgba(16, 185, 129, 0.2); display: flex; align-items: center; justify-content: center;">
@@ -407,13 +409,13 @@
                         </div>
 
                         <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Total Actif Monétaire</div>
+                            <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="part_card_tot_label">Total Ativo Monetário</div>
                             <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
                                 <div style="font-size: 26px; font-weight: 800; color: #34d399; font-family: monospace;">R$ 1.743.058,58</div>
                                 <div style="font-size: 14px; font-weight: 700; color: #38bdf8; font-family: monospace;">= 295.433,66 €</div>
                             </div>
-                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
-                                Liquidité totale immédiatement mobilisable au crédit de la filiale brésilienne 100% détenue.
+                            <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.4;" data-i18n="part_card_tot_note">
+                                Liquidez total imediatamente disponível da filial brasileira 100% detida.
                             </div>
                         </div>
                     </div>
@@ -422,31 +424,31 @@
                 <!-- Tabs Navigation for Bank Ledgers -->
                 <div style="display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
                     <button class="part-bank-tab-btn active" onclick="switchPartBankTab('cc')">
-                        <i class="fa-solid fa-receipt text-cyan"></i> 1. Conta Corrente (40.703,63 R$)
+                        <i class="fa-solid fa-receipt text-cyan"></i> <span data-i18n="part_tab_btn_cc">1. Conta Corrente (40.703,63 R$)</span>
                     </button>
                     <button class="part-bank-tab-btn" onclick="switchPartBankTab('inv')">
-                        <i class="fa-solid fa-chart-line text-amber"></i> 2. Conto Investimento (1.702.354,95 R$)
+                        <i class="fa-solid fa-chart-line text-amber"></i> <span data-i18n="part_tab_btn_inv">2. Conta de Aplicação (1.702.354,95 R$)</span>
                     </button>
                     <button class="part-bank-tab-btn" onclick="switchPartBankTab('hist')">
-                        <i class="fa-solid fa-clock-rotate-left text-emerald"></i> 3. Évolution des Soldes (2021 - 2026)
+                        <i class="fa-solid fa-clock-rotate-left text-emerald"></i> <span data-i18n="part_tab_btn_hist">3. Evolução dos Saldos (2021 - 2026)</span>
                     </button>
                 </div>
 
                 <!-- TAB 1: Conta Corrente Ledger -->
                 <div id="part-bank-tab-cc" class="table-responsive" style="display: block;">
-                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
-                        Dernières opérations du compte courant opérationnel (loyers perçus, honoraires, frais bancaires) :
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;" data-i18n="part_cc_intro">
+                        Últimas operações da conta corrente operacional (aluguéis recebidos, honorários, despesas bancárias):
                     </div>
                     <table class="data-table" style="font-size: 12.5px;">
                         <thead>
                             <tr>
-                                <th style="width: 105px;">Date</th>
-                                <th style="width: 70px;">N°</th>
-                                <th>Description de l'Opération</th>
-                                <th style="width: 160px;">Catégorie</th>
-                                <th>Tiers / Contrepartie</th>
-                                <th class="text-right" style="width: 150px;">Montant</th>
-                                <th class="text-right" style="width: 160px;">Solde Progressif</th>
+                                <th style="width: 105px;" data-i18n="part_th_date">Data</th>
+                                <th style="width: 70px;" data-i18n="part_th_num">Nº</th>
+                                <th data-i18n="part_th_desc">Descrição da Operação</th>
+                                <th style="width: 160px;" data-i18n="part_th_cat">Categoria</th>
+                                <th data-i18n="part_th_party">Favorecido / Contraparte</th>
+                                <th class="text-right" style="width: 150px;" data-i18n="part_th_amount">Valor</th>
+                                <th class="text-right" style="width: 160px;" data-i18n="part_th_balance">Saldo Acumulado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -454,7 +456,7 @@
         <tr>
             <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-09-30</td>
             <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#255</td>
-            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Pagamento contratto affitto</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;" data-i18n="tx_desc_rent">Pagamento de contrato de locação</td>
             <td style="font-size: 12px; color: var(--text-muted);">Produtos</td>
             <td style="font-size: 12px; color: var(--text-main);">140852-6 SCP - JM EMPREENDIMENTOS IMOBILIARIO SCP LTDA</td>
             <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
@@ -524,7 +526,7 @@
         <tr>
             <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-08-28</td>
             <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#250</td>
-            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Pagamento contratto affitto</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;" data-i18n="tx_desc_rent">Pagamento de contrato de locação</td>
             <td style="font-size: 12px; color: var(--text-muted);">Produtos</td>
             <td style="font-size: 12px; color: var(--text-main);">140852-6 SCP - JM EMPREENDIMENTOS IMOBILIARIO SCP LTDA</td>
             <td class="text-right text-bold text-emerald" style="font-family: monospace; font-size: 13px;">
@@ -720,7 +722,7 @@
         <tr>
             <td style="font-family: monospace; color: var(--text-muted); font-size: 12px;">2026-06-17</td>
             <td class="text-bold text-cyan" style="font-family: monospace; font-size: 12px;">#236</td>
-            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;">Domiciliazione societaria</td>
+            <td style="font-weight: 600; color: var(--text-main); font-size: 13px;" data-i18n="tx_desc_dom">Domiciliação societária</td>
             <td style="font-size: 12px; color: var(--text-muted);">Varias</td>
             <td style="font-size: 12px; color: var(--text-main);">Seahub Coworking</td>
             <td class="text-right text-bold text-rose" style="font-family: monospace; font-size: 13px;">
@@ -877,19 +879,19 @@
 
                 <!-- TAB 2: Conto Investimento Ledger -->
                 <div id="part-bank-tab-inv" class="table-responsive" style="display: none;">
-                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
-                        Historique des rendements mensuels bruts, impôts retenus à la source (IRRF) et rachats de trésorerie :
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;" data-i18n="part_inv_intro">
+                        Histórico de rendimentos mensais brutos, impostos retidos na fonte (IRRF) e resgates de tesouraria:
                     </div>
                     <table class="data-table" style="font-size: 12.5px;">
                         <thead>
                             <tr>
-                                <th style="width: 105px;">Date</th>
-                                <th style="width: 70px;">N°</th>
-                                <th>Description du Mouvement</th>
-                                <th style="width: 160px;">Nature</th>
-                                <th>Détail / Type</th>
-                                <th class="text-right" style="width: 150px;">Montant</th>
-                                <th class="text-right" style="width: 160px;">Solde Placements</th>
+                                <th style="width: 105px;" data-i18n="part_th_date">Data</th>
+                                <th style="width: 70px;" data-i18n="part_th_num">Nº</th>
+                                <th data-i18n="part_th_mov_desc">Descrição da Movimentação</th>
+                                <th style="width: 160px;" data-i18n="part_th_nature">Natureza</th>
+                                <th data-i18n="part_th_detail">Detalhe / Tipo</th>
+                                <th class="text-right" style="width: 150px;" data-i18n="part_th_amount">Valor</th>
+                                <th class="text-right" style="width: 160px;" data-i18n="part_th_balance_inv">Saldo em Aplicações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1320,58 +1322,58 @@
 
                 <!-- TAB 3: Evolution Historique des Soldes -->
                 <div id="part-bank-tab-hist" class="table-responsive" style="display: none;">
-                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
-                        Synthèse de l'évolution des soldes bancaires de la filiale au 31 décembre de chaque exercice :
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;" data-i18n="part_hist_intro">
+                        Síntese da evolução dos saldos bancários da filial em 31 de dezembro de cada exercício:
                     </div>
                     <table class="data-table" style="font-size: 13px;">
                         <thead>
                             <tr>
-                                <th>Période d'Arrêté</th>
-                                <th class="text-right" style="width: 180px;">Conta Corrente (C/C)</th>
-                                <th class="text-right" style="width: 200px;">Conto Investimento (Placements)</th>
-                                <th class="text-right" style="width: 200px;">Total Trésorerie R$</th>
-                                <th class="text-right" style="width: 180px;">Équivalent EUR</th>
+                                <th data-i18n="part_hist_col_period">Período de Fechamento</th>
+                                <th class="text-right" style="width: 180px;" data-i18n="part_hist_col_cc">Conta Corrente (C/C)</th>
+                                <th class="text-right" style="width: 200px;" data-i18n="part_hist_col_inv">Conta de Aplicação (Investimentos)</th>
+                                <th class="text-right" style="width: 200px;" data-i18n="part_hist_col_tot">Total Tesouraria R$</th>
+                                <th class="text-right" style="width: 180px;" data-i18n="part_hist_col_eur">Equivalente EUR</th>
                             </tr>
                         </thead>
                         <tbody>
                             
     <tr>
-        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2021</td>
+        <td style="font-weight: 700; color: var(--text-main);" data-i18n="part_hist_close_2021">Fechamento Exercício 2021</td>
         <td class="text-right" style="font-family: monospace;">R$ 0,00</td>
         <td class="text-right" style="font-family: monospace;">R$ 70,79</td>
         <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 70,79</td>
         <td class="text-right text-muted" style="font-family: monospace;">11,20 €</td>
     </tr>
     <tr>
-        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2022</td>
+        <td style="font-weight: 700; color: var(--text-main);" data-i18n="part_hist_close_2022">Fechamento Exercício 2022</td>
         <td class="text-right" style="font-family: monospace;">R$ 255.109,77</td>
         <td class="text-right" style="font-family: monospace;">R$ 609.935,21</td>
         <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 865.044,98</td>
         <td class="text-right text-muted" style="font-family: monospace;">154.472,32 €</td>
     </tr>
     <tr>
-        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2023</td>
+        <td style="font-weight: 700; color: var(--text-main);" data-i18n="part_hist_close_2023">Fechamento Exercício 2023</td>
         <td class="text-right" style="font-family: monospace;">R$ 0,00</td>
         <td class="text-right" style="font-family: monospace;">R$ 934.919,59</td>
         <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 934.919,59</td>
         <td class="text-right text-muted" style="font-family: monospace;">176.399,92 €</td>
     </tr>
     <tr>
-        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2024</td>
+        <td style="font-weight: 700; color: var(--text-main);" data-i18n="part_hist_close_2024">Fechamento Exercício 2024</td>
         <td class="text-right" style="font-family: monospace;">R$ 0,00</td>
         <td class="text-right" style="font-family: monospace;">R$ 976.766,78</td>
         <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 976.766,78</td>
         <td class="text-right text-muted" style="font-family: monospace;">162.794,46 €</td>
     </tr>
     <tr>
-        <td style="font-weight: 700; color: var(--text-main);">Clôture Exercice 2025</td>
+        <td style="font-weight: 700; color: var(--text-main);" data-i18n="part_hist_close_2025">Fechamento Exercício 2025</td>
         <td class="text-right" style="font-family: monospace;">R$ 8.856,39</td>
         <td class="text-right" style="font-family: monospace;">R$ 1.591.722,73</td>
         <td class="text-right text-emerald text-bold" style="font-family: monospace;">R$ 1.600.579,12</td>
         <td class="text-right text-muted" style="font-family: monospace;">266.763,19 €</td>
     </tr>
     <tr style="background: rgba(16, 185, 129, 0.12); font-weight: 800;">
-        <td style="color: #34d399;">Situation Actuelle 2026 (Extrait Banco do Brasil)</td>
+        <td style="color: #34d399;" data-i18n="part_hist_current_2026">Posição Atual 2026 (Extrato Banco do Brasil)</td>
         <td class="text-right" style="font-family: monospace; color: #38bdf8;">R$ 40.703,63</td>
         <td class="text-right" style="font-family: monospace; color: #fbbf24;">R$ 1.702.354,95</td>
         <td class="text-right text-emerald" style="font-family: monospace; font-size: 15px;">R$ 1.743.058,58</td>
@@ -1403,19 +1405,19 @@
                 <div class="glass-panel" style="padding: 1.5rem; border-left: 4px solid var(--accent-cyan); display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-                            <span class="badge badge-cyan">Stato Patrimoniale Separato</span>
-                            <span class="badge badge-emerald">Certificato 2024 vs 2025</span>
+                            <span class="badge badge-cyan" data-i18n="part_banner_bp_badge">Balanço Patrimonial Separado</span>
+                            <span class="badge badge-emerald" data-i18n="part_banner_bp_badge2">Certificado 2024 vs 2025</span>
                         </div>
                         <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
-                            <i class="fa-solid fa-scale-balanced text-cyan"></i> Balanço Patrimonial (Bilancio Brasile)
+                            <i class="fa-solid fa-scale-balanced text-cyan"></i> <span data-i18n="part_banner_bp_title">Balanço Patrimonial (Filial Brasil)</span>
                         </h3>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-                            Consulta la pagina dedicata del Bilancio Patrimoniale ufficiale (Ativo Total R$ 5.298.710,03, Patrimônio Líquido R$ 3.967.288,96) con l'apertura a tendina per ogni singola voce e sottoconto.
+                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;" data-i18n="part_banner_bp_desc">
+                            Consulte a página dedicada do Balanço Patrimonial oficial (Ativo Total R$ 5.298.710,03, Patrimônio Líquido R$ 3.967.288,96) com detalhamento analítico para cada conta e subconta.
                         </p>
                     </div>
                     <div style="margin-top: 1.25rem;">
                         <a href="bilancio_brasil.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
-                            <i class="fa-solid fa-arrow-right"></i> Apri Pagina Bilancio Brasile
+                            <i class="fa-solid fa-arrow-right"></i> <span data-i18n="part_banner_bp_btn">Acessar Balanço Patrimonial Brasil</span>
                         </a>
                     </div>
                 </div>
@@ -1423,19 +1425,19 @@
                 <div class="glass-panel" style="padding: 1.5rem; border-left: 4px solid var(--accent-emerald); display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-                            <span class="badge badge-emerald">Conto Economico Separato</span>
-                            <span class="badge badge-cyan">Perdite e Profitti Certificati</span>
+                            <span class="badge badge-emerald" data-i18n="part_banner_dre_badge">Demonstração do Resultado (DRE)</span>
+                            <span class="badge badge-cyan" data-i18n="part_banner_dre_badge2">Lucros e Perdas Certificados</span>
                         </div>
                         <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
-                            <i class="fa-solid fa-chart-line text-emerald"></i> DRE - Demonstração do Resultado do Exercício
+                            <i class="fa-solid fa-chart-line text-emerald"></i> <span data-i18n="part_banner_dre_title">DRE - Demonstração do Resultado do Exercício</span>
                         </h3>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
-                            Consulta la pagina dedicata di Perdite e Profitti (Rendimenti Banco do Brasil +R$ 135.280,27, Utile Netto Certificato DRE +R$ 137.310,45) con l'apertura a tendina delle singole fatture e proventi.
+                        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;" data-i18n="part_banner_dre_desc">
+                            Consulte a página dedicada de Demonstração do Resultado (Rendimentos Banco do Brasil +R$ 135.280,27, Lucro Líquido Certificado DRE +R$ 137.310,45) com abertura detalhada de receitas e custos.
                         </p>
                     </div>
                     <div style="margin-top: 1.25rem;">
                         <a href="dre_brasil.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
-                            <i class="fa-solid fa-arrow-right"></i> Apri Pagina Perdite e Profitti Brasile
+                            <i class="fa-solid fa-arrow-right"></i> <span data-i18n="part_banner_dre_btn">Acessar DRE / Resultados Brasil</span>
                         </a>
                     </div>
                 </div>
@@ -1444,8 +1446,7 @@
     </div>
 
 <!-- Core Scripts -->
-    <script src="data.js?v=20261023"></script>
-    <script src="i18n.js?v=20261023"></script>
-    <script src="app.js?v=20261023g"></script>
+    <script src="data.js?v=20261025_v4"></script>
+    <script src="app.js?v=20261025_v4"></script>
 </body>
 </html>

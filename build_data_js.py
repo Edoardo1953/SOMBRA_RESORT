@@ -203,7 +203,7 @@ partners_data = [
         "villa": "Villa C",
         "residence": "17 rue Beaumont, Luxembourg",
         "country": "Luxembourg",
-        "bo": "Michel Barbancey / Investisseurs",
+        "bo": "Baguanier Henri (100%)",
         "kyc_status": "Conforme",
         "pep": "Non",
         "color": "#0284c7"

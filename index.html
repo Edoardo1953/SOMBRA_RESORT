@@ -33,9 +33,11 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css?v=20261023g">
     <!-- Auth Guard -->
-    <script src="auth.js?v=20261023g"></script>
+    <script src="auth.js?v=20261025_v4"></script>
     <link rel="shortcut icon" href="brand_assets/favicon.ico?v=palma" type="image/x-icon">
     <link rel="apple-touch-icon" href="brand_assets/apple-touch-icon.png?v=palma">
+    <!-- i18n Core Engine -->
+    <script src="i18n.js?v=20261025_v4"></script>
 </head>
 <body>
     <div class="app-container">
@@ -433,27 +435,27 @@
                 <!-- Fiche d'Identité Juridique -->
                 <div class="glass-panel" style="padding: 1.5rem;">
                     <div class="section-header" style="margin-bottom: 1rem;">
-                        <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-id-card text-emerald"></i> Fiche d'Identité Juridique</h2>
+                        <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-id-card text-emerald"></i> <span data-i18n="legal_card_title">Fiche d'Identité Juridique</span></h2>
                         <span class="badge badge-emerald">SOPARFI LUXEMBOURG</span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px;">
-                        <div><strong style="color: var(--text-muted);">Dénomination :</strong> <span style="font-weight: 600; color: var(--text-main);">SOMBRA E AGUA FRESCA RESORT S.à r.l.</span></div>
-                        <div><strong style="color: var(--text-muted);">Forme Juridique :</strong> <span>Société à responsabilité limitée</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="legal_denomination">Dénomination :</strong> <span style="font-weight: 600; color: var(--text-main);">SOMBRA E AGUA FRESCA RESORT S.à r.l.</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="legal_forme">Forme Juridique :</strong> <span>Société à responsabilité limitée</span></div>
                         <div><strong style="color: var(--text-muted);">RCS Luxembourg :</strong> <span class="badge badge-blue">B 263.295</span></div>
-                        <div><strong style="color: var(--text-muted);">Matricule National :</strong> <span>2021 2400 671</span></div>
-                        <div><strong style="color: var(--text-muted);">Date de Constitution :</strong> <span>20/12/2021 (Immat. 14/01/2022)</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="legal_matricule">Matricule National :</strong> <span>2021 2400 671</span></div>
+                        <div><strong style="color: var(--text-muted);" data-i18n="legal_constitution">Date de Constitution :</strong> <span>20/12/2021 (Immat. 14/01/2022)</span></div>
                         <div><strong style="color: var(--text-muted);">Code NACE :</strong> <span>64.202 - Soparfi</span></div>
-                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Siège Social :</strong> <span>17, rue Beaumont, L-1219 Luxembourg</span></div>
-                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);">Conseil de Gérance :</strong> <span style="color: #34d399; font-weight: 600;">TUBIA Edoardo</span> & <span style="color: #38bdf8; font-weight: 600;">VIGNOLLE Giorgio</span> (Gérants)</div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);" data-i18n="legal_siege">Siège Social :</strong> <span>17, rue Beaumont, L-1219 Luxembourg</span></div>
+                        <div style="grid-column: span 2;"><strong style="color: var(--text-muted);" data-i18n="legal_gerance">Conseil de Gérance :</strong> <span style="color: #34d399; font-weight: 600;">TUBIA Edoardo</span> & <span style="color: #38bdf8; font-weight: 600;">VIGNOLLE Giorgio</span> (Gérants)</div>
                     </div>
 
                     <div style="margin-top: 1.25rem; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn btn-secondary" onclick="openSchemaSocietarioModal()">
-                            <i class="fa-solid fa-sitemap text-emerald"></i> Organigramme Détention Luxembourg / Brésil
+                            <i class="fa-solid fa-sitemap text-emerald"></i> <span data-i18n="legal_btn_organigram">Organigramme Détention Luxembourg / Brésil</span>
                         </button>
                         <a href="documenti.html" class="btn btn-secondary">
-                            <i class="fa-solid fa-file-lines text-cyan"></i> Voir Acte & RCS
+                            <i class="fa-solid fa-file-lines text-cyan"></i> <span data-i18n="legal_btn_rcs">Voir Acte & RCS</span>
                         </a>
                     </div>
                 </div>
@@ -462,12 +464,12 @@
                 <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
                         <div class="section-header" style="margin-bottom: 0.75rem;">
-                            <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-building-circle-check text-amber"></i> Filiale Détenue</h2>
-                            <span class="badge badge-amber">100% Détenue</span>
+                            <h2 style="font-size: 1.15rem; color: var(--text-main);"><i class="fa-solid fa-building-circle-check text-amber"></i> <span data-i18n="filiale_card_title">Filiale Détenue</span></h2>
+                            <span class="badge badge-amber" data-i18n="filiale_badge_pct">100% Détenue</span>
                         </div>
                         <div style="font-weight: 700; color: #fbbf24; font-size: 14px; margin-bottom: 4px;">SOMBRA RESORT BRASIL LTDA</div>
                         <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">CNPJ : 43.730.206/0001-80 • JUCERN 24200911503</div>
-                        <div style="font-size: 12.5px; line-height: 1.6; color: var(--text-main);">
+                        <div style="font-size: 12.5px; line-height: 1.6; color: var(--text-main);" data-i18n="filiale_card_desc">
                             Actif d'hospitality haut standing à <strong>Praia de Pipa</strong> (Tibau do Sul, RN). 
                             Capital souscrit par la holding : <strong>R$ 3.000.525,45</strong>. 
                             Complexe résidentiel comprenant 9 villas attribuées aux associés.
@@ -475,7 +477,7 @@
                     </div>
                     <div style="margin-top: 1rem;">
                         <a href="partecipazioni.html" class="btn btn-primary btn-block">
-                            <i class="fa-solid fa-arrow-right"></i> Consulter la Filiale Brésil
+                            <i class="fa-solid fa-arrow-right"></i> <span data-i18n="filiale_btn_view">Consulter la Filiale Brésil</span>
                         </a>
                     </div>
                 </div>
@@ -875,8 +877,7 @@
     </div>
     
     <!-- Core Scripts -->
-    <script src="data.js?v=20261023"></script>
-    <script src="i18n.js?v=20261023"></script>
-    <script src="app.js?v=20261023g"></script>
+    <script src="data.js?v=20261025_v4"></script>
+    <script src="app.js?v=20261025_v4"></script>
 </body>
 </html>
