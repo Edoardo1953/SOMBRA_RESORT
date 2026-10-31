@@ -252,10 +252,20 @@
 
     <!-- Modal: Preview Document -->
     <div id="docPreviewModal" class="modal-backdrop" style="display: none;">
-        <div class="modal-card glass-panel" style="max-width: 950px; width: 95%;">
-            <div class="modal-header">
-                <h3 id="doc-preview-title"><i class="fa-solid fa-eye text-emerald"></i> Aperçu Document</h3>
-                <button class="btn-icon" onclick="closeDocPreviewModal()"><i class="fa-solid fa-xmark"></i></button>
+        <div class="modal-card glass-panel" style="max-width: 1050px; width: 95%;">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 10px; min-width: 0; max-width: 65%;">
+                    <h3 id="doc-preview-title" style="margin: 0; font-size: 1.05rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><i class="fa-solid fa-eye text-emerald"></i> Aperçu Document</h3>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <a id="doc-preview-external-btn" href="#" target="_blank" class="btn btn-secondary btn-sm" title="Ouvrir dans un nouvel onglet sans filtre de navigateur">
+                        <i class="fa-solid fa-up-right-from-square text-cyan"></i> <span>Plein écran</span>
+                    </a>
+                    <a id="doc-preview-download-btn" href="#" download="" class="btn btn-secondary btn-sm" title="Télécharger le fichier original">
+                        <i class="fa-solid fa-download text-emerald"></i> <span>Télécharger</span>
+                    </a>
+                    <button class="btn-icon" onclick="closeDocPreviewModal()" title="Fermer"><i class="fa-solid fa-xmark"></i></button>
+                </div>
             </div>
             <div id="doc-preview-container" class="modal-body" style="padding: 1rem;"></div>
             <div class="modal-footer" style="padding: 0.75rem 1.5rem; text-align: right; border-top: 1px solid var(--border-color);">
