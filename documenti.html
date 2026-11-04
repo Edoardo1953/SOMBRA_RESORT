@@ -28,6 +28,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS -->
+    <script src="xlsx.full.min.js"></script>
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css?v=20261023g">
     <!-- Auth Guard -->
@@ -219,6 +221,9 @@
                             <input type="text" class="form-control" placeholder="Rechercher document, réf..." style="padding-left: 32px; width: 230px;" oninput="onDocSearchInput(this.value)">
                             <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 12px;"></i>
                         </div>
+                                                <button class="btn btn-secondary" onclick="openImportExcelModal()" style="border-color: rgba(16, 185, 129, 0.5); color: #10b981; font-weight: 600;" title="Mettre à jour directement depuis Excel">
+                            <i class="fa-solid fa-file-arrow-up text-emerald"></i> <span data-i18n="btn_update_excel">Aggiorna da Excel</span>
+                        </button>
                         <button class="btn btn-primary" onclick="openUploadDocModal()">
                             <i class="fa-solid fa-cloud-arrow-up"></i> Téléverser Document
                         </button>
@@ -310,9 +315,10 @@
         </div>
     </div>
 
-    <!-- Core Scripts -->
+        <!-- Core Scripts -->
     <script src="data.js?v=20261104"></script>
     <script src="i18n.js?v=20261023"></script>
+    <script src="excel_importer.js?v=20261104"></script>
     <script src="doc_storage.js?v=20261023"></script>
     <script src="documenti_app.js?v=20261104"></script>
 </body>
