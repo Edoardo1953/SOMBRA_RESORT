@@ -13,7 +13,7 @@ wb_conta = openpyxl.load_workbook('uploads/CONTA Sombra Resort Sàrl.xlsx', data
 # Olky Pay
 ws_o = wb_conta['OLKYPAY']
 olkypay_txs = []
-for r in range(6, ws_o.max_row+1):
+for r in range(6, 171):
     nr = ws_o.cell(r, 2).value
     desc = ws_o.cell(r, 3).value
     ordinante = ws_o.cell(r, 4).value
@@ -23,7 +23,7 @@ for r in range(6, ws_o.max_row+1):
     d_val = ws_o.cell(r, 8).value
     tot = ws_o.cell(r, 9).value
     solde = ws_o.cell(r, 10).value
-    if (desc and str(desc).strip()) or tot is not None:
+    if desc and str(desc).strip():
         amt = float(tot) if tot is not None else 0.0
         bal = float(solde) if solde is not None else 0.0
         date_str = clean_val(d_compt) or clean_val(d_val) or '2021-10-11'
@@ -43,7 +43,7 @@ for r in range(6, ws_o.max_row+1):
 # Revolut
 ws_r = wb_conta['Conto REVOLUT']
 revolut_txs = []
-for r in range(6, ws_r.max_row+1):
+for r in range(6, 69):
     nr = ws_r.cell(r, 2).value
     desc = ws_r.cell(r, 3).value
     ordinante = ws_r.cell(r, 4).value
@@ -53,7 +53,7 @@ for r in range(6, ws_r.max_row+1):
     d_val = ws_r.cell(r, 8).value
     tot = ws_r.cell(r, 9).value
     solde = ws_r.cell(r, 10).value
-    if (desc and str(desc).strip()) or tot is not None:
+    if desc and str(desc).strip():
         amt = float(tot) if tot is not None else 0.0
         bal = float(solde) if solde is not None else 0.0
         date_str = clean_val(d_compt) or clean_val(d_val) or '2026-03-04'
@@ -69,6 +69,9 @@ for r in range(6, ws_r.max_row+1):
             'balance': round(bal, 2),
             'bank': 'revolut'
         })
+
+revolut_current_balance = revolut_txs[-1]['balance'] if revolut_txs else 0.00
+olky_current_balance = olkypay_txs[-1]['balance'] if olkypay_txs else 0.00
 
 # --- 2. BANCO DO BRASIL TRANSACTIONS ---
 wb_bb = openpyxl.load_workbook('uploads/Partecipazione/Sombra Resort conta Banco Brasil.xlsx', data_only=True)
@@ -445,11 +448,11 @@ documents_data = [
         "title": "CONTA Sombra Resort Sàrl.xlsx",
         "category": "Trésorerie",
         "description": "Grand livre bancaire complet Olky Pay & Revolut, relevés, écritures comptables et cessions",
-        "date": "23/10/2026",
+        "date": "04/11/2026",
         "reference": "XLS-CONTA-LUX-2026",
-        "file_path": "uploads/CONTA Sombra Resort Sarl.xlsx",
+        "file_path": "uploads/CONTA Sombra Resort Sàrl.xlsx",
         "file_type": "xlsx",
-        "file_size": "175 KB",
+        "file_size": "177 KB",
         "status": "Opérationnel",
         "status_color": "emerald"
     },
@@ -580,7 +583,7 @@ data_obj = {
         "currency": "EUR (€)",
         "registered_office": "17, rue Beaumont, L-1219 Luxembourg",
         "gerance": "TUBIA Edoardo & VIGNOLLE Giorgio (Gérants)",
-        "updated_at": "23/10/2026 15:30:00"
+        "updated_at": "04/11/2026 16:30:00"
     },
     "subsidiary": {
         "name": "SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA",
@@ -621,7 +624,7 @@ data_obj = {
             "currency": "EUR",
             "balance_2024": 4229.46,
             "balance_2025": 10193.23,
-            "balance_current": 0.00,
+            "balance_current": olky_current_balance,
             "status": "Clôturé",
             "badge_color": "#64748b"
         },
@@ -634,7 +637,7 @@ data_obj = {
             "bic": "REVO LT21",
             "currency": "EUR",
             "balance_2025": 0.00,
-            "balance_current": 8508.43,
+            "balance_current": revolut_current_balance,
             "status": "Actif Principal",
             "badge_color": "#10b981"
         },
@@ -696,7 +699,7 @@ data_obj = {
             "libelle": "Avoirs en banques - Revolut Business EUR",
             "val_2024": 0.00,
             "val_2025": 0.00,
-            "val_2026": 8508.43,
+            "val_2026": revolut_current_balance,
             "category": "Actif circulant / Trésorerie",
             "note": "Compte Revolut Business LT34 3250 0953 8055 9528"
         }
@@ -789,7 +792,7 @@ data_obj = {
             "libelle": "Frais de comptes et commissions bancaires",
             "val_2024": -446.40,
             "val_2025": -376.83,
-            "val_2026": -124.49,
+            "val_2026": -142.49,
             "category": "Frais bancaires"
         },
         {
@@ -805,7 +808,7 @@ data_obj = {
             "libelle": "Frais d'actes notariés et assimilés",
             "val_2024": 0.00,
             "val_2025": -24.40,
-            "val_2026": 0.00,
+            "val_2026": -266.79,
             "category": "Frais légaux"
         },
         {

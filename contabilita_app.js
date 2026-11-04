@@ -41,7 +41,7 @@ const COMPTA_DRILLDOWN_DB = {
         { ref: "5131000", desc: "Compte courant bancaire Olky Pay EUR (LU66 6060 0020 0000 3953)", tiers: "Olky Payment Services S.A.", val_2024: 4229.46, val_2025: 10193.23, val_2026: 0.00, note: "Compte clôturé le 21/05/2026" }
     ],
     "5132000": [
-        { ref: "5132000", desc: "Compte opérationnel Revolut Business EUR (LT34 3250 0953 8055 9528)", tiers: "Revolut Bank UAB", val_2024: 0.00, val_2025: 0.00, val_2026: 8508.43, note: "Compte principal ouvert en 2026" }
+        { ref: "5132000", desc: "Compte opérationnel Revolut Business EUR (LT34 3250 0953 8055 9528)", tiers: "Revolut Bank UAB", val_2024: 0.00, val_2025: 0.00, val_2026: 7622.95, note: "Compte principal ouvert en 2026" }
     ],
 
     // BILAN PASSIF
@@ -80,20 +80,20 @@ const COMPTA_DRILLDOWN_DB = {
     // COMPTE DE PERTES ET PROFITS (P&P)
     "6133300": [
         { ref: "6133301", desc: "Frais mensuels de tenue de compte bancaire Olky Pay", tiers: "Olky Payment Services S.A.", val_2024: -240.00, val_2025: -180.00, val_2026: -60.00, note: "Forfait bancaire mensuel de 20 €" },
-        { ref: "6133302", desc: "Commissions sur virements et tenue Revolut Business", tiers: "Revolut Bank UAB", val_2024: -206.40, val_2025: -196.83, val_2026: -64.49, note: "Commissions de tenue et virements bancaires" }
+        { ref: "6133302", desc: "Commissions sur virements et tenue Revolut Business", tiers: "Revolut Bank UAB", val_2024: -206.40, val_2025: -196.83, val_2026: -82.49, note: "Commissions de tenue et virements bancaires" }
     ],
     "6134200": [
         { ref: "6134201", desc: "Honoraires annuels fiduciaire tenue comptable et bilan PCN", tiers: "Cabinet Fiduciaire Luxembourg", val_2024: -4000.00, val_2025: -4000.00, val_2026: 0.00, note: "Établissement bilan annuel, grand-livre et balance" },
         { ref: "6134202", desc: "Frais de dépôt eCDF et publication officielle RCSL", tiers: "Centre Commun eCDF / RCSL", val_2024: -640.00, val_2025: -705.00, val_2026: 0.00, note: "Dépôt légal de la liasse financière officielle" }
     ],
     "6135000": [
-        { ref: "6135001", desc: "Frais et actes notariés statutaires", tiers: "Étude Notariale Luxembourg", val_2024: 0.00, val_2025: -24.40, val_2026: 0.00, note: "Frais d'actes notariés et greffe RCSL" }
+        { ref: "6135001", desc: "Frais et actes notariés statutaires", tiers: "Étude Notariale Luxembourg", val_2024: 0.00, val_2025: -24.40, val_2026: -266.79, note: "Frais d'actes notariés et greffe RCSL (Schaeffer e Apostille)" }
     ],
     "6187000": [
         { ref: "6187001", desc: "Cotisation annuelle obligatoire Chambre de Commerce", tiers: "Chambre de Commerce du Luxembourg", val_2024: -350.00, val_2025: -350.00, val_2026: 0.00, note: "Cotisation légale annuelle Soparfi" }
     ],
     "6811000": [
-        { ref: "6811001", desc: "Impôt sur la Fortune minimum (IF forfaitaire annuel)", tiers: "Administration des Contributions Directes (ACD)", val_2024: -1605.00, val_2025: -1605.00, val_2026: 0.00, note: "Impôt forfaitaire SOPARFI (total bilan > 350.000 €)" }
+        { ref: "6811001", desc: "Impôt sur la Fortune minimum (IF forfaitaire annuel)", tiers: "Administration des Contributions Directes (ACD)", val_2024: -1605.00, val_2025: -1605.00, val_2026: -1605.00, note: "Impôt forfaitaire SOPARFI (total bilan > 350.000 €)" }
     ]
 };
 

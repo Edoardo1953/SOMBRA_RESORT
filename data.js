@@ -24,7 +24,7 @@ window.SOMBRA_RESORT_DATA = {
     "currency": "EUR (€)",
     "registered_office": "17, rue Beaumont, L-1219 Luxembourg",
     "gerance": "TUBIA Edoardo & VIGNOLLE Giorgio (Gérants)",
-    "updated_at": "23/10/2026 15:30:00"
+    "updated_at": "04/11/2026 16:30:00"
   },
   "subsidiary": {
     "name": "SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA",
@@ -81,7 +81,7 @@ window.SOMBRA_RESORT_DATA = {
       "bic": "REVO LT21",
       "currency": "EUR",
       "balance_2025": 0.0,
-      "balance_current": 8508.43,
+      "balance_current": 7622.95,
       "status": "Actif Principal",
       "badge_color": "#10b981"
     },
@@ -523,11 +523,11 @@ window.SOMBRA_RESORT_DATA = {
       "title": "CONTA Sombra Resort Sàrl.xlsx",
       "category": "Trésorerie",
       "description": "Grand livre bancaire complet Olky Pay & Revolut, relevés, écritures comptables et cessions",
-      "date": "23/10/2026",
+      "date": "04/11/2026",
       "reference": "XLS-CONTA-LUX-2026",
-      "file_path": "uploads/CONTA Sombra Resort Sarl.xlsx",
+      "file_path": "uploads/CONTA Sombra Resort Sàrl.xlsx",
       "file_type": "xlsx",
-      "file_size": "175 KB",
+      "file_size": "177 KB",
       "status": "Opérationnel",
       "status_color": "emerald"
     },
@@ -2616,18 +2616,6 @@ window.SOMBRA_RESORT_DATA = {
       "amount": -19.51,
       "balance": 0.0,
       "bank": "olky"
-    },
-    {
-      "id": "OLK-166",
-      "nr": 166,
-      "desc": "",
-      "ordinante": "",
-      "socio": "",
-      "beneficiario": "",
-      "date": "2021-10-11",
-      "amount": 0.0,
-      "balance": 0.0,
-      "bank": "olky"
     }
   ],
   "transactions_revolut": [
@@ -2922,49 +2910,49 @@ window.SOMBRA_RESORT_DATA = {
     {
       "id": "REV-025",
       "nr": 25,
-      "desc": "",
-      "ordinante": "",
+      "desc": "Spese bancarie (Frais d'abbonement)",
+      "ordinante": "Revolut",
       "socio": "",
-      "beneficiario": "",
-      "date": "2026-03-04",
-      "amount": 8308.99,
-      "balance": 8308.99,
+      "beneficiario": "Revolut",
+      "date": "2026-11-02",
+      "amount": -10.0,
+      "balance": 8298.99,
       "bank": "revolut"
     },
     {
       "id": "REV-026",
-      "nr": 153,
-      "desc": "Avances Impôt Fortune 2026",
-      "ordinante": "Sombra e Agua Fresca Resort Sàrl",
+      "nr": 26,
+      "desc": "Spese bancarie (Frais Appl. Depenses)",
+      "ordinante": "Revolut",
       "socio": "",
-      "beneficiario": "Administration des Contributions Directes",
-      "date": "2026-05-10",
-      "amount": -401.25,
-      "balance": 9310.93,
+      "beneficiario": "Revolut",
+      "date": "2026-11-02",
+      "amount": -8.0,
+      "balance": 8290.99,
       "bank": "revolut"
     },
     {
       "id": "REV-027",
-      "nr": 154,
-      "desc": "Avances Impôt Fortune 2026",
+      "nr": 27,
+      "desc": "Spese Amministrative",
       "ordinante": "Sombra e Agua Fresca Resort Sàrl",
       "socio": "",
-      "beneficiario": "Administration des Contributions Directes",
-      "date": "2026-08-10",
-      "amount": -401.25,
-      "balance": 8909.68,
+      "beneficiario": "Notaire Martine Schaeffer",
+      "date": "2026-11-04",
+      "amount": -266.79,
+      "balance": 8024.2,
       "bank": "revolut"
     },
     {
       "id": "REV-028",
-      "nr": 155,
-      "desc": "Avances Impôt Fortune 2026",
+      "nr": 28,
+      "desc": "Impôt Fortune 2026",
       "ordinante": "Sombra e Agua Fresca Resort Sàrl",
       "socio": "",
       "beneficiario": "Administration des Contributions Directes",
-      "date": "2026-11-10",
+      "date": "2026-11-04",
       "amount": -401.25,
-      "balance": 8508.43,
+      "balance": 7622.95,
       "bank": "revolut"
     }
   ],
@@ -6322,7 +6310,7 @@ window.SOMBRA_RESORT_DATA = {
       "libelle": "Avoirs en banques - Revolut Business EUR",
       "val_2024": 0.0,
       "val_2025": 0.0,
-      "val_2026": 8508.43,
+      "val_2026": 7622.95,
       "category": "Actif circulant / Trésorerie",
       "note": "Compte Revolut Business LT34 3250 0953 8055 9528"
     }
@@ -6415,7 +6403,7 @@ window.SOMBRA_RESORT_DATA = {
       "libelle": "Frais de comptes et commissions bancaires",
       "val_2024": -446.4,
       "val_2025": -376.83,
-      "val_2026": -124.49,
+      "val_2026": -142.49,
       "category": "Frais bancaires"
     },
     {
@@ -6431,7 +6419,7 @@ window.SOMBRA_RESORT_DATA = {
       "libelle": "Frais d'actes notariés et assimilés",
       "val_2024": 0.0,
       "val_2025": -24.4,
-      "val_2026": 0.0,
+      "val_2026": -266.79,
       "category": "Frais légaux"
     },
     {
