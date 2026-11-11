@@ -54,9 +54,9 @@ const SR_I18N = {
         part_kpi_ativo_label: "Actif Total (Bilan 31/10/2026)",
         part_kpi_ativo_sub: "Disponibilités R$ 1.774.989,28 (2025 : R$ 5.348.180,83)",
         part_kpi_pl_label: "Capitaux Propres (31/10/2026)",
-        part_kpi_pl_sub: "Capital + Rés. R$ 1.745.282,93 (2025 : R$ 4.633.908,26)",
-        part_kpi_res_label: "Rendements BB RF (YTD 2026)",
-        part_kpi_res_sub: "Bénéfice Net YTD : +R$ 111.900,12 (2025 : +R$ 135.280,27)",
+        part_kpi_pl_sub: "Capital + Rés. R$ 1.807.792,97 (2025 : R$ 4.633.908,26)",
+        part_kpi_res_label: "Produits Totaux BB + SCP (YTD 2026)",
+        part_kpi_res_sub: "BB RF R$ 156,6k + Loyers SCP R$ 64,7k • Net +R$ 174.410,16",
 
         // Fiche d'Identité de la Filiale Brésilienne
         part_fiche_title: "Fiche d'Identité de la Filiale Brésilienne",
@@ -120,12 +120,14 @@ const SR_I18N = {
         part_banner_bp_badge: "Bilan Séparé",
         part_banner_bp_badge2: "Certifié 2024–2025 & YTD 2026",
         part_banner_bp_title: "Balanço Patrimonial (Bilan Brésil)",
-        part_banner_bp_desc: "Consultez la page dédiée du Bilan Patrimonial (2025 Certifié R$ 5.348.180,83 • 31/10/2026 Excel BB R$ 5.457.856,95, Capitaux Propres R$ 4.745.808,38) avec le détail de chaque poste.",
+        part_banner_bp_desc: "Consultez la page dédiée du Bilan Patrimonial (2025 Certifié R$ 5.348.180,83 • 31/10/2026 Excel BB R$ 5.522.590,99, Capitaux Propres R$ 4.808.318,42) avec le détail de chaque poste.",
         part_banner_bp_btn: "Ouvrir la Page Bilan Brésil",
         part_banner_dre_badge: "Compte de Résultat Séparé",
         part_banner_dre_badge2: "P&L Certifié & YTD 2026",
         part_banner_dre_title: "DRE - Demonstração do Resultado do Exercício",
-        part_banner_dre_desc: "Consultez la page dédiée du Compte de Résultat (DRE 2025 Certifié : Bénéfice +R$ 137.310,45 • YTD 31/10/2026 Excel BB : Rendements +R$ 156.589,49, Bénéfice Net +R$ 111.900,12).",
+        part_banner_dre_desc: "Consultez le Compte de Résultat avec double vue : Flux BB Excel (2025 : Loyers +R$ 617.509,26, Solde +R$ 623.812,34) vs Comptabilité CRC (+R$ 137.310,45) • YTD 31/10/2026 : BB +R$ 156.589,49 + Loyers SCP +R$ 64.734,05, Net +R$ 174.410,16.",
+        ctrl_dre_basis_cash: "Flux BB (Caisse Excel)",
+        ctrl_dre_basis_crc: "Comptabilité Officielle (CRC)",
         part_banner_dre_btn: "Ouvrir la Page DRE Brésil",
 
         // Contrôles Bilan et DRE
@@ -289,9 +291,9 @@ const SR_I18N = {
         part_kpi_ativo_label: "Attivo Totale (Bilancio 31/10/2026)",
         part_kpi_ativo_sub: "Disponibilità R$ 1.774.989,28 (2025 : R$ 5.348.180,83)",
         part_kpi_pl_label: "Patrimonio Netto (31/10/2026)",
-        part_kpi_pl_sub: "Capitale + Riserve R$ 1.745.282,93 (2025 : R$ 4.633.908,26)",
-        part_kpi_res_label: "Rendimenti BB RF (YTD 2026)",
-        part_kpi_res_sub: "Utile Netto YTD : +R$ 111.900,12 (2025 : +R$ 135.280,27)",
+        part_kpi_pl_sub: "Capitale + Riserve R$ 1.807.792,97 (2025 : R$ 4.633.908,26)",
+        part_kpi_res_label: "Ricavi Totali BB + SCP (YTD 2026)",
+        part_kpi_res_sub: "BB RF R$ 156,6k + Locazione SCP R$ 64,7k • Utile +R$ 174.410,16",
 
         // Scheda Identificativa Filiale Brasiliana
         part_fiche_title: "Scheda Identificativa della Filiale Brasiliana",
@@ -355,12 +357,14 @@ const SR_I18N = {
         part_banner_bp_badge: "Stato Patrimoniale Separato",
         part_banner_bp_badge2: "Certificato 2024–2025 & YTD 2026",
         part_banner_bp_title: "Balanço Patrimonial (Bilancio Brasile)",
-        part_banner_bp_desc: "Consulta la pagina dedicata del Bilancio Patrimoniale (2025 Certificato R$ 5.348.180,83 • 31/10/2026 Excel BB R$ 5.457.856,95, Patrimonio Netto R$ 4.745.808,38) con apertura a tendina di ogni voce.",
+        part_banner_bp_desc: "Consulta la pagina dedicata del Bilancio Patrimoniale (2025 Certificato R$ 5.348.180,83 • 31/10/2026 Excel BB R$ 5.522.590,99, Patrimonio Netto R$ 4.808.318,42) con apertura a tendina di ogni voce.",
         part_banner_bp_btn: "Apri Pagina Bilancio Brasile",
         part_banner_dre_badge: "Conto Economico Separato",
         part_banner_dre_badge2: "Perdite e Profitti Certificati & YTD 2026",
         part_banner_dre_title: "DRE - Demonstração do Resultado do Exercício",
-        part_banner_dre_desc: "Consulta la pagina dedicata di Perdite e Profitti (DRE 2025 Certificato : Utile +R$ 137.310,45 • YTD 31/10/2026 Excel BB : Rendimenti +R$ 156.589,49, Utile Netto +R$ 111.900,12).",
+        part_banner_dre_desc: "Consulta il Conto Economico con doppia vista: Flussi BB Excel (2025: Locazione +R$ 617.509,26, Saldo +R$ 623.812,34) vs Contabilità CRC (+R$ 137.310,45) • YTD 31/10/2026: BB +R$ 156.589,49 + Locazione SCP +R$ 64.734,05, Utile +R$ 174.410,16.",
+        ctrl_dre_basis_cash: "Flussi BB (Cassa Excel)",
+        ctrl_dre_basis_crc: "Contabilità Ufficiale (CRC)",
         part_banner_dre_btn: "Apri Pagina Perdite e Profitti Brasile",
 
         // Controlli Bilancio e DRE
@@ -524,9 +528,9 @@ const SR_I18N = {
         part_kpi_ativo_label: "Ativo Total (Balanço 31/10/2026)",
         part_kpi_ativo_sub: "Disponibilidades R$ 1.774.989,28 (2025 : R$ 5.348.180,83)",
         part_kpi_pl_label: "Patrimônio Líquido (31/10/2026)",
-        part_kpi_pl_sub: "Capital + Lucros R$ 1.745.282,93 (2025 : R$ 4.633.908,26)",
-        part_kpi_res_label: "Rendimentos BB RF (YTD 2026)",
-        part_kpi_res_sub: "Lucro Líquido YTD : +R$ 111.900,12 (2025 : +R$ 135.280,27)",
+        part_kpi_pl_sub: "Capital + Lucros R$ 1.807.792,97 (2025 : R$ 4.633.908,26)",
+        part_kpi_res_label: "Receitas Totais BB + SCP (YTD 2026)",
+        part_kpi_res_sub: "BB RF R$ 156,6k + Locação SCP R$ 64,7k • Lucro +R$ 174.410,16",
 
         // Ficha Cadastral da Filial Brasileira
         part_fiche_title: "Ficha Cadastral da Filial Brasileira",
@@ -590,12 +594,14 @@ const SR_I18N = {
         part_banner_bp_badge: "Balanço Patrimonial Separado",
         part_banner_bp_badge2: "Certificado 2024–2025 & YTD 2026",
         part_banner_bp_title: "Balanço Patrimonial (Filial Brasil)",
-        part_banner_bp_desc: "Consulte a página dedicada do Balanço Patrimonial (2025 Certificado R$ 5.348.180,83 • 31/10/2026 Excel BB R$ 5.457.856,95, Patrimônio Líquido R$ 4.745.808,38) com detalhamento analítico.",
+        part_banner_bp_desc: "Consulte a página dedicada do Balanço Patrimonial (2025 Certificado R$ 5.348.180,83 • 31/10/2026 Excel BB R$ 5.522.590,99, Patrimônio Líquido R$ 4.808.318,42) com detalhamento analítico.",
         part_banner_bp_btn: "Acessar Balanço Patrimonial Brasil",
         part_banner_dre_badge: "Demonstração do Resultado (DRE)",
         part_banner_dre_badge2: "Lucros e Perdas Certificados & YTD 2026",
         part_banner_dre_title: "DRE - Demonstração do Resultado do Exercício",
-        part_banner_dre_desc: "Consulte a página dedicada da DRE (2025 Certificado : Lucro +R$ 137.310,45 • YTD 31/10/2026 Excel BB : Rendimentos +R$ 156.589,49, Lucro Líquido +R$ 111.900,12).",
+        part_banner_dre_desc: "Consulte a DRE com dupla visão: Fluxos BB Excel (2025: Locação +R$ 617.509,26, Saldo +R$ 623.812,34) vs Contabilidade CRC (+R$ 137.310,45) • YTD 31/10/2026: BB +R$ 156.589,49 + Locação SCP +R$ 64.734,05, Lucro +R$ 174.410,16.",
+        ctrl_dre_basis_cash: "Fluxo BB (Caixa Excel)",
+        ctrl_dre_basis_crc: "Contabilidade Oficial (CRC)",
         part_banner_dre_btn: "Acessar DRE / Resultados Brasil",
 
         // Controles de Exercício Balanço e DRE
@@ -759,9 +765,9 @@ const SR_I18N = {
         part_kpi_ativo_label: "Total Assets (Balance 31/10/2026)",
         part_kpi_ativo_sub: "Cash & Bank R$ 1,774,989.28 (2025: R$ 5,348,180.83)",
         part_kpi_pl_label: "Net Equity (31/10/2026)",
-        part_kpi_pl_sub: "Capital + Reserves R$ 1,745,282.93 (2025: R$ 4,633,908.26)",
-        part_kpi_res_label: "BB RF Returns (YTD 2026)",
-        part_kpi_res_sub: "YTD Net Profit: +R$ 111,900.12 (2025: +R$ 135,280.27)",
+        part_kpi_pl_sub: "Capital + Reserves R$ 1,807,792.97 (2025: R$ 4,633,908.26)",
+        part_kpi_res_label: "Total Revenues BB + SCP (YTD 2026)",
+        part_kpi_res_sub: "BB RF R$ 156.6k + Resort Lease SCP R$ 64.7k • Profit +R$ 174,410.16",
 
         // Corporate Profile Brazil
         part_fiche_title: "Corporate Profile of the Brazilian Subsidiary",
@@ -825,12 +831,14 @@ const SR_I18N = {
         part_banner_bp_badge: "Separate Balance Sheet",
         part_banner_bp_badge2: "Certified 2024–2025 & YTD 2026",
         part_banner_bp_title: "Balanço Patrimonial (Brazil Balance Sheet)",
-        part_banner_bp_desc: "Access the dedicated Balance Sheet page (2025 Certified R$ 5,348,180.83 • 31/10/2026 BB Excel R$ 5,457,856.95, Net Equity R$ 4,745,808.38) with collapsible ledger details.",
+        part_banner_bp_desc: "Access the dedicated Balance Sheet page (2025 Certified R$ 5,348,180.83 • 31/10/2026 BB Excel R$ 5,522,590.99, Net Equity R$ 4,808,318.42) with collapsible ledger details.",
         part_banner_bp_btn: "Open Brazil Balance Sheet Page",
         part_banner_dre_badge: "Separate Income Statement",
         part_banner_dre_badge2: "Certified P&L & YTD 2026",
         part_banner_dre_title: "DRE - Demonstração do Resultado do Exercício",
-        part_banner_dre_desc: "Access the dedicated P&L page (2025 Certified Net Profit +R$ 137,310.45 • YTD 31/10/2026 BB Excel: Returns +R$ 156,589.49, Net Profit +R$ 111,900.12).",
+        part_banner_dre_desc: "Access the P&L with dual view: BB Excel Cash Flows (2025: Lease +R$ 617,509.26, Net +R$ 623,812.34) vs Certified CRC (+R$ 137,310.45) • YTD 31/10/2026: BB +R$ 156,589.49 + Resort Lease SCP +R$ 64,734.05, Profit +R$ 174,410.16.",
+        ctrl_dre_basis_cash: "BB Cash Flows (Excel)",
+        ctrl_dre_basis_crc: "Certified Accounting (CRC)",
         part_banner_dre_btn: "Open Brazil P&L Page",
 
         // Controls

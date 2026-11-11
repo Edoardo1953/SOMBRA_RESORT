@@ -51,15 +51,18 @@ window.SOMBRA_RESORT_DATA = {
     ],
     "partner_operator": "Hôtel Sombra e Água Fresca / Grupo Sombra",
     "bank_accounts_br": "Banco do Brasil - Agência 1066-9 (Goianinha), C/C 48649-3",
-    "ativo_total_2026_ytd": 5457856.95,
+    "ativo_total_2026_ytd": 5522590.99,
     "ativo_total_2025": 5348180.83,
     "ativo_total_2024": 5298710.03,
-    "patrimonio_liquido_2026_ytd": 4745808.38,
+    "patrimonio_liquido_2026_ytd": 4808318.42,
     "patrimonio_liquido_2025": 4633908.26,
     "patrimonio_liquido_2024": 3967288.96,
     "resultado_financeiro_2025": 135280.27,
+    "locacao_scp_2025_cash": 617509.26,
+    "fluxo_liquido_bb_2025": 623812.34,
     "resultado_financeiro_2026_ytd": 156589.49,
-    "lucro_liquido_2026_ytd": 111900.12
+    "locacao_scp_2026_ytd": 64734.05,
+    "lucro_liquido_2026_ytd": 174410.16
   },
   "bank_accounts": {
     "olky": {
@@ -6587,14 +6590,14 @@ window.SOMBRA_RESORT_DATA = {
     }
   ],
   "brazil_balanco": {
-    "ativo_circulante_2026_ytd": 5445226.24,
+    "ativo_circulante_2026_ytd": 5509960.28,
     "ativo_circulante_2025": 5335550.12,
     "ativo_circulante_2024": 5278448.74,
     "bb_disponibilidades_2026_ytd": 1774989.28,
     "bb_investimentos_2026_ytd": 1753411.27,
     "bb_investimentos_2025": 1591722.73,
     "bb_investimentos_2024": 976766.78,
-    "outros_creditos_2026_ytd": 69711.51,
+    "outros_creditos_2026_ytd": 134445.55,
     "outros_creditos_2025": 134445.55,
     "outros_creditos_2024": 701156.51,
     "passivo_intercompany_2025": 0.0,
@@ -6602,10 +6605,10 @@ window.SOMBRA_RESORT_DATA = {
     "passivo_sombra_sarl_2025": 638000.0,
     "passivo_sombra_sarl_2024": 700000.0,
     "capital_social_brl": 3000525.45,
-    "lucros_acumulados_2026_ytd": 1745282.93,
+    "lucros_acumulados_2026_ytd": 1807792.97,
     "lucros_acumulados_2025": 1633382.81,
     "lucros_acumulados_2024": 966763.51,
-    "patrimonio_liquido_2026_ytd": 4745808.38,
+    "patrimonio_liquido_2026_ytd": 4808318.42,
     "patrimonio_liquido_2025": 4633908.26,
     "patrimonio_liquido_2024": 3967288.96
   }
