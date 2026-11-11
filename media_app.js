@@ -1,8 +1,24 @@
 /**
- * SOMBRA_RESORT - Photos & Vidéos Management & Interactive Diaporama (Slideshow)
- * Comprehensive media gallery with fullscreen viewers, customizable slideshow with MP3 music,
- * drag & drop reordering, title editing, download, and deletion.
+ * SOMBRA_RESORT - Photos & Vidéos Management & Interactive Slideshow (Diaporama)
+ * - 100% independent storage (IndexedDB SombraResortMediaDB + sombra_* localStorage keys)
+ * - Persistent local uploads via IndexedDB (photos, videos, custom MP3s survive reloads)
+ * - Dossier organization (Villa F, G, H, I, Resort + custom dossiers) + multi-photo selection for Slideshow (photos only)
+ * - Videos separated and launched individually in fullscreen overlay Video Theater
  */
+
+const DEFAULT_DOSSIERS = ['Villa F', 'Villa G', 'Villa H', 'Villa I', 'Resort'];
+
+const STORAGE_KEYS = {
+    deleted: 'sombra_deleted_media',
+    titles: 'sombra_media_titles',
+    order: 'sombra_media_order',
+    userMedia: 'sombra_user_media',
+    dossiers: 'sombra_media_dossiers',
+    userAudio: 'sombra_user_audio'
+};
+
+const MEDIA_DB_NAME = 'SombraResortMediaDB';
+const MEDIA_STORE_NAME = 'media_blobs';
 
 // Global State
 let currentMediaList = [];
@@ -10,52 +26,236 @@ let allPhotos = [];
 let allVideos = [];
 let allAudio = [];
 let activeTypeFilter = 'all'; // 'all' | 'photo' | 'video'
-let activeVillaFilter = 'all'; // 'all' | 'Villa F' | 'Villa G' | 'Villa H' | 'Villa I' | 'Resort'
+let activeDossierFilter = 'all'; // 'all' | dossier name
 let searchQuery = '';
 
-// Diaporama State
+// Multi-selection State (Photos ONLY)
+let selectedPhotoIds = new Set();
+let lastSelectedPhotoId = null;
+
+// Blob URL cache & IndexedDB handle
+let mediaDbInstance = null;
+const activeBlobUrls = {};
+
+// Diaporama State (Photos ONLY)
 let diaporamaPhotos = [];
 let currentSlideIndex = 0;
 let diaporamaTimer = null;
-let diaporamaSpeed = 4000; // ms
+let diaporamaSpeed = 4000;
 let isDiaporamaPlaying = false;
 let diaporamaAudio = null;
 let isMusicMuted = false;
 let currentAudioTrack = null;
 
-// Initialize on DOM Ready
+// Lightbox State
+let lightboxPhotosList = [];
+let currentLightboxIndex = 0;
+
+/* ==========================================================================
+   URL & MIME HELPERS
+   ========================================================================== */
+function resolveMediaUrl(url) {
+    if (!url) return '';
+    return url;
+}
+
+function inferMimeType(filename, mediaType) {
+    const ext = (filename || '').split('.').pop().toLowerCase();
+    if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg';
+    if (ext === 'png') return 'image/png';
+    if (ext === 'webp') return 'image/webp';
+    if (ext === 'gif') return 'image/gif';
+    if (ext === 'mp4' || ext === 'm4v') return 'video/mp4';
+    if (ext === 'mov') return 'video/quicktime';
+    if (ext === 'webm') return 'video/webm';
+    if (ext === 'mp3') return 'audio/mpeg';
+    if (ext === 'wav') return 'audio/wav';
+    if (ext === 'm4a') return 'audio/mp4';
+    if (mediaType === 'video') return 'video/mp4';
+    if (mediaType === 'audio') return 'audio/mpeg';
+    return 'image/jpeg';
+}
+
+function normalizeDossier(val) {
+    if (!val || typeof val !== 'string') return 'Resort';
+    const trimmed = val.trim();
+    if (!trimmed) return 'Resort';
+    return trimmed;
+}
+
+/* ==========================================================================
+   INDEXEDDB PERSISTENT BLOB STORAGE
+   ========================================================================== */
+function openMediaDb() {
+    return new Promise((resolve) => {
+        if (mediaDbInstance) return resolve(mediaDbInstance);
+        if (!window.indexedDB) {
+            console.warn('IndexedDB non disponible');
+            return resolve(null);
+        }
+        try {
+            const req = indexedDB.open(MEDIA_DB_NAME, 1);
+            req.onupgradeneeded = (e) => {
+                const db = e.target.result;
+                if (!db.objectStoreNames.contains(MEDIA_STORE_NAME)) {
+                    db.createObjectStore(MEDIA_STORE_NAME, { keyPath: 'id' });
+                }
+            };
+            req.onsuccess = (e) => {
+                mediaDbInstance = e.target.result;
+                resolve(mediaDbInstance);
+            };
+            req.onerror = (e) => {
+                console.warn('Erreur ouverture IndexedDB media:', e);
+                resolve(null);
+            };
+        } catch (err) {
+            console.warn('Eccezione IndexedDB media:', err);
+            resolve(null);
+        }
+    });
+}
+
+async function saveMediaBlob(id, file) {
+    try {
+        const buffer = await file.arrayBuffer();
+        const mimeType = file.type || inferMimeType(file.name);
+        const blob = new Blob([buffer], { type: mimeType });
+        const objectUrl = URL.createObjectURL(blob);
+        if (activeBlobUrls[id]) {
+            try { URL.revokeObjectURL(activeBlobUrls[id]); } catch (e) {}
+        }
+        activeBlobUrls[id] = objectUrl;
+
+        const db = await openMediaDb();
+        if (db) {
+            await new Promise((resolve, reject) => {
+                const tx = db.transaction(MEDIA_STORE_NAME, 'readwrite');
+                const store = tx.objectStore(MEDIA_STORE_NAME);
+                store.put({
+                    id,
+                    filename: file.name,
+                    mimeType,
+                    buffer,
+                    savedAt: Date.now()
+                });
+                tx.oncomplete = () => resolve(true);
+                tx.onerror = () => reject(tx.error);
+            });
+        }
+        return objectUrl;
+    } catch (e) {
+        console.warn('Erreur sauvegarde blob media dans IndexedDB:', e);
+        const fallbackUrl = URL.createObjectURL(file);
+        activeBlobUrls[id] = fallbackUrl;
+        return fallbackUrl;
+    }
+}
+
+async function getMediaBlobRecord(id) {
+    try {
+        const db = await openMediaDb();
+        if (!db) return null;
+        return await new Promise((resolve) => {
+            const tx = db.transaction(MEDIA_STORE_NAME, 'readonly');
+            const store = tx.objectStore(MEDIA_STORE_NAME);
+            const req = store.get(id);
+            req.onsuccess = () => resolve(req.result || null);
+            req.onerror = () => resolve(null);
+        });
+    } catch (e) {
+        return null;
+    }
+}
+
+async function restoreBlobUrl(item) {
+    if (activeBlobUrls[item.id]) return activeBlobUrls[item.id];
+    const rec = await getMediaBlobRecord(item.id);
+    if (rec && rec.buffer) {
+        const mime = rec.mimeType || inferMimeType(item.filename, item.type);
+        const blob = new Blob([rec.buffer], { type: mime });
+        const url = URL.createObjectURL(blob);
+        activeBlobUrls[item.id] = url;
+        return url;
+    }
+    return null;
+}
+
+async function deleteMediaBlob(id) {
+    if (activeBlobUrls[id]) {
+        try { URL.revokeObjectURL(activeBlobUrls[id]); } catch (e) {}
+        delete activeBlobUrls[id];
+    }
+    try {
+        const db = await openMediaDb();
+        if (!db) return;
+        const tx = db.transaction(MEDIA_STORE_NAME, 'readwrite');
+        tx.objectStore(MEDIA_STORE_NAME).delete(id);
+    } catch (e) {}
+}
+
+/* ==========================================================================
+   INITIALIZATION
+   ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
     initMediaGallery();
     initGlobalEventListeners();
+    initInlineDropZone();
+    initModalDropZone();
 });
 
-function initMediaGallery() {
-    if (!window.SOMBRA_MEDIA_DATA) return;
+async function initMediaGallery() {
+    const dataCatalog = window.SOMBRA_MEDIA_DATA;
+    if (!dataCatalog) return;
 
-    // Load Deleted IDs
     const deletedIds = getDeletedMediaIds();
-
-    // Load Custom Titles
     const customTitles = getCustomMediaTitles();
-
-    // Load User Uploads
     const userMedia = getUserUploads();
+    const userAudio = getUserAudioUploads();
 
-    // Combine Stock Data + User Uploads
-    const stockPhotos = (window.SOMBRA_MEDIA_DATA.photos || []).map(p => ({ ...p, type: 'photo' }));
-    const stockVideos = (window.SOMBRA_MEDIA_DATA.videos || []).map(v => ({ ...v, type: 'video' }));
-    allAudio = window.SOMBRA_MEDIA_DATA.audio || [];
+    // Restore persistent Blob URLs from IndexedDB for user-uploaded items
+    for (const item of userMedia) {
+        const restoredUrl = await restoreBlobUrl(item);
+        if (restoredUrl) {
+            item.url = restoredUrl;
+            item._expiredBlob = false;
+        } else if (!item.url || item.url.startsWith('blob:')) {
+            item.url = '';
+            item._expiredBlob = true;
+        }
+    }
 
-    let combined = [...stockPhotos, ...stockVideos, ...userMedia];
+    const restoredUserAudio = [];
+    for (const track of userAudio) {
+        const restoredUrl = await restoreBlobUrl(track);
+        if (restoredUrl) {
+            track.url = restoredUrl;
+            restoredUserAudio.push(track);
+        }
+    }
+
+    const stockPhotos = (dataCatalog.photos || []).map(p => ({ ...p, type: 'photo', dossier: normalizeDossier(p.dossier || p.villa) }));
+    const stockVideos = (dataCatalog.videos || []).map(v => ({ ...v, type: 'video', dossier: normalizeDossier(v.dossier || v.villa || 'Visites Vidéo') }));
+    allAudio = [...restoredUserAudio, ...(dataCatalog.audio || [])];
+
+    let combined = [...userMedia, ...stockPhotos, ...stockVideos];
 
     // Filter out deleted
     combined = combined.filter(item => !deletedIds.includes(item.id));
 
-    // Apply custom titles
+    // Apply custom titles & dossiers if edited
     combined.forEach(item => {
         if (customTitles[item.id]) {
-            item.title = customTitles[item.id];
+            if (typeof customTitles[item.id] === 'string') {
+                item.title = customTitles[item.id];
+            } else if (typeof customTitles[item.id] === 'object') {
+                if (customTitles[item.id].title) item.title = customTitles[item.id].title;
+                if (customTitles[item.id].dossier) item.dossier = customTitles[item.id].dossier;
+                else if (customTitles[item.id].villa) item.dossier = customTitles[item.id].villa;
+            }
         }
+        item.dossier = normalizeDossier(item.dossier || item.villa);
+        item.villa = item.dossier;
     });
 
     // Apply Saved Drag & Drop Order if exists
@@ -75,18 +275,27 @@ function initMediaGallery() {
     allPhotos = currentMediaList.filter(item => item.type === 'photo');
     allVideos = currentMediaList.filter(item => item.type === 'video');
 
+    // Prune stale selected IDs
+    const validPhotoSet = new Set(allPhotos.map(p => p.id));
+    selectedPhotoIds.forEach(id => {
+        if (!validPhotoSet.has(id)) selectedPhotoIds.delete(id);
+    });
+
+    populateDossierSelects();
+    renderDossierBar();
     renderGallery();
     populateAudioSelectors();
     initAudioElement();
     updateMediaStats();
+    updateSelectionUI();
 }
 
 /* ==========================================================================
-   STORAGE HELPERS
+   LOCALSTORAGE HELPERS (SOMBRA_RESORT ISOLATED KEYS ONLY)
    ========================================================================== */
 function getDeletedMediaIds() {
     try {
-        return JSON.parse(localStorage.getItem('sombra_deleted_media') || '[]');
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.deleted) || '[]');
     } catch (e) {
         return [];
     }
@@ -96,27 +305,27 @@ function saveDeletedMediaId(id) {
     const list = getDeletedMediaIds();
     if (!list.includes(id)) {
         list.push(id);
-        localStorage.setItem('sombra_deleted_media', JSON.stringify(list));
+        localStorage.setItem(STORAGE_KEYS.deleted, JSON.stringify(list));
     }
 }
 
 function getCustomMediaTitles() {
     try {
-        return JSON.parse(localStorage.getItem('sombra_media_titles') || '{}');
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.titles) || '{}');
     } catch (e) {
         return {};
     }
 }
 
-function saveCustomMediaTitle(id, newTitle) {
+function saveCustomMediaTitle(id, newTitle, newDossier = null) {
     const titles = getCustomMediaTitles();
-    titles[id] = newTitle;
-    localStorage.setItem('sombra_media_titles', JSON.stringify(titles));
+    titles[id] = { title: newTitle, dossier: newDossier, villa: newDossier };
+    localStorage.setItem(STORAGE_KEYS.titles, JSON.stringify(titles));
 }
 
 function getSavedMediaOrder() {
     try {
-        return JSON.parse(localStorage.getItem('sombra_media_order') || '[]');
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.order) || '[]');
     } catch (e) {
         return [];
     }
@@ -124,102 +333,470 @@ function getSavedMediaOrder() {
 
 function saveMediaOrder() {
     const ids = currentMediaList.map(item => item.id);
-    localStorage.setItem('sombra_media_order', JSON.stringify(ids));
+    localStorage.setItem(STORAGE_KEYS.order, JSON.stringify(ids));
 }
 
 function getUserUploads() {
     try {
-        return JSON.parse(localStorage.getItem('sombra_user_media') || '[]');
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.userMedia) || '[]');
     } catch (e) {
         return [];
     }
 }
 
+function saveUserUploadsList(list) {
+    // Never persist ephemeral blob: URLs in localStorage
+    const cleanList = list.map(item => {
+        const copy = { ...item };
+        if (copy.url && copy.url.startsWith('blob:')) copy.url = '';
+        if (copy.path && copy.path.startsWith('blob:')) copy.path = '';
+        delete copy._expiredBlob;
+        return copy;
+    });
+    localStorage.setItem(STORAGE_KEYS.userMedia, JSON.stringify(cleanList));
+}
+
 function saveUserUpload(item) {
     const list = getUserUploads();
     list.unshift(item);
-    localStorage.setItem('sombra_user_media', JSON.stringify(list));
+    saveUserUploadsList(list);
+}
+
+function getUserAudioUploads() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.userAudio) || '[]');
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveUserAudioUpload(track) {
+    const list = getUserAudioUploads();
+    const copy = { ...track, url: '', path: '' };
+    list.unshift(copy);
+    localStorage.setItem(STORAGE_KEYS.userAudio, JSON.stringify(list));
+}
+
+function getCustomDossiers() {
+    try {
+        const list = JSON.parse(localStorage.getItem(STORAGE_KEYS.dossiers) || '[]');
+        return Array.isArray(list) ? list : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+function saveCustomDossiers(list) {
+    const unique = Array.from(new Set(list.map(s => (s || '').trim()).filter(Boolean)));
+    localStorage.setItem(STORAGE_KEYS.dossiers, JSON.stringify(unique));
+}
+
+function getAllDossiers() {
+    const set = new Set(DEFAULT_DOSSIERS);
+    getCustomDossiers().forEach(d => set.add(d));
+    allPhotos.forEach(p => {
+        if (p.dossier) set.add(p.dossier);
+    });
+    return Array.from(set);
+}
+
+function registerDossierIfNew(name) {
+    const clean = (name || '').trim();
+    if (!clean) return;
+    if (!DEFAULT_DOSSIERS.includes(clean)) {
+        const custom = getCustomDossiers();
+        if (!custom.includes(clean)) {
+            custom.push(clean);
+            saveCustomDossiers(custom);
+        }
+    }
 }
 
 /* ==========================================================================
-   GALLERY RENDERING & FILTERING
+   DOSSIER MANAGEMENT & UI
    ========================================================================== */
-function renderGallery() {
-    const container = document.getElementById('mediaGrid');
+function populateDossierSelects() {
+    const dossiers = getAllDossiers();
+    const extraVillas = ['Villa A', 'Villa B', 'Villa C', 'Villa D', 'Villa E'];
+    const selectOptions = Array.from(new Set([...dossiers, ...extraVillas]));
+
+    const selectIds = [
+        'inlineUploadSectionSelect',
+        'uploadVillaSelect',
+        'modalEditVillaSelect',
+        'bulkMoveDossierSelect'
+    ];
+
+    selectIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const prev = el.value;
+        el.innerHTML = '';
+        selectOptions.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d;
+            el.appendChild(opt);
+        });
+        if (prev && selectOptions.includes(prev)) {
+            el.value = prev;
+        } else if (id === 'inlineUploadSectionSelect' || id === 'uploadVillaSelect') {
+            el.value = activeDossierFilter !== 'all' ? activeDossierFilter : 'Resort';
+        }
+    });
+}
+
+function renderDossierBar() {
+    const container = document.getElementById('dossierPillsContainer');
     if (!container) return;
 
-    let items = currentMediaList.filter(item => {
-        // Type filter
-        if (activeTypeFilter !== 'all' && item.type !== activeTypeFilter) return false;
-        // Villa filter
-        if (activeVillaFilter !== 'all' && item.villa !== activeVillaFilter) return false;
-        // Search query
+    const dossiers = getAllDossiers();
+    const counts = {};
+    allPhotos.forEach(p => {
+        const d = p.dossier || 'Resort';
+        counts[d] = (counts[d] || 0) + 1;
+    });
+
+    const totalPhotosCount = allPhotos.length;
+    let html = `
+        <div class="dossier-chip ${activeDossierFilter === 'all' ? 'active' : ''}" onclick="setDossierFilter('all')">
+            <i class="fa-solid fa-layer-group"></i>
+            <span class="dossier-chip-name">${escapeHtml(getI18nText('media_dossiers_all', 'Tous les Dossiers'))}</span>
+            <span class="dossier-chip-count">${totalPhotosCount}</span>
+        </div>
+    `;
+
+    dossiers.forEach(d => {
+        const count = counts[d] || 0;
+        const isCustom = !DEFAULT_DOSSIERS.includes(d);
+        const isActive = activeDossierFilter === d;
+        const escapedName = escapeJsString(d);
+
+        html += `
+            <div class="dossier-chip ${isActive ? 'active' : ''}" onclick="setDossierFilter('${escapedName}')">
+                <i class="fa-solid ${isActive ? 'fa-folder-open' : 'fa-folder'}"></i>
+                <span class="dossier-chip-name">${escapeHtml(d)}</span>
+                <span class="dossier-chip-count">${count}</span>
+                ${count > 0 ? `
+                    <button type="button" class="dossier-chip-play" onclick="event.stopPropagation(); startDiaporama({ dossier: '${escapedName}' })" title="${escapeHtml(d)} - ${escapeHtml(getI18nText('media_diaporama', 'Diaporama'))}">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                ` : ''}
+                ${isCustom ? `
+                    <button type="button" class="dossier-chip-delete" onclick="event.stopPropagation(); deleteCustomDossier('${escapedName}')" title="Supprimer ce dossier personnalisé">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                ` : ''}
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+function setDossierFilter(dossier) {
+    activeDossierFilter = dossier || 'all';
+    populateDossierSelects();
+    renderDossierBar();
+    renderGallery();
+    updateSelectionUI();
+}
+
+function openNewDossierModal(targetSelectId = '') {
+    const modal = document.getElementById('newDossierModal');
+    const input = document.getElementById('newDossierNameInput');
+    const targetInput = document.getElementById('newDossierTargetSelectId');
+    if (!modal || !input) return;
+
+    if (targetInput) targetInput.value = targetSelectId || '';
+    input.value = '';
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+    setTimeout(() => input.focus(), 50);
+}
+
+function closeNewDossierModal() {
+    const modal = document.getElementById('newDossierModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.style.display = 'none';
+    }
+}
+
+function confirmCreateDossier() {
+    const input = document.getElementById('newDossierNameInput');
+    const targetSelectId = document.getElementById('newDossierTargetSelectId')?.value;
+    const name = (input?.value || '').trim();
+    if (!name) return;
+
+    registerDossierIfNew(name);
+    populateDossierSelects();
+
+    if (targetSelectId) {
+        const sel = document.getElementById(targetSelectId);
+        if (sel) sel.value = name;
+    } else {
+        activeDossierFilter = name;
+    }
+
+    renderDossierBar();
+    renderGallery();
+    updateSelectionUI();
+    closeNewDossierModal();
+    showMediaToast(`Dossier "${name}" prêt !`, 'success');
+}
+
+function deleteCustomDossier(name) {
+    if (DEFAULT_DOSSIERS.includes(name)) return;
+    const photosInDossier = allPhotos.filter(p => p.dossier === name);
+    const msg = photosInDossier.length > 0
+        ? `Supprimer le dossier "${name}" ? Les ${photosInDossier.length} photos seront déplacées dans "Resort".`
+        : `Supprimer le dossier vide "${name}" ?`;
+
+    if (!confirm(msg)) return;
+
+    if (photosInDossier.length > 0) {
+        const userUploads = getUserUploads();
+        let userChanged = false;
+        photosInDossier.forEach(p => {
+            p.dossier = 'Resort';
+            p.villa = 'Resort';
+            saveCustomMediaTitle(p.id, p.title, 'Resort');
+            const uIdx = userUploads.findIndex(u => u.id === p.id);
+            if (uIdx !== -1) {
+                userUploads[uIdx].dossier = 'Resort';
+                userUploads[uIdx].villa = 'Resort';
+                userChanged = true;
+            }
+        });
+        if (userChanged) saveUserUploadsList(userUploads);
+    }
+
+    const custom = getCustomDossiers().filter(d => d !== name);
+    saveCustomDossiers(custom);
+    if (activeDossierFilter === name) activeDossierFilter = 'all';
+
+    populateDossierSelects();
+    renderDossierBar();
+    renderGallery();
+    updateSelectionUI();
+    showMediaToast(`Dossier "${name}" supprimé.`, 'info');
+}
+
+/* ==========================================================================
+   GALLERY RENDERING & SEPARATE PHOTO / VIDEO SECTIONS
+   ========================================================================== */
+function getFilteredPhotos() {
+    return allPhotos.filter(item => {
+        if (activeDossierFilter !== 'all' && item.dossier !== activeDossierFilter) return false;
         if (searchQuery.trim() !== '') {
             const q = searchQuery.toLowerCase();
             const matchesTitle = (item.title || '').toLowerCase().includes(q);
-            const matchesVilla = (item.villa || '').toLowerCase().includes(q);
+            const matchesDossier = (item.dossier || '').toLowerCase().includes(q);
             const matchesFile = (item.filename || '').toLowerCase().includes(q);
-            if (!matchesTitle && !matchesVilla && !matchesFile) return false;
+            if (!matchesTitle && !matchesDossier && !matchesFile) return false;
         }
         return true;
     });
-
-    if (items.length === 0) {
-        container.innerHTML = `
-            <div class="media-empty-state">
-                <i class="fa-solid fa-photo-film"></i>
-                <h3>Aucun média trouvé</h3>
-                <p>Aucune photo ou vidéo ne correspond aux filtres sélectionnés.</p>
-                <button class="btn btn-secondary btn-sm" onclick="resetFilters()">
-                    <i class="fa-solid fa-rotate-left"></i> Réinitialiser les filtres
-                </button>
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML = items.map(item => createMediaCardHTML(item)).join('');
-    initCardDragAndDrop();
 }
 
-function createMediaCardHTML(item) {
-    const isVideo = item.type === 'video';
-    const encodedUrl = item.url;
-    const villaBadgeClass = getVillaBadgeClass(item.villa);
+function getFilteredVideos() {
+    return allVideos.filter(item => {
+        if (searchQuery.trim() !== '') {
+            const q = searchQuery.toLowerCase();
+            const matchesTitle = (item.title || '').toLowerCase().includes(q);
+            const matchesDossier = (item.dossier || '').toLowerCase().includes(q);
+            const matchesFile = (item.filename || '').toLowerCase().includes(q);
+            if (!matchesTitle && !matchesDossier && !matchesFile) return false;
+        }
+        return true;
+    });
+}
+
+function renderGallery() {
+    const photoSection = document.getElementById('photoSectionContainer');
+    const videoSection = document.getElementById('videoSectionContainer');
+    const photoGrid = document.getElementById('photoGrid');
+    const videoGrid = document.getElementById('videoGrid');
+    const photoQuickActions = document.getElementById('photoQuickActions');
+
+    const showPhotos = activeTypeFilter === 'all' || activeTypeFilter === 'photo';
+    const showVideos = activeTypeFilter === 'all' || activeTypeFilter === 'video';
+
+    if (photoSection) photoSection.style.display = showPhotos ? 'block' : 'none';
+    if (videoSection) videoSection.style.display = showVideos ? 'block' : 'none';
+    if (photoQuickActions) photoQuickActions.style.display = showPhotos ? 'flex' : 'none';
+
+    if (showPhotos && photoGrid) {
+        const photos = getFilteredPhotos();
+        const badge = document.getElementById('photoSectionCountBadge');
+        if (badge) badge.textContent = photos.length;
+
+        if (photos.length === 0) {
+            photoGrid.innerHTML = `
+                <div class="media-empty-state">
+                    <i class="fa-solid fa-images"></i>
+                    <h3>${escapeHtml(getI18nText('media_empty_photos_title', 'Aucune photo dans ce Dossier'))}</h3>
+                    <p>${escapeHtml(getI18nText('media_empty_photos_desc', 'Importez de nouvelles photos ci-dessus ou changez de Dossier / filtre de recherche.'))}</p>
+                    <button class="btn btn-secondary btn-sm" onclick="resetFilters()">
+                        <i class="fa-solid fa-rotate-left"></i> <span>${escapeHtml(getI18nText('media_empty_reset', 'Réinitialiser les filtres'))}</span>
+                    </button>
+                </div>
+            `;
+        } else {
+            photoGrid.innerHTML = photos.map(item => createPhotoCardHTML(item)).join('');
+            initCardDragAndDrop();
+        }
+    }
+
+    if (showVideos && videoGrid) {
+        const videos = getFilteredVideos();
+        const badge = document.getElementById('videoSectionCountBadge');
+        if (badge) badge.textContent = videos.length;
+
+        if (videos.length === 0) {
+            videoGrid.innerHTML = `
+                <div class="media-empty-state">
+                    <i class="fa-solid fa-film"></i>
+                    <h3>${escapeHtml(getI18nText('media_empty_videos_title', 'Aucune vidéo trouvée'))}</h3>
+                    <p>${escapeHtml(getI18nText('media_empty_videos_desc', 'Importez des vidéos MP4/MOV/WEBM dans la zone ci-dessus pour les lire individuellement.'))}</p>
+                </div>
+            `;
+        } else {
+            videoGrid.innerHTML = videos.map(item => createVideoCardHTML(item)).join('');
+        }
+    }
+
+    updateSelectionUI();
+}
+
+function createPhotoCardHTML(item) {
+    const resolvedUrl = resolveMediaUrl(item.url);
+    const dossierBadgeClass = getDossierBadgeClass(item.dossier);
+    const isSelected = selectedPhotoIds.has(item.id);
+    const isExpired = !!item._expiredBlob || !resolvedUrl;
 
     return `
-        <div class="media-card glass-panel" 
-             id="card_${item.id}" 
-             data-id="${item.id}" 
-             data-type="${item.type}"
+        <div class="media-card glass-panel ${isSelected ? 'is-selected' : ''} ${isExpired ? 'is-expired-blob' : ''}"
+             id="card_${item.id}"
+             data-id="${item.id}"
+             data-type="photo"
              draggable="true">
-            
+
             <div class="media-card-top-bar">
-                <div class="media-drag-handle" title="Glisser-déposer pour réordonner">
-                    <i class="fa-solid fa-grip-vertical"></i>
+                <div style="display:flex; align-items:center; gap:6px;">
+                    <label class="media-select-checkbox-wrap" onclick="event.stopPropagation();" title="Sélectionner pour le Diaporama">
+                        <input type="checkbox"
+                               class="media-select-checkbox"
+                               data-photo-id="${item.id}"
+                               ${isSelected ? 'checked' : ''}
+                               ${isExpired ? 'disabled' : ''}
+                               onclick="togglePhotoSelection('${item.id}', event)">
+                        <span class="media-checkbox-visual"><i class="fa-solid fa-check"></i></span>
+                    </label>
+                    <div class="media-drag-handle" title="Glisser-déposer pour réordonner">
+                        <i class="fa-solid fa-grip-vertical"></i>
+                    </div>
                 </div>
                 <div class="media-badges">
-                    <span class="badge ${villaBadgeClass}">${escapeHtml(item.villa || 'Resort')}</span>
-                    <span class="media-type-badge ${isVideo ? 'badge-video' : 'badge-photo'}">
-                        <i class="fa-solid ${isVideo ? 'fa-video' : 'fa-image'}"></i> ${isVideo ? 'Vidéo' : 'Photo'}
+                    <span class="badge ${dossierBadgeClass}" title="Dossier">${escapeHtml(item.dossier || 'Resort')}</span>
+                    <span class="media-type-badge badge-photo">
+                        <i class="fa-solid fa-image"></i> Photo
                     </span>
                 </div>
             </div>
 
-            <div class="media-thumb-wrap" onclick="${isVideo ? `openVideoTheater('${item.id}')` : `openLightbox('${item.id}')`}">
-                ${isVideo ? `
-                    <div class="media-video-thumb">
-                        <i class="fa-solid fa-circle-play video-play-glyph"></i>
-                        <span class="video-label-tag"><i class="fa-solid fa-play"></i> Lancer la vidéo</span>
+            <div class="media-thumb-wrap" onclick="${isExpired ? `relinkMediaFile('${item.id}')` : `openLightbox('${item.id}')`}">
+                ${isExpired ? `
+                    <div class="media-expired-placeholder">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Fichier temporaire expiré</span>
+                        <button type="button" class="btn-relink-file" onclick="event.stopPropagation(); relinkMediaFile('${item.id}')">
+                            <i class="fa-solid fa-upload"></i> Recharger fichier
+                        </button>
                     </div>
                 ` : `
-                    <img src="${encodedUrl}" alt="${escapeHtml(item.title)}" loading="lazy" class="media-thumb-img">
+                    <img src="${resolvedUrl}" alt="${escapeHtml(item.title)}" loading="lazy" class="media-thumb-img" onerror="handleThumbError(this, '${item.id}')">
+                    <div class="media-hover-overlay">
+                        <div class="hover-action-btn" title="Agrandir la photo">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    </div>
                 `}
-                <div class="media-hover-overlay">
-                    <div class="hover-action-btn" title="${isVideo ? 'Lire la vidéo' : 'Agrandir la photo'}">
-                        <i class="fa-solid ${isVideo ? 'fa-play' : 'fa-magnifying-glass-plus'}"></i>
+            </div>
+
+            <div class="media-card-info">
+                <div class="media-title-row">
+                    <div class="media-card-title" id="title_text_${item.id}" title="${escapeHtml(item.title)}">
+                        ${escapeHtml(item.title)}
+                    </div>
+                    <button type="button" class="media-action-icon-btn btn-edit-title" onclick="editMediaTitle('${item.id}')" title="Modifier le titre et le Dossier">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </div>
+
+                <div class="media-meta-row">
+                    <span class="media-meta-size">
+                        <i class="fa-solid fa-hard-drive"></i> ${item.size_mb || 0} MB
+                    </span>
+                    <div class="media-card-actions">
+                        ${!isExpired ? `
+                            <button type="button" class="media-action-icon-btn btn-view" onclick="openLightbox('${item.id}')" title="Visionner plein écran">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+                            <a href="${resolvedUrl}" download="${escapeHtml(item.filename)}" class="media-action-icon-btn btn-download" title="Télécharger" onclick="event.stopPropagation()">
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                        ` : ''}
+                        <button type="button" class="media-action-icon-btn btn-delete" onclick="deleteMediaItem('${item.id}')" title="Supprimer de la galerie">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    `;
+}
+
+function createVideoCardHTML(item) {
+    const resolvedUrl = resolveMediaUrl(item.url);
+    const isExpired = !!item._expiredBlob || !resolvedUrl;
+
+    return `
+        <div class="media-card media-video-card glass-panel ${isExpired ? 'is-expired-blob' : ''}"
+             id="card_${item.id}"
+             data-id="${item.id}"
+             data-type="video">
+
+            <div class="media-card-top-bar">
+                <span class="video-solo-pill">
+                    <i class="fa-solid fa-circle-play"></i> Individuel
+                </span>
+                <div class="media-badges">
+                    <span class="media-type-badge badge-video">
+                        <i class="fa-solid fa-video"></i> Vidéo
+                    </span>
+                </div>
+            </div>
+
+            <div class="media-thumb-wrap" onclick="${isExpired ? `relinkMediaFile('${item.id}')` : `openVideoTheater('${item.id}')`}">
+                ${isExpired ? `
+                    <div class="media-expired-placeholder">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Vidéo temporaire expirée</span>
+                        <button type="button" class="btn-relink-file" onclick="event.stopPropagation(); relinkMediaFile('${item.id}')">
+                            <i class="fa-solid fa-upload"></i> Recharger vidéo
+                        </button>
+                    </div>
+                ` : `
+                    <div class="media-video-thumb">
+                        <video src="${resolvedUrl}#t=0.5" preload="metadata" muted playsinline class="media-video-preview"></video>
+                        <div class="media-video-play-center">
+                            <i class="fa-solid fa-circle-play video-play-glyph"></i>
+                            <span class="video-label-tag"><i class="fa-solid fa-play"></i> Lancer la vidéo</span>
+                        </div>
+                    </div>
+                `}
             </div>
 
             <div class="media-card-info">
@@ -237,12 +814,14 @@ function createMediaCardHTML(item) {
                         <i class="fa-solid fa-hard-drive"></i> ${item.size_mb || 0} MB
                     </span>
                     <div class="media-card-actions">
-                        <button type="button" class="media-action-icon-btn btn-view" onclick="${isVideo ? `openVideoTheater('${item.id}')` : `openLightbox('${item.id}')`}" title="Visionner plein écran">
-                            <i class="fa-solid fa-expand"></i>
-                        </button>
-                        <a href="${encodedUrl}" download="${escapeHtml(item.filename)}" class="media-action-icon-btn btn-download" title="Télécharger" onclick="event.stopPropagation()">
-                            <i class="fa-solid fa-download"></i>
-                        </a>
+                        ${!isExpired ? `
+                            <button type="button" class="media-action-icon-btn btn-view" onclick="openVideoTheater('${item.id}')" title="Lire la vidéo">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <a href="${resolvedUrl}" download="${escapeHtml(item.filename)}" class="media-action-icon-btn btn-download" title="Télécharger" onclick="event.stopPropagation()">
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                        ` : ''}
                         <button type="button" class="media-action-icon-btn btn-delete" onclick="deleteMediaItem('${item.id}')" title="Supprimer de la galerie">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
@@ -253,26 +832,37 @@ function createMediaCardHTML(item) {
     `;
 }
 
-function getVillaBadgeClass(villa) {
-    switch (villa) {
+function handleThumbError(imgEl, id) {
+    if (!imgEl || imgEl.dataset.errored) return;
+    imgEl.dataset.errored = '1';
+    const wrap = imgEl.parentElement;
+    if (wrap) {
+        wrap.innerHTML = `
+            <div class="media-expired-placeholder">
+                <i class="fa-solid fa-image"></i>
+                <span>Aperçu indisponible</span>
+                <button type="button" class="btn-relink-file" onclick="event.stopPropagation(); relinkMediaFile('${id}')">
+                    <i class="fa-solid fa-upload"></i> Recharger photo
+                </button>
+            </div>
+        `;
+    }
+}
+
+function getDossierBadgeClass(dossier) {
+    switch (dossier) {
         case 'Villa F': return 'badge-fuchsia';
-        case 'Villa G': return 'badge-amber';
-        case 'Villa H': return 'badge-emerald';
-        case 'Villa I': return 'badge-blue';
-        default: return 'badge-cyan';
+        case 'Villa G': return 'badge-ext';
+        case 'Villa H': return 'badge-entree';
+        case 'Villa I': return 'badge-ord';
+        case 'Resort': return 'badge-ord';
+        default: return 'badge-fuchsia';
     }
 }
 
 function setTypeFilter(type, btn) {
     activeTypeFilter = type;
     document.querySelectorAll('.media-type-tab').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    renderGallery();
-}
-
-function setVillaFilter(villa, btn) {
-    activeVillaFilter = villa;
-    document.querySelectorAll('.media-villa-pill').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     renderGallery();
 }
@@ -284,12 +874,12 @@ function onSearchInput(val) {
 
 function resetFilters() {
     activeTypeFilter = 'all';
-    activeVillaFilter = 'all';
+    activeDossierFilter = 'all';
     searchQuery = '';
     const searchInput = document.getElementById('mediaSearchInput');
     if (searchInput) searchInput.value = '';
     document.querySelectorAll('.media-type-tab').forEach(b => b.classList.toggle('active', b.dataset.type === 'all'));
-    document.querySelectorAll('.media-villa-pill').forEach(b => b.classList.toggle('active', b.dataset.villa === 'all'));
+    renderDossierBar();
     renderGallery();
 }
 
@@ -304,12 +894,164 @@ function updateMediaStats() {
 }
 
 /* ==========================================================================
-   DRAG & DROP REORDERING
+   MULTI-PHOTO SELECTION FOR DIAPORAMA
+   ========================================================================== */
+function togglePhotoSelection(id, event) {
+    if (event) event.stopPropagation();
+    const visiblePhotos = getFilteredPhotos().filter(p => !p._expiredBlob && p.url);
+    const checkbox = document.querySelector(`.media-select-checkbox[data-photo-id="${id}"]`);
+    const willSelect = checkbox ? checkbox.checked : !selectedPhotoIds.has(id);
+
+    if (event && event.shiftKey && lastSelectedPhotoId && lastSelectedPhotoId !== id) {
+        const idxA = visiblePhotos.findIndex(p => p.id === lastSelectedPhotoId);
+        const idxB = visiblePhotos.findIndex(p => p.id === id);
+        if (idxA !== -1 && idxB !== -1) {
+            const start = Math.min(idxA, idxB);
+            const end = Math.max(idxA, idxB);
+            for (let i = start; i <= end; i++) {
+                if (willSelect) selectedPhotoIds.add(visiblePhotos[i].id);
+                else selectedPhotoIds.delete(visiblePhotos[i].id);
+            }
+        }
+    } else {
+        if (willSelect) selectedPhotoIds.add(id);
+        else selectedPhotoIds.delete(id);
+    }
+
+    lastSelectedPhotoId = id;
+    updateSelectionUI();
+}
+
+function selectAllVisiblePhotos() {
+    const visible = getFilteredPhotos().filter(p => !p._expiredBlob && p.url);
+    visible.forEach(p => selectedPhotoIds.add(p.id));
+    updateSelectionUI();
+}
+
+function clearPhotoSelection() {
+    selectedPhotoIds.clear();
+    lastSelectedPhotoId = null;
+    updateSelectionUI();
+}
+
+function updateSelectionUI() {
+    const count = selectedPhotoIds.size;
+
+    document.querySelectorAll('#photoGrid .media-card').forEach(card => {
+        const id = card.dataset.id;
+        const selected = selectedPhotoIds.has(id);
+        card.classList.toggle('is-selected', selected);
+        const cb = card.querySelector('.media-select-checkbox');
+        if (cb) cb.checked = selected;
+    });
+
+    const bar = document.getElementById('photoSelectionBar');
+    const countEl = document.getElementById('selectionCountText');
+    const clearTopBtn = document.getElementById('btnClearSelectionTop');
+
+    if (bar) bar.style.display = count > 0 ? 'flex' : 'none';
+    if (countEl) countEl.textContent = count <= 1 ? `${count} photo sélectionnée` : `${count} photos sélectionnées`;
+    if (clearTopBtn) clearTopBtn.style.display = count > 0 ? 'inline-flex' : 'none';
+
+    const scopeSub = document.getElementById('slideshowLaunchScopeSub');
+    const dossierBtn = document.getElementById('btnSlideshowCurrentDossier');
+    const dossierBtnLabel = document.getElementById('btnSlideshowDossierLabel');
+
+    const visibleValid = getFilteredPhotos().filter(p => !p._expiredBlob && p.url);
+
+    if (scopeSub) {
+        if (count > 0) {
+            scopeSub.textContent = `${count} photo(s) sélectionnée(s) • Photos + Musique MP3`;
+        } else if (activeDossierFilter !== 'all') {
+            scopeSub.textContent = `Dossier "${activeDossierFilter}" (${visibleValid.length} photos) • Photos + MP3`;
+        } else {
+            scopeSub.textContent = `Toutes les photos (${visibleValid.length}) • Photos + Musique MP3`;
+        }
+    }
+
+    if (dossierBtn && dossierBtnLabel) {
+        if (count > 0) {
+            dossierBtnLabel.textContent = `Diaporama (${count} sélectionnées)`;
+            dossierBtn.disabled = false;
+        } else if (activeDossierFilter !== 'all') {
+            dossierBtnLabel.textContent = `Diaporama "${activeDossierFilter}" (${visibleValid.length})`;
+            dossierBtn.disabled = visibleValid.length === 0;
+        } else {
+            dossierBtnLabel.textContent = `Diaporama Toutes (${visibleValid.length})`;
+            dossierBtn.disabled = visibleValid.length === 0;
+        }
+    }
+}
+
+function bulkMoveSelectedToDossier() {
+    if (selectedPhotoIds.size === 0) return;
+    const select = document.getElementById('bulkMoveDossierSelect');
+    const targetDossier = select ? select.value : 'Resort';
+    if (!targetDossier) return;
+
+    registerDossierIfNew(targetDossier);
+    const userUploads = getUserUploads();
+    let userChanged = false;
+
+    selectedPhotoIds.forEach(id => {
+        const item = allPhotos.find(p => p.id === id);
+        if (item) {
+            item.dossier = targetDossier;
+            item.villa = targetDossier;
+            saveCustomMediaTitle(id, item.title, targetDossier);
+            const uIdx = userUploads.findIndex(u => u.id === id);
+            if (uIdx !== -1) {
+                userUploads[uIdx].dossier = targetDossier;
+                userUploads[uIdx].villa = targetDossier;
+                userChanged = true;
+            }
+        }
+    });
+
+    if (userChanged) saveUserUploadsList(userUploads);
+
+    const movedCount = selectedPhotoIds.size;
+    clearPhotoSelection();
+    renderDossierBar();
+    renderGallery();
+    showMediaToast(`${movedCount} photo(s) déplacée(s) dans "${targetDossier}"`, 'success');
+}
+
+async function bulkDeleteSelectedPhotos() {
+    if (selectedPhotoIds.size === 0) return;
+    const count = selectedPhotoIds.size;
+    if (!confirm(`Voulez-vous supprimer les ${count} photo(s) sélectionnée(s) de la galerie ?`)) return;
+
+    const toDelete = Array.from(selectedPhotoIds);
+    for (const id of toDelete) {
+        const item = currentMediaList.find(m => m.id === id);
+        if (item && item._expiredBlob) {
+            const userUploads = getUserUploads().filter(u => u.id !== id);
+            saveUserUploadsList(userUploads);
+            await deleteMediaBlob(id);
+        } else {
+            saveDeletedMediaId(id);
+        }
+    }
+
+    currentMediaList = currentMediaList.filter(m => !selectedPhotoIds.has(m.id));
+    allPhotos = currentMediaList.filter(item => item.type === 'photo');
+    allVideos = currentMediaList.filter(item => item.type === 'video');
+    selectedPhotoIds.clear();
+    saveMediaOrder();
+    renderDossierBar();
+    renderGallery();
+    updateMediaStats();
+    showMediaToast(`${count} photo(s) supprimée(s).`, 'info');
+}
+
+/* ==========================================================================
+   DRAG & DROP REORDERING (PHOTOS)
    ========================================================================== */
 let draggedCardEl = null;
 
 function initCardDragAndDrop() {
-    const cards = document.querySelectorAll('.media-card');
+    const cards = document.querySelectorAll('#photoGrid .media-card');
     cards.forEach(card => {
         card.addEventListener('dragstart', (e) => {
             draggedCardEl = card;
@@ -327,6 +1069,7 @@ function initCardDragAndDrop() {
         });
 
         card.addEventListener('dragover', (e) => {
+            if (!draggedCardEl) return;
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
             if (card !== draggedCardEl && !card.classList.contains('drag-over')) {
@@ -339,6 +1082,7 @@ function initCardDragAndDrop() {
         });
 
         card.addEventListener('drop', (e) => {
+            if (!draggedCardEl) return;
             e.preventDefault();
             card.classList.remove('drag-over');
             const draggedId = e.dataTransfer.getData('text/plain');
@@ -362,56 +1106,72 @@ function initCardDragAndDrop() {
 }
 
 /* ==========================================================================
-   TITLE MODIFICATION & DELETION
+   TITLE & DOSSIER MODIFICATION & DELETION
    ========================================================================== */
 function editMediaTitle(id) {
     const item = currentMediaList.find(m => m.id === id);
     if (!item) return;
 
+    populateDossierSelects();
     const modal = document.getElementById('editTitleModal');
     const inputTitle = document.getElementById('modalEditTitleInput');
-    const selectVilla = document.getElementById('modalEditVillaSelect');
+    const selectDossier = document.getElementById('modalEditVillaSelect');
+    const dossierRow = document.getElementById('modalEditDossierRow');
     const hiddenId = document.getElementById('modalEditMediaId');
 
-    if (modal && inputTitle && selectVilla && hiddenId) {
+    if (modal && inputTitle && selectDossier && hiddenId) {
         hiddenId.value = id;
         inputTitle.value = item.title;
-        selectVilla.value = item.villa || 'Resort';
+        if (dossierRow) {
+            dossierRow.style.display = item.type === 'video' ? 'none' : 'block';
+        }
+        selectDossier.value = item.dossier || 'Resort';
         modal.style.display = 'flex';
         modal.classList.add('active');
         inputTitle.focus();
         inputTitle.select();
-    } else {
-        // Fallback prompt
-        const newTitle = prompt("Modifier le titre du média :", item.title);
-        if (newTitle !== null && newTitle.trim() !== '') {
-            saveTitleAndRefresh(id, newTitle.trim());
-        }
     }
 }
 
 function saveModalTitle() {
     const hiddenId = document.getElementById('modalEditMediaId');
     const inputTitle = document.getElementById('modalEditTitleInput');
-    const selectVilla = document.getElementById('modalEditVillaSelect');
+    const selectDossier = document.getElementById('modalEditVillaSelect');
 
     if (!hiddenId || !inputTitle) return;
     const id = hiddenId.value;
     const newTitle = inputTitle.value.trim();
-    const newVilla = selectVilla ? selectVilla.value : null;
+    const item = currentMediaList.find(m => m.id === id);
+    const newDossier = (item && item.type === 'photo' && selectDossier) ? selectDossier.value : (item ? item.dossier : 'Resort');
 
     if (newTitle) {
-        saveTitleAndRefresh(id, newTitle, newVilla);
+        saveTitleAndRefresh(id, newTitle, newDossier);
     }
     closeEditTitleModal();
 }
 
-function saveTitleAndRefresh(id, newTitle, newVilla = null) {
+function saveTitleAndRefresh(id, newTitle, newDossier = null) {
     const item = currentMediaList.find(m => m.id === id);
     if (item) {
         item.title = newTitle;
-        if (newVilla) item.villa = newVilla;
-        saveCustomMediaTitle(id, newTitle);
+        if (newDossier) {
+            item.dossier = newDossier;
+            item.villa = newDossier;
+        }
+        saveCustomMediaTitle(id, newTitle, item.dossier);
+
+        const userUploads = getUserUploads();
+        const uIdx = userUploads.findIndex(u => u.id === id);
+        if (uIdx !== -1) {
+            userUploads[uIdx].title = newTitle;
+            if (newDossier) {
+                userUploads[uIdx].dossier = newDossier;
+                userUploads[uIdx].villa = newDossier;
+            }
+            saveUserUploadsList(userUploads);
+        }
+
+        renderDossierBar();
         renderGallery();
     }
 }
@@ -424,17 +1184,25 @@ function closeEditTitleModal() {
     }
 }
 
-function deleteMediaItem(id) {
+async function deleteMediaItem(id) {
     const item = currentMediaList.find(m => m.id === id);
     if (!item) return;
 
     const confirmMsg = `Êtes-vous sûr de vouloir supprimer "${item.title}" de la galerie ?`;
     if (confirm(confirmMsg)) {
-        saveDeletedMediaId(id);
+        if (item._expiredBlob) {
+            const userUploads = getUserUploads().filter(u => u.id !== id);
+            saveUserUploadsList(userUploads);
+            await deleteMediaBlob(id);
+        } else {
+            saveDeletedMediaId(id);
+        }
+        selectedPhotoIds.delete(id);
         currentMediaList = currentMediaList.filter(m => m.id !== id);
-        allPhotos = currentMediaList.filter(m => m.type === 'photo');
-        allVideos = currentMediaList.filter(m => m.type === 'video');
+        allPhotos = currentMediaList.filter(item => item.type === 'photo');
+        allVideos = currentMediaList.filter(item => item.type === 'video');
         saveMediaOrder();
+        renderDossierBar();
         renderGallery();
         updateMediaStats();
     }
@@ -442,15 +1210,54 @@ function deleteMediaItem(id) {
 
 function restoreAllDeletedMedia() {
     if (confirm("Voulez-vous restaurer tous les médias supprimés précédemment ?")) {
-        localStorage.removeItem('sombra_deleted_media');
+        localStorage.removeItem(STORAGE_KEYS.deleted);
         initMediaGallery();
+        showMediaToast("Médias supprimés restaurés !", "success");
     }
 }
 
 /* ==========================================================================
-   EASY UPLOAD (PHOTOS, VIDEOS, AUDIO MP3)
+   RELINK EXPIRED LEGACY BLOB UPLOADS
+   ========================================================================== */
+function relinkMediaFile(id) {
+    const input = document.getElementById('relinkMediaInput');
+    if (!input) return;
+    const item = currentMediaList.find(m => m.id === id);
+    if (!item) return;
+
+    input.accept = item.type === 'video' ? 'video/*' : 'image/*';
+    input.onchange = async () => {
+        if (!input.files || input.files.length === 0) return;
+        const file = input.files[0];
+        const blobUrl = await saveMediaBlob(item.id, file);
+        const sizeMb = parseFloat((file.size / (1024 * 1024)).toFixed(2));
+
+        item.url = blobUrl;
+        item.filename = file.name;
+        item.size_mb = sizeMb;
+        item._expiredBlob = false;
+
+        const userUploads = getUserUploads();
+        const uIdx = userUploads.findIndex(u => u.id === item.id);
+        if (uIdx !== -1) {
+            userUploads[uIdx].filename = file.name;
+            userUploads[uIdx].size_mb = sizeMb;
+            userUploads[uIdx].url = '';
+            saveUserUploadsList(userUploads);
+        }
+
+        input.value = '';
+        renderGallery();
+        showMediaToast(`"${item.title}" rechargé et sauvegardé définitivement !`, 'success');
+    };
+    input.click();
+}
+
+/* ==========================================================================
+   PERSISTENT UPLOADS (FILES & FOLDERS -> INDEXEDDB)
    ========================================================================== */
 function openUploadModal() {
+    populateDossierSelects();
     const modal = document.getElementById('uploadModal');
     if (modal) {
         modal.style.display = 'flex';
@@ -468,84 +1275,260 @@ function closeUploadModal() {
 
 function handleFileInputChange(input) {
     if (!input.files || input.files.length === 0) return;
-    processUploadedFiles(Array.from(input.files));
+    const select = document.getElementById('uploadVillaSelect');
+    const chosenDossier = select ? select.value : 'Resort';
+    processUploadedFiles(Array.from(input.files), chosenDossier, false);
     input.value = '';
 }
 
-function processUploadedFiles(files) {
-    const villaSelect = document.getElementById('uploadVillaSelect');
-    const chosenVilla = villaSelect ? villaSelect.value : 'Resort';
+function handleFolderInputChange(input) {
+    if (!input.files || input.files.length === 0) return;
+    const select = document.getElementById('uploadVillaSelect');
+    const fallbackDossier = select ? select.value : 'Resort';
+    processUploadedFiles(Array.from(input.files), fallbackDossier, true);
+    input.value = '';
+}
 
-    files.forEach(file => {
+function handleInlineFileInput(input) {
+    if (!input.files || input.files.length === 0) return;
+    const inlineSelect = document.getElementById('inlineUploadSectionSelect');
+    const chosenDossier = inlineSelect ? inlineSelect.value : 'Resort';
+    processUploadedFiles(Array.from(input.files), chosenDossier, false);
+    input.value = '';
+}
+
+function handleInlineFolderInput(input) {
+    if (!input.files || input.files.length === 0) return;
+    const inlineSelect = document.getElementById('inlineUploadSectionSelect');
+    const fallbackDossier = inlineSelect ? inlineSelect.value : 'Resort';
+    processUploadedFiles(Array.from(input.files), fallbackDossier, true);
+    input.value = '';
+}
+
+async function extractFilesFromDataTransfer(dt) {
+    const collected = [];
+    if (dt.items && dt.items.length > 0 && typeof dt.items[0].webkitGetAsEntry === 'function') {
+        const entries = [];
+        for (let i = 0; i < dt.items.length; i++) {
+            const entry = dt.items[i].webkitGetAsEntry();
+            if (entry) entries.push(entry);
+        }
+
+        async function readEntry(entry, folderPrefix) {
+            if (entry.isFile) {
+                await new Promise((resolve) => {
+                    entry.file((file) => {
+                        collected.push({ file, folderName: folderPrefix });
+                        resolve();
+                    }, () => resolve());
+                });
+            } else if (entry.isDirectory) {
+                const dirReader = entry.createReader();
+                const readAllEntries = async () => {
+                    const batch = await new Promise((resolve) => dirReader.readEntries(resolve, () => resolve([])));
+                    if (batch && batch.length > 0) {
+                        for (const child of batch) {
+                            await readEntry(child, folderPrefix || entry.name);
+                        }
+                        await readAllEntries();
+                    }
+                };
+                await readAllEntries();
+            }
+        }
+
+        for (const entry of entries) {
+            await readEntry(entry, entry.isDirectory ? entry.name : null);
+        }
+        return collected;
+    }
+
+    if (dt.files) {
+        Array.from(dt.files).forEach(file => collected.push({ file, folderName: null }));
+    }
+    return collected;
+}
+
+function initInlineDropZone() {
+    const dropzone = document.getElementById('inlineDropZone');
+    if (!dropzone) return;
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.add('dropzone-active');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.remove('dropzone-active');
+        }, false);
+    });
+
+    dropzone.addEventListener('drop', async (e) => {
+        const dt = e.dataTransfer;
+        if (!dt) return;
+        const inlineSelect = document.getElementById('inlineUploadSectionSelect');
+        const chosenDossier = inlineSelect ? inlineSelect.value : 'Resort';
+        const entries = await extractFilesFromDataTransfer(dt);
+        if (entries.length > 0) {
+            await processUploadedEntries(entries, chosenDossier);
+        }
+    }, false);
+}
+
+function initModalDropZone() {
+    const dropzone = document.getElementById('modalDropZone');
+    if (!dropzone) return;
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.add('dropzone-hover');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropzone.classList.remove('dropzone-hover');
+        }, false);
+    });
+
+    dropzone.addEventListener('drop', async (e) => {
+        const dt = e.dataTransfer;
+        if (!dt) return;
+        const select = document.getElementById('uploadVillaSelect');
+        const chosenDossier = select ? select.value : 'Resort';
+        const entries = await extractFilesFromDataTransfer(dt);
+        if (entries.length > 0) {
+            await processUploadedEntries(entries, chosenDossier);
+        }
+    }, false);
+}
+
+async function processUploadedFiles(files, chosenDossier, detectFolderFromPath = false) {
+    const entries = files.map(file => {
+        let folderName = null;
+        if (detectFolderFromPath && file.webkitRelativePath) {
+            const parts = file.webkitRelativePath.split('/');
+            if (parts.length > 1 && parts[0]) folderName = parts[0];
+        }
+        return { file, folderName };
+    });
+    await processUploadedEntries(entries, chosenDossier);
+}
+
+async function processUploadedEntries(entries, fallbackDossier) {
+    let addedPhotos = 0;
+    let addedVideos = 0;
+    let addedAudio = 0;
+    let lastDossierUsed = null;
+
+    for (const { file, folderName } of entries) {
+        if (!file || !file.name) continue;
         const fileExt = file.name.split('.').pop().toLowerCase();
-        const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
-        const fileBlobUrl = URL.createObjectURL(file);
+        const sizeMb = parseFloat((file.size / (1024 * 1024)).toFixed(2));
         const nameNoExt = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
+        const targetDossier = normalizeDossier(folderName || fallbackDossier || 'Resort');
 
-        if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(fileExt)) {
+        if (['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp'].includes(fileExt)) {
+            const id = 'user_photo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            const blobUrl = await saveMediaBlob(id, file);
+            registerDossierIfNew(targetDossier);
+            lastDossierUsed = targetDossier;
+
             const newPhoto = {
-                id: 'user_photo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                id,
                 filename: file.name,
                 title: nameNoExt,
-                path: fileBlobUrl,
-                url: fileBlobUrl,
-                villa: chosenVilla,
-                size_mb: parseFloat(sizeMb),
+                path: '',
+                url: blobUrl,
+                dossier: targetDossier,
+                villa: targetDossier,
+                size_mb: sizeMb,
                 type: 'photo',
                 isUserUpload: true
             };
             saveUserUpload(newPhoto);
             currentMediaList.unshift(newPhoto);
-        } else if (['mp4', 'mov', 'webm'].includes(fileExt)) {
+            addedPhotos++;
+        } else if (['mp4', 'mov', 'webm', 'm4v'].includes(fileExt)) {
+            const id = 'user_video_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            const blobUrl = await saveMediaBlob(id, file);
+
             const newVideo = {
-                id: 'user_video_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                id,
                 filename: file.name,
                 title: nameNoExt,
-                path: fileBlobUrl,
-                url: fileBlobUrl,
-                villa: chosenVilla,
-                size_mb: parseFloat(sizeMb),
+                path: '',
+                url: blobUrl,
+                dossier: 'Visites Vidéo',
+                villa: 'Visites Vidéo',
+                size_mb: sizeMb,
                 type: 'video',
                 isUserUpload: true
             };
             saveUserUpload(newVideo);
             currentMediaList.unshift(newVideo);
+            addedVideos++;
         } else if (['mp3', 'm4a', 'wav'].includes(fileExt)) {
+            const id = 'user_audio_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            const blobUrl = await saveMediaBlob(id, file);
+
             const newAudio = {
-                id: 'user_audio_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                id,
                 filename: file.name,
                 title: nameNoExt,
                 album: 'Musique Personnalisée',
-                path: fileBlobUrl,
-                url: fileBlobUrl,
-                size_mb: parseFloat(sizeMb),
+                path: '',
+                url: blobUrl,
+                size_mb: sizeMb,
                 isUserUpload: true
             };
+            saveUserAudioUpload(newAudio);
             allAudio.unshift(newAudio);
             populateAudioSelectors();
             playAudioTrack(newAudio.url, newAudio.title);
+            addedAudio++;
         }
-    });
+    }
 
     allPhotos = currentMediaList.filter(item => item.type === 'photo');
     allVideos = currentMediaList.filter(item => item.type === 'video');
     saveMediaOrder();
+    populateDossierSelects();
+    renderDossierBar();
     renderGallery();
     updateMediaStats();
     closeUploadModal();
+
+    const parts = [];
+    if (addedPhotos > 0) parts.push(`${addedPhotos} photo(s)${lastDossierUsed ? ` dans "${lastDossierUsed}"` : ''}`);
+    if (addedVideos > 0) parts.push(`${addedVideos} vidéo(s)`);
+    if (addedAudio > 0) parts.push(`${addedAudio} morceau(x) MP3`);
+    if (parts.length > 0) {
+        showMediaToast(`Sauvegardé définitivement : ${parts.join(', ')}`, 'success');
+    }
 }
 
 /* ==========================================================================
    PHOTO LIGHTBOX (SINGLE VIEW)
    ========================================================================== */
-let currentLightboxIndex = 0;
-
 function openLightbox(photoId) {
-    const index = allPhotos.findIndex(p => p.id === photoId);
+    const visibleValid = getFilteredPhotos().filter(p => !p._expiredBlob && p.url);
+    lightboxPhotosList = visibleValid.length > 0 ? visibleValid : allPhotos.filter(p => !p._expiredBlob && p.url);
+    const index = lightboxPhotosList.findIndex(p => p.id === photoId);
     if (index === -1) return;
 
     currentLightboxIndex = index;
-    const photo = allPhotos[index];
+    const photo = lightboxPhotosList[index];
 
     const modal = document.getElementById('photoLightboxModal');
     const imgEl = document.getElementById('lightboxImg');
@@ -556,12 +1539,13 @@ function openLightbox(photoId) {
 
     if (!modal || !imgEl) return;
 
-    imgEl.src = photo.url;
+    const resolvedUrl = resolveMediaUrl(photo.url);
+    imgEl.src = resolvedUrl;
     if (titleEl) titleEl.textContent = photo.title;
-    if (villaEl) villaEl.textContent = photo.villa || 'Resort';
-    if (counterEl) counterEl.textContent = `${index + 1} / ${allPhotos.length}`;
+    if (villaEl) villaEl.textContent = photo.dossier || 'Resort';
+    if (counterEl) counterEl.textContent = `${index + 1} / ${lightboxPhotosList.length}`;
     if (downloadEl) {
-        downloadEl.href = photo.url;
+        downloadEl.href = resolvedUrl;
         downloadEl.download = photo.filename;
     }
 
@@ -571,15 +1555,29 @@ function openLightbox(photoId) {
 }
 
 function nextLightboxPhoto() {
-    if (allPhotos.length === 0) return;
-    currentLightboxIndex = (currentLightboxIndex + 1) % allPhotos.length;
-    openLightbox(allPhotos[currentLightboxIndex].id);
+    if (lightboxPhotosList.length === 0) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % lightboxPhotosList.length;
+    openLightbox(lightboxPhotosList[currentLightboxIndex].id);
 }
 
 function prevLightboxPhoto() {
-    if (allPhotos.length === 0) return;
-    currentLightboxIndex = (currentLightboxIndex - 1 + allPhotos.length) % allPhotos.length;
-    openLightbox(allPhotos[currentLightboxIndex].id);
+    if (lightboxPhotosList.length === 0) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + lightboxPhotosList.length) % lightboxPhotosList.length;
+    openLightbox(lightboxPhotosList[currentLightboxIndex].id);
+}
+
+function startDiaporamaFromLightbox() {
+    const current = lightboxPhotosList[currentLightboxIndex];
+    if (!current) return;
+    if (selectedPhotoIds.size > 0 && selectedPhotoIds.has(current.id)) {
+        startDiaporama({ startFromId: current.id });
+    } else {
+        startDiaporama({
+            photoIds: lightboxPhotosList.map(p => p.id),
+            startFromId: current.id,
+            sourceLabel: activeDossierFilter !== 'all' ? `Dossier: ${activeDossierFilter}` : 'Galerie Photos'
+        });
+    }
 }
 
 function closeLightbox() {
@@ -592,11 +1590,16 @@ function closeLightbox() {
 }
 
 /* ==========================================================================
-   VIDEO THEATER (PLAYER FULLSCREEN)
+   VIDEO THEATER (INDIVIDUAL VIDEO PLAYBACK OVERLAY - SEPARATE FROM DIAPORAMA)
    ========================================================================== */
 function openVideoTheater(videoId) {
     const video = allVideos.find(v => v.id === videoId);
-    if (!video) return;
+    if (!video || video._expiredBlob || !video.url) return;
+
+    // Pause background slideshow music so audio does not overlap
+    if (diaporamaAudio && !diaporamaAudio.paused) {
+        diaporamaAudio.pause();
+    }
 
     const modal = document.getElementById('videoTheaterModal');
     const player = document.getElementById('videoTheaterPlayer');
@@ -605,10 +1608,11 @@ function openVideoTheater(videoId) {
 
     if (!modal || !player) return;
 
-    player.src = video.url;
+    const resolvedUrl = resolveMediaUrl(video.url);
+    player.src = resolvedUrl;
     if (titleEl) titleEl.textContent = video.title;
     if (downloadBtn) {
-        downloadBtn.href = video.url;
+        downloadBtn.href = resolvedUrl;
         downloadBtn.download = video.filename;
     }
 
@@ -633,21 +1637,72 @@ function closeVideoTheater() {
 }
 
 /* ==========================================================================
-   DIAPORAMA (SLIDESHOW) WITH MP3 AUDIO
+   DIAPORAMA / SLIDESHOW (STRICTLY PHOTOS ONLY - BY DOSSIER OR MULTI-SELECT)
    ========================================================================== */
-function startDiaporama(startFromId = null) {
+function startDossierSlideshow() {
+    if (selectedPhotoIds.size > 0) {
+        startSelectedPhotosSlideshow();
+    } else if (activeDossierFilter !== 'all') {
+        startDiaporama({ dossier: activeDossierFilter });
+    } else {
+        startDiaporama();
+    }
+}
+
+function startSelectedPhotosSlideshow() {
+    if (selectedPhotoIds.size === 0) {
+        alert("Veuillez sélectionner au moins une photo pour le Diaporama.");
+        return;
+    }
+    startDiaporama({ photoIds: Array.from(selectedPhotoIds), sourceLabel: `Sélection (${selectedPhotoIds.size} photos)` });
+}
+
+function startDiaporama(options = {}) {
+    if (typeof options === 'string') {
+        options = { startFromId: options };
+    }
     closeLightbox();
-    diaporamaPhotos = allPhotos.slice();
+    closeVideoTheater();
+
+    // Only valid photos can ever enter the Diaporama
+    const validPhotos = allPhotos.filter(p => p.type === 'photo' && !p._expiredBlob && p.url);
+    let sourceLabel = 'Toutes les photos';
+
+    if (options.dossier) {
+        diaporamaPhotos = validPhotos.filter(p => p.dossier === options.dossier);
+        sourceLabel = `Dossier: ${options.dossier}`;
+    } else if (Array.isArray(options.photoIds) && options.photoIds.length > 0) {
+        const idSet = new Set(options.photoIds);
+        diaporamaPhotos = validPhotos.filter(p => idSet.has(p.id));
+        sourceLabel = options.sourceLabel || `Sélection (${diaporamaPhotos.length} photos)`;
+    } else if (selectedPhotoIds.size > 0) {
+        diaporamaPhotos = validPhotos.filter(p => selectedPhotoIds.has(p.id));
+        sourceLabel = `Sélection (${diaporamaPhotos.length} photos)`;
+    } else if (activeDossierFilter !== 'all') {
+        diaporamaPhotos = validPhotos.filter(p => p.dossier === activeDossierFilter);
+        sourceLabel = `Dossier: ${activeDossierFilter}`;
+    } else {
+        const filtered = getFilteredPhotos().filter(p => !p._expiredBlob && p.url);
+        diaporamaPhotos = filtered.length > 0 ? filtered : validPhotos;
+        sourceLabel = searchQuery.trim() ? `Recherche (${diaporamaPhotos.length} photos)` : `Toutes les photos (${diaporamaPhotos.length})`;
+    }
+
     if (diaporamaPhotos.length === 0) {
-        alert("Aucune photo disponible pour le diaporama.");
+        alert("Aucune photo valide disponible pour le diaporama dans ce dossier ou cette sélection.");
         return;
     }
 
-    if (startFromId) {
-        const foundIdx = diaporamaPhotos.findIndex(p => p.id === startFromId);
+    if (options.startFromId) {
+        const foundIdx = diaporamaPhotos.findIndex(p => p.id === options.startFromId);
         currentSlideIndex = foundIdx !== -1 ? foundIdx : 0;
     } else {
         currentSlideIndex = 0;
+    }
+
+    const sourceBadge = document.getElementById('diaporamaSourceBadge');
+    if (sourceBadge) {
+        sourceBadge.textContent = sourceLabel;
+        sourceBadge.style.display = 'inline-flex';
     }
 
     const overlay = document.getElementById('diaporamaOverlay');
@@ -662,7 +1717,6 @@ function startDiaporama(startFromId = null) {
     updateDiaporamaPlayButton();
     startDiaporamaTimer();
 
-    // Start background music if selected
     if (!isMusicMuted && diaporamaAudio && diaporamaAudio.src) {
         diaporamaAudio.play().catch(e => console.log('Autoplay prevented', e));
     }
@@ -679,16 +1733,18 @@ function renderCurrentSlide() {
     const counterEl = document.getElementById('diaporamaCounter');
     const progressBar = document.getElementById('diaporamaProgress');
 
+    const resolvedUrl = resolveMediaUrl(photo.url);
+
     if (imgEl) {
         imgEl.style.opacity = '0';
         setTimeout(() => {
-            imgEl.src = photo.url;
+            imgEl.src = resolvedUrl;
             imgEl.style.opacity = '1';
         }, 150);
     }
 
     if (titleEl) titleEl.textContent = photo.title;
-    if (villaEl) villaEl.textContent = photo.villa || 'Resort';
+    if (villaEl) villaEl.textContent = photo.dossier || 'Resort';
     if (counterEl) counterEl.textContent = `Slide ${currentSlideIndex + 1} / ${diaporamaPhotos.length}`;
 
     if (progressBar) {
@@ -804,18 +1860,21 @@ function initAudioElement() {
     }
     diaporamaAudio.volume = 0.65;
 
-    // Pick first track by default
     if (allAudio && allAudio.length > 0) {
         currentAudioTrack = allAudio[0];
-        diaporamaAudio.src = currentAudioTrack.url;
+        diaporamaAudio.src = resolveMediaUrl(currentAudioTrack.url);
         updateAudioDisplay(currentAudioTrack.title);
     }
 
     diaporamaAudio.addEventListener('play', () => {
         setMusicVisualizerActive(true);
+        const icon = document.getElementById('btnAudioMainIcon');
+        if (icon) icon.className = 'fa-solid fa-pause';
     });
     diaporamaAudio.addEventListener('pause', () => {
         setMusicVisualizerActive(false);
+        const icon = document.getElementById('btnAudioMainIcon');
+        if (icon) icon.className = 'fa-solid fa-play';
     });
 }
 
@@ -829,7 +1888,6 @@ function populateAudioSelectors() {
         if (!select) return;
         select.innerHTML = '';
 
-        // Group by album
         const albums = {};
         allAudio.forEach(track => {
             const alb = track.album || 'Autres morceaux';
@@ -842,9 +1900,9 @@ function populateAudioSelectors() {
             group.label = albumName;
             albums[albumName].forEach(track => {
                 const opt = document.createElement('option');
-                opt.value = track.url;
+                opt.value = track.id;
                 opt.textContent = track.title;
-                if (currentAudioTrack && currentAudioTrack.url === track.url) {
+                if (currentAudioTrack && currentAudioTrack.id === track.id) {
                     opt.selected = true;
                 }
                 group.appendChild(opt);
@@ -854,16 +1912,17 @@ function populateAudioSelectors() {
     });
 }
 
-function onAudioTrackChange(url) {
-    const track = allAudio.find(a => a.url === url);
+function onAudioTrackChange(trackIdOrUrl) {
+    const track = allAudio.find(a => a.id === trackIdOrUrl || a.url === trackIdOrUrl);
     if (!track) return;
     currentAudioTrack = track;
+    populateAudioSelectors();
     playAudioTrack(track.url, track.title);
 }
 
 function playAudioTrack(url, title) {
     if (!diaporamaAudio) return;
-    diaporamaAudio.src = url;
+    diaporamaAudio.src = resolveMediaUrl(url);
     diaporamaAudio.play().then(() => {
         updateAudioDisplay(title);
     }).catch(e => console.log('Audio playback info', e));
@@ -914,32 +1973,54 @@ function triggerCustomAudioUpload() {
     if (input) input.click();
 }
 
-function handleCustomAudioFile(input) {
+async function handleCustomAudioFile(input) {
     if (!input.files || input.files.length === 0) return;
     const file = input.files[0];
-    const blobUrl = URL.createObjectURL(file);
+    const id = 'user_audio_' + Date.now();
+    const blobUrl = await saveMediaBlob(id, file);
     const title = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
 
     const customTrack = {
-        id: 'user_audio_' + Date.now(),
+        id,
         filename: file.name,
         title: title,
         album: 'Morceau Personnalisé',
-        path: blobUrl,
+        path: '',
         url: blobUrl,
-        size_mb: parseFloat((file.size / (1024 * 1024)).toFixed(2))
+        size_mb: parseFloat((file.size / (1024 * 1024)).toFixed(2)),
+        isUserUpload: true
     };
 
+    saveUserAudioUpload(customTrack);
     allAudio.unshift(customTrack);
     currentAudioTrack = customTrack;
     populateAudioSelectors();
     playAudioTrack(customTrack.url, customTrack.title);
     input.value = '';
+    showMediaToast(`Morceau "${title}" sauvegardé dans la playlist !`, 'success');
 }
 
 /* ==========================================================================
-   GLOBAL KEYBOARD SHORTCUTS
+   TOAST NOTIFICATIONS & GLOBAL KEYBOARD SHORTCUTS
    ========================================================================== */
+function showMediaToast(message, type = 'info') {
+    let toast = document.getElementById('sr-media-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'sr-media-toast';
+        toast.className = 'media-toast';
+        document.body.appendChild(toast);
+    }
+    const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-info';
+    toast.className = `media-toast media-toast-${type} visible`;
+    toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${escapeHtml(message)}</span>`;
+
+    clearTimeout(window._srMediaToastTimer);
+    window._srMediaToastTimer = setTimeout(() => {
+        toast.classList.remove('visible');
+    }, 3500);
+}
+
 function initGlobalEventListeners() {
     document.addEventListener('keydown', (e) => {
         const diaporamaActive = document.getElementById('diaporamaOverlay')?.classList.contains('active');
@@ -961,21 +2042,40 @@ function initGlobalEventListeners() {
         }
     });
 
-    // Close modals on background click
     window.addEventListener('click', (e) => {
         if (e.target.id === 'photoLightboxModal') closeLightbox();
         if (e.target.id === 'videoTheaterModal') closeVideoTheater();
         if (e.target.id === 'uploadModal') closeUploadModal();
         if (e.target.id === 'editTitleModal') closeEditTitleModal();
+        if (e.target.id === 'newDossierModal') closeNewDossierModal();
     });
+
+    window.addEventListener('sr:languageChanged', () => {
+        renderDossierBar();
+        updateSelectionUI();
+    });
+}
+
+function getI18nText(key, fallback) {
+    try {
+        const lang = localStorage.getItem('sr_lang') || 'fr';
+        const dict = window.SR_I18N && (window.SR_I18N[lang] || window.SR_I18N.fr);
+        if (dict && dict[key] !== undefined) return dict[key];
+    } catch (e) {}
+    return fallback;
 }
 
 function escapeHtml(str) {
     if (!str) return '';
-    return str
+    return String(str)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
+}
+
+function escapeJsString(str) {
+    if (!str) return '';
+    return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }

@@ -10,6 +10,11 @@ if ([string]::IsNullOrEmpty($RootDir)) {
     $RootDir = (Resolve-Path $RootDir).Path
 }
 
+$mediaUpdater = Join-Path $RootDir "update_media_data.ps1"
+if (Test-Path $mediaUpdater) {
+    try { & $mediaUpdater -RootDir $RootDir } catch {}
+}
+
 # Verifica se il server è già attivo sulla porta principale
 function Test-PortInUse([int]$testPort) {
     try {
