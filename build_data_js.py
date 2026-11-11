@@ -607,11 +607,15 @@ data_obj = {
         "administrators_list": ["Ricardo Pimentel Portela de Moraes", "Edoardo Tubia"],
         "partner_operator": "Hôtel Sombra e Água Fresca / Grupo Sombra",
         "bank_accounts_br": "Banco do Brasil - Agência 1066-9 (Goianinha), C/C 48649-3",
-        "ativo_total_2025": 5298710.03,
-        "ativo_total_2024": 5348180.83,
-        "patrimonio_liquido_2025": 3967288.96,
-        "patrimonio_liquido_2024": 4633908.26,
-        "resultado_financeiro_2025": 135280.27
+        "ativo_total_2026_ytd": 5457856.95,
+        "ativo_total_2025": 5348180.83,
+        "ativo_total_2024": 5298710.03,
+        "patrimonio_liquido_2026_ytd": 4745808.38,
+        "patrimonio_liquido_2025": 4633908.26,
+        "patrimonio_liquido_2024": 3967288.96,
+        "resultado_financeiro_2025": 135280.27,
+        "resultado_financeiro_2026_ytd": 156589.49,
+        "lucro_liquido_2026_ytd": 111900.12
     },
     "bank_accounts": {
         "olky": {
@@ -649,9 +653,9 @@ data_obj = {
             "iban": "C/C: 48649-3 • Agência 1066-9",
             "bic": "BRASBRRJRFN",
             "currency": "BRL",
-            "balance_2024": 1600579.12,
-            "balance_2025": 976766.78,
-            "balance_current": 976766.78,
+            "balance_2024": 976766.78,
+            "balance_2025": 1600579.12,
+            "balance_current": 1774989.28,
             "status": "Actif Filiale",
             "badge_color": "#f59e0b"
         }
@@ -829,20 +833,27 @@ data_obj = {
         }
     ],
     "brazil_balanco": {
-        "ativo_circulante_2025": 5278448.74,
-        "ativo_circulante_2024": 5335550.12,
-        "bb_investimentos_2025": 976766.78,
-        "bb_investimentos_2024": 1591722.73,
-        "outros_creditos_2025": 701156.51,
-        "outros_creditos_2024": 134445.55,
-        "passivo_intercompany_2025": 583947.11,
-        "passivo_sombra_sarl_2025": 700000.00,
-        "passivo_sombra_sarl_2024": 638000.00,
+        "ativo_circulante_2026_ytd": 5445226.24,
+        "ativo_circulante_2025": 5335550.12,
+        "ativo_circulante_2024": 5278448.74,
+        "bb_disponibilidades_2026_ytd": 1774989.28,
+        "bb_investimentos_2026_ytd": 1753411.27,
+        "bb_investimentos_2025": 1591722.73,
+        "bb_investimentos_2024": 976766.78,
+        "outros_creditos_2026_ytd": 69711.51,
+        "outros_creditos_2025": 134445.55,
+        "outros_creditos_2024": 701156.51,
+        "passivo_intercompany_2025": 0.00,
+        "passivo_intercompany_2024": 583947.11,
+        "passivo_sombra_sarl_2025": 638000.00,
+        "passivo_sombra_sarl_2024": 700000.00,
         "capital_social_brl": 3000525.45,
-        "lucros_acumulados_2025": 966763.51,
-        "lucros_acumulados_2024": 1633382.81,
-        "patrimonio_liquido_2025": 3967288.96,
-        "patrimonio_liquido_2024": 4633908.26
+        "lucros_acumulados_2026_ytd": 1745282.93,
+        "lucros_acumulados_2025": 1633382.81,
+        "lucros_acumulados_2024": 966763.51,
+        "patrimonio_liquido_2026_ytd": 4745808.38,
+        "patrimonio_liquido_2025": 4633908.26,
+        "patrimonio_liquido_2024": 3967288.96
     }
 }
 

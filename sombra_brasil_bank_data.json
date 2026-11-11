@@ -1,6 +1,138 @@
 {
   "ccTxs": [
     {
+      "nr": 266,
+      "date": "2026-10-30",
+      "year": 2026,
+      "desc": "Pagamento contratto affitto",
+      "in_out": "ENTRADAS",
+      "category": "LOCACAO",
+      "type": "Produtos",
+      "subject": "140852-6 SCP - JM EMPREENDIMENTOS IMOBILIARIO SCP LTDA",
+      "amount": 21578.01,
+      "balance": 21578.01
+    },
+    {
+      "nr": 265,
+      "date": "2026-10-29",
+      "year": 2026,
+      "desc": "Resgate",
+      "in_out": "",
+      "category": "INVESTIMENTOS",
+      "type": "Resgate",
+      "subject": "B.B.",
+      "amount": 2313.0,
+      "balance": -0.0
+    },
+    {
+      "nr": 264,
+      "date": "2026-10-29",
+      "year": 2026,
+      "desc": "Placa",
+      "in_out": "SAIDAS",
+      "category": "DESPESAS GERAIS",
+      "type": "Varias",
+      "subject": "Art Korten Design",
+      "amount": -2313.0,
+      "balance": -2313.0
+    },
+    {
+      "nr": 263,
+      "date": "2026-10-23",
+      "year": 2026,
+      "desc": "Resgate",
+      "in_out": "",
+      "category": "INVESTIMENTOS",
+      "type": "Resgate",
+      "subject": "B.B.",
+      "amount": 184.0,
+      "balance": -0.0
+    },
+    {
+      "nr": 262,
+      "date": "2026-10-23",
+      "year": 2026,
+      "desc": "Honorario Contabeis",
+      "in_out": "SAIDAS",
+      "category": "DESPESAS GERAIS",
+      "type": "Gestao Empresarial",
+      "subject": "LT Soluçoes Corporativas e Contabeis",
+      "amount": -184.0,
+      "balance": -184.0
+    },
+    {
+      "nr": 261,
+      "date": "2026-10-13",
+      "year": 2026,
+      "desc": "Resgate",
+      "in_out": "",
+      "category": "INVESTIMENTOS",
+      "type": "Resgate",
+      "subject": "B.B.",
+      "amount": 377.0,
+      "balance": -0.0
+    },
+    {
+      "nr": 260,
+      "date": "2026-10-13",
+      "year": 2026,
+      "desc": "Honorario Contabeis",
+      "in_out": "SAIDAS",
+      "category": "DESPESAS GERAIS",
+      "type": "Gestao Empresarial",
+      "subject": "JJ Assessoria Contabil",
+      "amount": -377.0,
+      "balance": -377.0
+    },
+    {
+      "nr": 259,
+      "date": "2026-10-06",
+      "year": 2026,
+      "desc": "Aplicaçao",
+      "in_out": "",
+      "category": "INVESTIMENTOS",
+      "type": "Aplicaçao",
+      "subject": "B.B.",
+      "amount": -38612.53,
+      "balance": -0.0
+    },
+    {
+      "nr": 258,
+      "date": "2026-10-05",
+      "year": 2026,
+      "desc": "Tarifa Pacote de Serviços",
+      "in_out": "SAIDAS",
+      "category": "DESPESAS FINANCEIRAS",
+      "type": "Despesas Bancarias",
+      "subject": "B.B.",
+      "amount": -93.1,
+      "balance": 38612.53
+    },
+    {
+      "nr": 257,
+      "date": "2026-10-05",
+      "year": 2026,
+      "desc": "Honorario Contabeis",
+      "in_out": "SAIDAS",
+      "category": "DESPESAS GERAIS",
+      "type": "Gestao Empresarial",
+      "subject": "LT Soluçoes Corporativas e Contabeis",
+      "amount": -1621.0,
+      "balance": 38705.63
+    },
+    {
+      "nr": 256,
+      "date": "2026-10-05",
+      "year": 2026,
+      "desc": "Honorario Contabeis",
+      "in_out": "SAIDAS",
+      "category": "DESPESAS GERAIS",
+      "type": "Gestao Empresarial",
+      "subject": "LT Soluçoes Corporativas e Contabeis",
+      "amount": -377.0,
+      "balance": 40326.63
+    },
+    {
       "nr": 255,
       "date": "2026-09-30",
       "year": 2026,
@@ -10,7 +142,7 @@
       "type": "Produtos",
       "subject": "140852-6 SCP - JM EMPREENDIMENTOS IMOBILIARIO SCP LTDA",
       "amount": 21578.02,
-      "balance": 40703.6299999999
+      "balance": 40703.63
     },
     {
       "nr": 254,
@@ -22,7 +154,7 @@
       "type": "Gestao Empresarial",
       "subject": "JJ Assessoria Contabil",
       "amount": -361.31,
-      "balance": 19125.6099999999
+      "balance": 19125.61
     },
     {
       "nr": 253,
@@ -34,7 +166,7 @@
       "type": "Despesas Bancarias",
       "subject": "B.B.",
       "amount": -93.1,
-      "balance": 19486.9199999999
+      "balance": 19486.92
     },
     {
       "nr": 252,
@@ -45,8 +177,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "LT Soluçoes Corporativas e Contabeis",
-      "amount": -1621,
-      "balance": 19580.0199999999
+      "amount": -1621.0,
+      "balance": 19580.02
     },
     {
       "nr": 251,
@@ -57,8 +189,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "LT Soluçoes Corporativas e Contabeis",
-      "amount": -377,
-      "balance": 21201.0199999999
+      "amount": -377.0,
+      "balance": 21201.02
     },
     {
       "nr": 250,
@@ -70,7 +202,7 @@
       "type": "Produtos",
       "subject": "140852-6 SCP - JM EMPREENDIMENTOS IMOBILIARIO SCP LTDA",
       "amount": 21578.02,
-      "balance": 21578.0199999999
+      "balance": 21578.02
     },
     {
       "nr": 249,
@@ -81,8 +213,8 @@
       "category": "INVESTIMENTOS",
       "type": "Resgate",
       "subject": "B.B.",
-      "amount": 377,
-      "balance": -1.0186340659856796e-10
+      "amount": 377.0,
+      "balance": -0.0
     },
     {
       "nr": 248,
@@ -93,8 +225,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "JJ Assessoria Contabil",
-      "amount": -377,
-      "balance": -377.00000000010186
+      "amount": -377.0,
+      "balance": -377.0
     },
     {
       "nr": 247,
@@ -106,7 +238,7 @@
       "type": "Resgate",
       "subject": "B.B.",
       "amount": 2091.1,
-      "balance": -1.0186340659856796e-10
+      "balance": -0.0
     },
     {
       "nr": 246,
@@ -118,7 +250,7 @@
       "type": "Despesas Bancarias",
       "subject": "B.B.",
       "amount": -93.1,
-      "balance": -2091.1000000001018
+      "balance": -2091.1
     },
     {
       "nr": 245,
@@ -129,8 +261,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "Essencial Gestao Empresarial Ltda",
-      "amount": -1621,
-      "balance": -1998.0000000001019
+      "amount": -1621.0,
+      "balance": -1998.0
     },
     {
       "nr": 244,
@@ -141,8 +273,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "Essencial Gestao Empresarial Ltda",
-      "amount": -377,
-      "balance": -377.00000000010186
+      "amount": -377.0,
+      "balance": -377.0
     },
     {
       "nr": 243,
@@ -153,8 +285,8 @@
       "category": "INVESTIMENTOS",
       "type": "Resgate",
       "subject": "B.B.",
-      "amount": 2375,
-      "balance": -1.0186340659856796e-10
+      "amount": 2375.0,
+      "balance": -0.0
     },
     {
       "nr": 242,
@@ -165,8 +297,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "JJ Assessoria Contabil",
-      "amount": -377,
-      "balance": -2375.000000000102
+      "amount": -377.0,
+      "balance": -2375.0
     },
     {
       "nr": 241,
@@ -177,8 +309,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "Essencial Gestao Empresarial Ltda",
-      "amount": -1621,
-      "balance": -1998.0000000001019
+      "amount": -1621.0,
+      "balance": -1998.0
     },
     {
       "nr": 240,
@@ -189,8 +321,8 @@
       "category": "DESPESAS GERAIS",
       "type": "Gestao Empresarial",
       "subject": "Essencial Gestao Empresarial Ltda",
-      "amount": -377,
-      "balance": -377.00000000010186
+      "amount": -377.0,
+      "balance": -377.0
     },
     {
       "nr": 239,
@@ -202,7 +334,7 @@
       "type": "Resgate",
       "subject": "B.B.",
       "amount": 93.1,
-      "balance": -1.0186340659856796e-10
+      "balance": -0.0
     },
     {
       "nr": 238,
@@ -214,7 +346,7 @@
       "type": "Despesas Bancarias",
       "subject": "B.B.",
       "amount": -93.1,
-      "balance": -93.10000000010186
+      "balance": -93.1
     },
     {
       "nr": 237,
@@ -226,142 +358,82 @@
       "type": "Resgate",
       "subject": "B.B.",
       "amount": 935.39,
-      "balance": -1.0186340659856796e-10
-    },
-    {
-      "nr": 236,
-      "date": "2026-06-17",
-      "year": 2026,
-      "desc": "Domiciliazione societaria",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS GERAIS",
-      "type": "Varias",
-      "subject": "Seahub Coworking",
-      "amount": -935.39,
-      "balance": -935.3900000001018
-    },
-    {
-      "nr": 235,
-      "date": "2026-06-10",
-      "year": 2026,
-      "desc": "Resgate",
-      "in_out": "",
-      "category": "INVESTIMENTOS",
-      "type": "Resgate",
-      "subject": "B.B.",
-      "amount": 377,
-      "balance": -1.0186340659856796e-10
-    },
-    {
-      "nr": 234,
-      "date": "2026-06-10",
-      "year": 2026,
-      "desc": "Honorario Contabeis",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS GERAIS",
-      "type": "Gestao Empresarial",
-      "subject": "JJ Assessoria Contabil",
-      "amount": -377,
-      "balance": -377.00000000010186
-    },
-    {
-      "nr": 233,
-      "date": "2026-06-05",
-      "year": 2026,
-      "desc": "Resgate",
-      "in_out": "",
-      "category": "INVESTIMENTOS",
-      "type": "Resgate",
-      "subject": "B.B.",
-      "amount": 2091.1,
-      "balance": -1.0186340659856796e-10
-    },
-    {
-      "nr": 232,
-      "date": "2026-06-05",
-      "year": 2026,
-      "desc": "Tarifa Pacote de Serviços",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS FINANCEIRAS",
-      "type": "Despesas Bancarias",
-      "subject": "B.B.",
-      "amount": -93.1,
-      "balance": -2091.1000000001018
-    },
-    {
-      "nr": 231,
-      "date": "2026-06-05",
-      "year": 2026,
-      "desc": "Honorario Contabeis",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS GERAIS",
-      "type": "Gestao Empresarial",
-      "subject": "Essencial Gestao Empresarial Ltda",
-      "amount": -1621,
-      "balance": -1998.0000000001019
-    },
-    {
-      "nr": 230,
-      "date": "2026-06-05",
-      "year": 2026,
-      "desc": "Honorario Contabeis",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS GERAIS",
-      "type": "Gestao Empresarial",
-      "subject": "Essencial Gestao Empresarial Ltda",
-      "amount": -377,
-      "balance": -377.00000000010186
-    },
-    {
-      "nr": 229,
-      "date": "2026-05-11",
-      "year": 2026,
-      "desc": "Resgate",
-      "in_out": "",
-      "category": "INVESTIMENTOS",
-      "type": "Resgate",
-      "subject": "B.B.",
-      "amount": 377,
-      "balance": -1.0186340659856796e-10
-    },
-    {
-      "nr": 228,
-      "date": "2026-05-11",
-      "year": 2026,
-      "desc": "Honorario Contabeis",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS GERAIS",
-      "type": "Gestao Empresarial",
-      "subject": "JJ Assessoria Contabil",
-      "amount": -377,
-      "balance": -377.00000000010186
-    },
-    {
-      "nr": 227,
-      "date": "2026-05-06",
-      "year": 2026,
-      "desc": "Resgate",
-      "in_out": "",
-      "category": "INVESTIMENTOS",
-      "type": "Resgate",
-      "subject": "B.B.",
-      "amount": 93.1,
-      "balance": -1.0186340659856796e-10
-    },
-    {
-      "nr": 226,
-      "date": "2026-05-06",
-      "year": 2026,
-      "desc": "Tarifa Pacote de Serviços",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS FINANCEIRAS",
-      "type": "Despesas Bancarias",
-      "subject": "B.B.",
-      "amount": -93.1,
-      "balance": -93.10000000010186
+      "balance": -0.0
     }
   ],
   "invTxs": [
+    {
+      "nr": 199,
+      "date": "2026-10-31",
+      "year": 2026,
+      "desc": "Imposto de Renda",
+      "in_out": "SAIDAS",
+      "category": "DESPESAS TRIBUTARIAS",
+      "type": "IRRF",
+      "subject": "",
+      "amount": -26.2,
+      "balance": 1753411.27
+    },
+    {
+      "nr": 198,
+      "date": "2026-10-31",
+      "year": 2026,
+      "desc": "Rendimento Bruto",
+      "in_out": "ENTRADAS",
+      "category": "JUROS",
+      "type": "Receitas Financeiras",
+      "subject": "",
+      "amount": 15343.99,
+      "balance": 1753437.47
+    },
+    {
+      "nr": 197,
+      "date": "2026-10-29",
+      "year": 2026,
+      "desc": "Resgate",
+      "in_out": "",
+      "category": "RESGATE",
+      "type": "Despesas Gerais",
+      "subject": "B.B.",
+      "amount": -2313.0,
+      "balance": 1738093.48
+    },
+    {
+      "nr": 196,
+      "date": "2026-10-23",
+      "year": 2026,
+      "desc": "Resgate",
+      "in_out": "",
+      "category": "RESGATE",
+      "type": "Despesas Gerais",
+      "subject": "B.B.",
+      "amount": -184.0,
+      "balance": 1740406.48
+    },
+    {
+      "nr": 195,
+      "date": "2026-10-13",
+      "year": 2026,
+      "desc": "Resgate",
+      "in_out": "",
+      "category": "RESGATE",
+      "type": "Despesas Gerais",
+      "subject": "B.B.",
+      "amount": -377.0,
+      "balance": 1740590.48
+    },
+    {
+      "nr": 194,
+      "date": "2026-10-06",
+      "year": 2026,
+      "desc": "Aplicaçao",
+      "in_out": "",
+      "category": "INVESTIMENTOS",
+      "type": "Aplicaçao",
+      "subject": "B.B.",
+      "amount": 38612.53,
+      "balance": 1740967.48
+    },
     {
       "nr": 193,
       "date": "2026-09-30",
@@ -407,7 +479,7 @@
       "category": "RESGATE",
       "type": "Despesas Gerais",
       "subject": "B.B.",
-      "amount": -377,
+      "amount": -377.0,
       "balance": 1671521.89
     },
     {
@@ -444,7 +516,7 @@
       "type": "Receitas Financeiras",
       "subject": "",
       "amount": 17203.96,
-      "balance": 1673996.6199999999
+      "balance": 1673996.62
     },
     {
       "nr": 186,
@@ -455,7 +527,7 @@
       "category": "RESGATE",
       "type": "Despesas Gerais",
       "subject": "B.B.",
-      "amount": -2375,
+      "amount": -2375.0,
       "balance": 1656792.66
     },
     {
@@ -515,8 +587,8 @@
       "category": "RESGATE",
       "type": "Despesas Gerais",
       "subject": "B.B.",
-      "amount": -377,
-      "balance": 1644504.3699999999
+      "amount": -377.0,
+      "balance": 1644504.37
     },
     {
       "nr": 180,
@@ -528,7 +600,7 @@
       "type": "Despesas Gerais",
       "subject": "B.B.",
       "amount": -2091.1,
-      "balance": 1644881.3699999999
+      "balance": 1644881.37
     },
     {
       "nr": 179,
@@ -563,8 +635,8 @@
       "category": "RESGATE",
       "type": "Despesas Gerais",
       "subject": "B.B.",
-      "amount": -377,
-      "balance": 1650289.3900000001
+      "amount": -377.0,
+      "balance": 1650289.39
     },
     {
       "nr": 176,
@@ -576,7 +648,7 @@
       "type": "Despesas Gerais",
       "subject": "B.B.",
       "amount": -93.1,
-      "balance": 1650666.3900000001
+      "balance": 1650666.39
     },
     {
       "nr": 175,
@@ -587,8 +659,8 @@
       "category": "RESGATE",
       "type": "Despesas Gerais",
       "subject": "B.B.",
-      "amount": -1998,
-      "balance": 1650759.4900000002
+      "amount": -1998.0,
+      "balance": 1650759.49
     },
     {
       "nr": 174,
@@ -600,7 +672,7 @@
       "type": "IRRF",
       "subject": "",
       "amount": -10.01,
-      "balance": 1652757.4900000002
+      "balance": 1652757.49
     },
     {
       "nr": 173,
@@ -612,7 +684,7 @@
       "type": "Receitas Financeiras",
       "subject": "",
       "amount": 15246.12,
-      "balance": 1652767.5000000002
+      "balance": 1652767.5
     },
     {
       "nr": 172,
@@ -623,8 +695,8 @@
       "category": "RESGATE",
       "type": "Despesas Gerais",
       "subject": "B.B.",
-      "amount": -377,
-      "balance": 1637521.3800000001
+      "amount": -377.0,
+      "balance": 1637521.38
     },
     {
       "nr": 171,
@@ -636,7 +708,7 @@
       "type": "Despesas Gerais",
       "subject": "B.B.",
       "amount": -81.4,
-      "balance": 1637898.3800000001
+      "balance": 1637898.38
     },
     {
       "nr": 170,
@@ -649,85 +721,13 @@
       "subject": "B.B.",
       "amount": -758.56,
       "balance": 1637979.78
-    },
-    {
-      "nr": 169,
-      "date": "2026-03-31",
-      "year": 2026,
-      "desc": "Rendimento Bruto",
-      "in_out": "ENTRADAS",
-      "category": "JUROS",
-      "type": "Receitas Financeiras",
-      "subject": "",
-      "amount": 17189.88,
-      "balance": 1638738.34
-    },
-    {
-      "nr": 168,
-      "date": "2026-02-27",
-      "year": 2026,
-      "desc": "Rendimento Bruto",
-      "in_out": "ENTRADAS",
-      "category": "JUROS",
-      "type": "Receitas Financeiras",
-      "subject": "",
-      "amount": 13803.51,
-      "balance": 1621548.4600000002
-    },
-    {
-      "nr": 167,
-      "date": "2026-01-31",
-      "year": 2026,
-      "desc": "Rendimento Bruto",
-      "in_out": "ENTRADAS",
-      "category": "JUROS",
-      "type": "Receitas Financeiras",
-      "subject": "",
-      "amount": 16022.22,
-      "balance": 1607744.9500000002
-    },
-    {
-      "nr": 166,
-      "date": "2025-12-31",
-      "year": 2025,
-      "desc": "Imposto de Renda",
-      "in_out": "SAIDAS",
-      "category": "DESPESAS TRIBUTARIAS",
-      "type": "IRRF",
-      "subject": "",
-      "amount": -29.1,
-      "balance": 1591722.7300000002
-    },
-    {
-      "nr": 165,
-      "date": "2025-12-31",
-      "year": 2025,
-      "desc": "Rendimento Bruto",
-      "in_out": "ENTRADAS",
-      "category": "JUROS",
-      "type": "Receitas Financeiras",
-      "subject": "",
-      "amount": 15590.85,
-      "balance": 1591751.8300000003
-    },
-    {
-      "nr": 164,
-      "date": "2025-12-15",
-      "year": 2025,
-      "desc": "Aplicaçao",
-      "in_out": "",
-      "category": "INVESTIMENTOS",
-      "type": "Aplicaçao",
-      "subject": "B.B.",
-      "amount": 200000,
-      "balance": 1576160.9800000002
     }
   ],
-  "ccTotalCount": 255,
-  "invTotalCount": 194,
-  "ccBalance": 40703.63,
-  "invBalance": 1702354.95,
-  "totalBalanceBrl": 1743058.58,
+  "ccTotalCount": 266,
+  "invTotalCount": 200,
+  "ccBalance": 21578.01,
+  "invBalance": 1753411.27,
+  "totalBalanceBrl": 1774989.28,
   "rateEurBrl": 5.9,
-  "totalBalanceEur": 295433.66
+  "totalBalanceEur": 300845.64
 }

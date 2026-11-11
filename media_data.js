@@ -197,40 +197,40 @@ const SOMBRA_MEDIA_DATA = {
                    },
                    {
                        "id":  "photo_20",
-                       "filename":  "DSC_0833.JPG",
-                       "title":  "Resort - DSC_0833",
-                       "path":  "uploads/Foto e video/DSC_0833.JPG",
-                       "url":  "uploads/Foto%20e%20video/DSC_0833.JPG",
+                       "filename":  "Resort 01.JPG",
+                       "title":  "Resort - Resort 01",
+                       "path":  "uploads/Foto e video/Resort 01.JPG",
+                       "url":  "uploads/Foto%20e%20video/Resort%2001.JPG",
                        "villa":  "Resort",
                        "dossier":  "Resort",
                        "size_mb":  1.95
                    },
                    {
                        "id":  "photo_21",
-                       "filename":  "DSC_0834.JPG",
-                       "title":  "Resort - DSC_0834",
-                       "path":  "uploads/Foto e video/DSC_0834.JPG",
-                       "url":  "uploads/Foto%20e%20video/DSC_0834.JPG",
+                       "filename":  "Resort 02.JPG",
+                       "title":  "Resort - Resort 02",
+                       "path":  "uploads/Foto e video/Resort 02.JPG",
+                       "url":  "uploads/Foto%20e%20video/Resort%2002.JPG",
                        "villa":  "Resort",
                        "dossier":  "Resort",
                        "size_mb":  1.96
                    },
                    {
                        "id":  "photo_22",
-                       "filename":  "DSC_0835.JPG",
-                       "title":  "Resort - DSC_0835",
-                       "path":  "uploads/Foto e video/DSC_0835.JPG",
-                       "url":  "uploads/Foto%20e%20video/DSC_0835.JPG",
+                       "filename":  "Resort 03.JPG",
+                       "title":  "Resort - Resort 03",
+                       "path":  "uploads/Foto e video/Resort 03.JPG",
+                       "url":  "uploads/Foto%20e%20video/Resort%2003.JPG",
                        "villa":  "Resort",
                        "dossier":  "Resort",
                        "size_mb":  1.95
                    },
                    {
                        "id":  "photo_23",
-                       "filename":  "DSC_0836.JPG",
-                       "title":  "Resort - DSC_0836",
-                       "path":  "uploads/Foto e video/DSC_0836.JPG",
-                       "url":  "uploads/Foto%20e%20video/DSC_0836.JPG",
+                       "filename":  "Resort 04.JPG",
+                       "title":  "Resort - Resort 04",
+                       "path":  "uploads/Foto e video/Resort 04.JPG",
+                       "url":  "uploads/Foto%20e%20video/Resort%2004.JPG",
                        "villa":  "Resort",
                        "dossier":  "Resort",
                        "size_mb":  1.96
@@ -239,23 +239,23 @@ const SOMBRA_MEDIA_DATA = {
     "videos":  [
                    {
                        "id":  "video_1",
-                       "filename":  "Casa H Resort 07.2026.MP4",
-                       "title":  "Casa H Resort 07.2026",
-                       "path":  "uploads/Foto e video/Casa H Resort 07.2026.MP4",
-                       "url":  "uploads/Foto%20e%20video/Casa%20H%20Resort%2007.2026.MP4",
+                       "filename":  "Casa H 01 - Resort 2026.MP4",
+                       "title":  "Casa H 01 - Resort 2026",
+                       "path":  "uploads/Foto e video/Casa H 01 - Resort 2026.MP4",
+                       "url":  "uploads/Foto%20e%20video/Casa%20H%2001%20-%20Resort%202026.MP4",
                        "villa":  "Resort",
-                       "dossier":  "Visites Vidéo",
-                       "size_mb":  7.26
+                       "dossier":  "Visites VidÃ©o",
+                       "size_mb":  6.46
                    },
                    {
                        "id":  "video_2",
-                       "filename":  "Resort Casa H 2026.MP4",
-                       "title":  "Resort Casa H 2026",
-                       "path":  "uploads/Foto e video/Resort Casa H 2026.MP4",
-                       "url":  "uploads/Foto%20e%20video/Resort%20Casa%20H%202026.MP4",
+                       "filename":  "Casa H 02 - Resort 2026.MP4",
+                       "title":  "Casa H 02 - Resort 2026",
+                       "path":  "uploads/Foto e video/Casa H 02 - Resort 2026.MP4",
+                       "url":  "uploads/Foto%20e%20video/Casa%20H%2002%20-%20Resort%202026.MP4",
                        "villa":  "Resort",
-                       "dossier":  "Visites Vidéo",
-                       "size_mb":  6.46
+                       "dossier":  "Visites VidÃ©o",
+                       "size_mb":  7.26
                    }
                ],
     "audio":  [

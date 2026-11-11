@@ -2,15 +2,19 @@
  * brasil_finances.js
  * SOMBRA RESORT BRASIL SOCIEDADE UNIPESSOAL LTDA (CNPJ 43.730.206/0001-80)
  * Gestione dinamica:
- * - Scelta dell'anno singolo da esaminare (2024, 2025)
- * - Confronto dinamico tra due anni (2024 vs 2025, o viceversa)
+ * - Scelta dell'anno singolo da esaminare (2024, 2025, 2026 YTD Excel BB)
+ * - Confronto dinamico tra due anni (es. 2025 vs 2026, 2024 vs 2025)
  * - Accordion tendina per ciascuna voce e sottoconto analitico
  */
 
 let brFinMode = 'compare'; // 'single' oppure 'compare'
-let brSingleYear = '2025';
-let brCompareY1 = '2024';
-let brCompareY2 = '2025';
+let brSingleYear = '2026';
+let brCompareY1 = '2025';
+let brCompareY2 = '2026';
+
+function getBrDateLabel(yr) {
+    return yr === '2026' ? '31/10/2026' : `31/12/${yr}`;
+}
 
 function formatBRL(val) {
     if (val === null || val === undefined || isNaN(val)) return "R$ 0,00";
@@ -42,6 +46,8 @@ function formatBRLPercent(v1, v2) {
 
 // ============================================================
 // BASE DATI: BALANÇO PATRIMONIAL (STATO PATRIMONIALE)
+// 2024 & 2025: da Balanço Patrimonial Assinado 31/12/2025
+// 2026: 31/12/2025 rettificato con movimenti Excel BB al 31/10/2026
 // ============================================================
 const BR_BALANCO_DATA = [
     {
@@ -50,10 +56,10 @@ const BR_BALANCO_DATA = [
         code: "1.1.1",
         name: "Ativo Circulante - Disponibilidades (Cassa e Banche)",
         desc: "Banco do Brasil C/C e Fondo Investimento Renda Fixa",
-        vals: { "2024": 1600579.12, "2025": 976766.78 },
+        vals: { "2024": 976766.78, "2025": 1600579.12, "2026": 1774989.28 },
         details: [
-            { code: "1.1.1.01.002", name: "Banco do Brasil S.A. - C/C 48649-3", nature: "Conto Corrente ordinario (Ag. 1066-9 Tibau do Sul)", vals: { "2024": 8856.39, "2025": 0.00 }, note: "Saldo tesoreria operativa; liquidità concentrata su fondo remunerato" },
-            { code: "1.1.1.02.001", name: "BB Renda Fixa Simples LP", nature: "Fondo d'Investimento Monetario a Breve Termine", vals: { "2024": 1591722.73, "2025": 976766.78 }, note: "Liquidità aziendale remunerata a rendimento CDI garantito" }
+            { code: "1.1.1.01.002", name: "Banco do Brasil S.A. - C/C 48649-3", nature: "Conto Corrente ordinario (Ag. 1066-9 Goianinha)", vals: { "2024": 0.00, "2025": 8856.39, "2026": 21578.01 }, note: "2025 da Balanço CRC; 2026 saldo al 30/10/2026 da estratto Excel Banco do Brasil" },
+            { code: "1.1.1.02.001", name: "BB Renda Fixa Simples LP", nature: "Fondo d'Investimento Monetario a Breve Termine", vals: { "2024": 976766.78, "2025": 1591722.73, "2026": 1753411.27 }, note: "Liquidità remunerata a rendimento CDI (+R$ 156.589,49 lordi, -R$ 18.614,73 IRRF, +R$ 23.713,78 netto versamenti/prelievi nel 2026)" }
         ]
     },
     {
@@ -62,11 +68,11 @@ const BR_BALANCO_DATA = [
         code: "1.1.2",
         name: "Ativo Circulante - Outros Créditos & Adiantamentos",
         desc: "Anticipi fornitori, Crediti fiscali RFB & Dividendi SCP a ricevere",
-        vals: { "2024": 134445.55, "2025": 701156.51 },
+        vals: { "2024": 701156.51, "2025": 134445.55, "2026": 69711.51 },
         details: [
-            { code: "1.1.2.05.001", name: "Adiantamentos a Fornecedores", nature: "Yapay Pagamentos (R$ 6.764,79) & Palaoro (R$ 6.573,20 em 2024)", vals: { "2024": 13337.99, "2025": 6764.79 }, note: "Acconti versati per servizi tecnologici e piattaforme di pagamento" },
-            { code: "1.1.2.06.002", name: "Impostos a Compensar (IRRF / IRPJ)", nature: "Crediti tributari verso Receita Federal do Brasil (RFB)", vals: { "2024": 56373.52, "2025": 36557.38 }, note: "Ritenute fiscali subite sui rendimenti BB da compensare con future imposte" },
-            { code: "1.1.2.08.001", name: "Dividendos e Lucros a Receber SCP", nature: "J.M. Empreendimentos Imobiliários SCP", vals: { "2024": 64734.04, "2025": 657834.34 }, note: "Utili e proventi maturati dalla partecipazione nella SCP immobiliare da incassare" }
+            { code: "1.1.2.05.001", name: "Adiantamentos a Fornecedores", nature: "Yapay Pagamentos (2024) & C N Palaoro Eireli (2025-2026)", vals: { "2024": 6764.79, "2025": 13337.99, "2026": 13337.99 }, note: "Acconti a fornitori; nel 2026 nessuna variazione su C N Palaoro Eireli" },
+            { code: "1.1.2.06.002", name: "Impostos a Compensar (IRRF / IRPJ)", nature: "Crediti tributari verso Receita Federal do Brasil (RFB)", vals: { "2024": 36557.38, "2025": 56373.52, "2026": 56373.52 }, note: "Crediti IRPJ/IRRF certificati 2025; ritenuta IRRF 2026 (R$ 18.614,73) spesata nel DRE provvisorio fino a chiusura ECF" },
+            { code: "1.1.2.08.001", name: "Dividendos e Lucros a Receber SCP", nature: "J.M. Empreendimentos Imobiliários SCP", vals: { "2024": 657834.34, "2025": 64734.04, "2026": 0.00 }, note: "Credito fine 2025 (R$ 64.734,04) interamente incassato in 3 rate da R$ 21.578 tra ago e ott 2026 (tot. R$ 64.734,05 in Excel BB)" }
         ]
     },
     {
@@ -75,10 +81,10 @@ const BR_BALANCO_DATA = [
         code: "1.1.3",
         name: "Ativo Circulante - Estoques & Ativos Imobiliários",
         desc: "Terreno Praia do Amor e Complesso Case/Villas Sombra Resort",
-        vals: { "2024": 3600525.45, "2025": 3600525.45 },
+        vals: { "2024": 3600525.45, "2025": 3600525.45, "2026": 3600525.45 },
         details: [
-            { code: "1.1.3.01.001", name: "Terreno Urbano Praia do Amor", nature: "Lotto 1.044,81 m² - Praia de Pipa / Tibau do Sul (RN)", vals: { "2024": 600000.00, "2025": 600000.00 }, note: "Valore d'acquisto e registrazione notarile al Catasto di Tibau do Sul" },
-            { code: "1.1.3.02.001", name: "Empreendimento 09 Casas/Villas Sombra Resort", nature: "Complesso Residenziale Turistico Sombra Resort Brasil", vals: { "2024": 3000525.45, "2025": 3000525.45 }, note: "Valore storico di conferimento di capitale e sviluppo edilizio del villaggio" }
+            { code: "1.1.3.01.001", name: "Terreno Urbano Praia do Amor", nature: "Lotto 1.044,81 m² - Praia de Pipa / Tibau do Sul (RN)", vals: { "2024": 600000.00, "2025": 600000.00, "2026": 600000.00 }, note: "Valore d'acquisto e registrazione notarile al Catasto di Tibau do Sul" },
+            { code: "1.1.3.02.001", name: "Empreendimento 09 Casas/Villas Sombra Resort", nature: "Complesso Residenziale Turistico Sombra Resort Brasil", vals: { "2024": 3000525.45, "2025": 3000525.45, "2026": 3000525.45 }, note: "Valore storico di conferimento di capitale e sviluppo edilizio del villaggio" }
         ]
     },
     {
@@ -86,12 +92,12 @@ const BR_BALANCO_DATA = [
         category: "ativo_nc",
         code: "1.2",
         name: "Ativo Não Circulante - Investimentos & Imobilizzato",
-        desc: "Partecipazione SCP J.M. Empreendimenti & Mobili",
-        vals: { "2024": 12630.71, "2025": 20261.29 },
+        desc: "Partecipazione SCP J.M. Empreendimentos & Mobili",
+        vals: { "2024": 20261.29, "2025": 12630.71, "2026": 12630.71 },
         details: [
-            { code: "1.2.1.01.001", name: "Participação Societária J.M. Empreendimentos SCP", nature: "Quota di partecipazione societaria", vals: { "2024": 6000.00, "2025": 6000.00 }, note: "Quota sociale nominale detenuta quale socio partecipante (sócio participante)" },
-            { code: "1.2.1.02.001", name: "Equivalência Patrimonial SCP", nature: "Rivalutazione a Patrimonio Netto quota SCP", vals: { "2024": 0.00, "2025": 14261.29 }, note: "Incremento del patrimonio netto pro quota di spettanza maturato nella SCP" },
-            { code: "1.2.2.01.001", name: "Móveis e Utensílios de Escritório", nature: "Cespiti materiali e dotazioni sede", vals: { "2024": 6630.71, "2025": 0.00 }, note: "Completamente ammortizzati al 31/12/2025 (fondo ammortamento al 100%)" }
+            { code: "1.2.1.01.001", name: "Participação Societária J.M. Empreendimentos SCP", nature: "Quota di partecipazione societaria", vals: { "2024": 6000.00, "2025": 6000.00, "2026": 6000.00 }, note: "Quota sociale nominale detenuta quale socio partecipante (sócio participante)" },
+            { code: "1.2.1.02.001", name: "Equivalência Patrimonial SCP", nature: "Rivalutazione a Patrimonio Netto quota SCP", vals: { "2024": 14261.29, "2025": 0.00, "2026": 0.00 }, note: "Adeguamento equivalenza patrimoniale SCP al 31/12/2025" },
+            { code: "1.2.2.01.001", name: "Móveis e Utensílios de Escritório (Líquido)", nature: "Cespiti materiali al netto ammortamenti (R$ 7.425,04 - R$ 794,33)", vals: { "2024": 0.00, "2025": 6630.71, "2026": 6630.71 }, note: "Arredi acquistati nel 2025 (valore netto contabile invariato in attesa ammortamento fine 2026)" }
         ]
     },
     {
@@ -100,11 +106,11 @@ const BR_BALANCO_DATA = [
         code: "2.1.1",
         name: "Passivo Circulante - Fornecedores & Imposte da Versare",
         desc: "Debiti commerciali a breve termine e imposte correnti/differite",
-        vals: { "2024": 76272.57, "2025": 47473.96 },
+        vals: { "2024": 47473.96, "2025": 76272.57, "2026": 74048.57 },
         details: [
-            { code: "2.1.1.01.001", name: "Fornecedores Nacionais de Bens e Serviços", nature: "Fornitori locali (JJ Manut., LRT, Elenice de Souza)", vals: { "2024": 2224.00, "2025": 88.25 }, note: "Fatture per servizi vari di manutenzione e utenze in scadenza" },
-            { code: "2.1.2.01.002", name: "CSLL a Recolher (Tributi sul Reddito)", nature: "Receita Federal do Brasil (RFB)", vals: { "2024": 2167.32, "2025": 521.45 }, note: "Imposta CSLL dovuta per il 4° trimestre con saldo entro gennaio" },
-            { code: "2.1.2.03.001", name: "Tributos Federais Diferidos s/ Aplicações", nature: "IRPJ (R$ 29.290,16) e CSLL (R$ 17.574,10)", vals: { "2024": 71881.25, "2025": 46864.26 }, note: "Fondo imposte differite sui rendimenti maturati sul fondo BB RF" }
+            { code: "2.1.1.01.001", name: "Fornecedores Nacionais de Bens e Serviços", nature: "Elenice Soares (2024), JJ Assessoria & LRT Soluções (2025)", vals: { "2024": 88.25, "2025": 2224.00, "2026": 0.00 }, note: "Debito fine 2025 (JJ R$ 353 + LRT R$ 1.871 = R$ 2.224,00) saldato il 05-12/01/2026 in C/C BB" },
+            { code: "2.1.2.01.002", name: "CSLL a Recolher (Tributi sul Reddito)", nature: "Receita Federal do Brasil (RFB)", vals: { "2024": 521.45, "2025": 2167.32, "2026": 2167.32 }, note: "Imposta CSLL da versare riportata da chiusura 2025" },
+            { code: "2.1.2.03.001", name: "Tributos Federais Diferidos s/ Aplicações", nature: "IRPJ (R$ 44.925,79) e CSLL (R$ 26.955,46) al 31/12/2025", vals: { "2024": 46864.26, "2025": 71881.25, "2026": 71881.25 }, note: "Fondo imposte differite sui rendimenti BB RF da chiusura ufficiale 2025" }
         ]
     },
     {
@@ -113,9 +119,9 @@ const BR_BALANCO_DATA = [
         code: "2.1.3",
         name: "Passivo Circulante - Partes Relacionadas (SCP J.M.)",
         desc: "Debiti di regolamento intercompany verso J.M. Empreendimentos SCP",
-        vals: { "2024": 0.00, "2025": 583947.11 },
+        vals: { "2024": 583947.11, "2025": 0.00, "2026": 0.00 },
         details: [
-            { code: "2.1.3.01.001", name: "Intercompany Partes Relacionadas", nature: "J.M. Empreendimentos Imobiliários SCP", vals: { "2024": 0.00, "2025": 583947.11 }, note: "Anticipazioni e regolamenti di conto per la gestione congiunta delle opere e del resort" }
+            { code: "2.1.3.01.001", name: "Intercompany Partes Relacionadas", nature: "J.M. Empreendimentos Imobiliários SCP", vals: { "2024": 583947.11, "2025": 0.00, "2026": 0.00 }, note: "Saldo intercompany regolato e compensato nell'esercizio 2025" }
         ]
     },
     {
@@ -124,9 +130,9 @@ const BR_BALANCO_DATA = [
         code: "2.2.1",
         name: "Passivo Não Circulante - Financiamento Sócios (Holding Lux)",
         desc: "Finanziamento soci a lungo termine da Sombra e Agua Fresca Resort S.à r.l.",
-        vals: { "2024": 638000.00, "2025": 700000.00 },
+        vals: { "2024": 700000.00, "2025": 638000.00, "2026": 638000.00 },
         details: [
-            { code: "2.2.1.01.001", name: "Financiamento / Mútuo de Sócios Estrangeiros", nature: "Sombra e Agua Fresca Resort S.à r.l. (RCS B263295)", vals: { "2024": 638000.00, "2025": 700000.00 }, note: "Finanziamento soci infruttifero a lungo termine. Corrisponde al conto PCN 4228800 in Lux" }
+            { code: "2.2.1.01.001", name: "Financiamento / Mútuo de Sócios Estrangeiros", nature: "Sombra e Agua Fresca Resort S.à r.l. (RCS B263295)", vals: { "2024": 700000.00, "2025": 638000.00, "2026": 638000.00 }, note: "Ridotto di R$ 62.000 nel dic 2025 (cessione credito Franco Toscano); invariato nel 2026" }
         ]
     },
     {
@@ -135,9 +141,9 @@ const BR_BALANCO_DATA = [
         code: "2.3.1",
         name: "Patrimônio Líquido - Capital Social Subscrito Estrangeiro",
         desc: "100% detenuto da Sombra e Agua Fresca Resort S.à r.l.",
-        vals: { "2024": 3000525.45, "2025": 3000525.45 },
+        vals: { "2024": 3000525.45, "2025": 3000525.45, "2026": 3000525.45 },
         details: [
-            { code: "2.3.1.01.001", name: "Sombra e Agua Fresca Resort S.à r.l.", nature: "Lussemburgo (RCS B263295) - 3.000.525 quote (100%)", vals: { "2024": 3000525.45, "2025": 3000525.45 }, note: "Capitale sociale interamente versato registrato RDE-IED presso Banco Central do Brasil" }
+            { code: "2.3.1.01.001", name: "Sombra e Agua Fresca Resort S.à r.l.", nature: "Lussemburgo (RCS B263295) - 3.000.525 quote (100%)", vals: { "2024": 3000525.45, "2025": 3000525.45, "2026": 3000525.45 }, note: "Capitale sociale interamente versato registrato RDE-IED presso Banco Central do Brasil" }
         ]
     },
     {
@@ -146,17 +152,19 @@ const BR_BALANCO_DATA = [
         code: "2.3.2",
         name: "Patrimônio Líquido - Lucros Acumulados & Riserve",
         desc: "Risultati economici riportati a nuovo e utili netti d'esercizio",
-        vals: { "2024": 1633382.81, "2025": 966763.51 },
+        vals: { "2024": 966763.51, "2025": 1633382.81, "2026": 1745282.93 },
         details: [
-            { code: "2.3.2.01.001", name: "Saldo Anterior de Lucros Acumulados", nature: "Utili di esercizi precedenti riportati a nuovo", vals: { "2024": 1588783.95, "2025": 1633382.81 }, note: "Riserva utili accumulati all'inizio del rispettivo esercizio contabile" },
-            { code: "2.3.2.01.002", name: "Lucro Líquido Apurado no Exercício", nature: "Risultato netto da DRE chiuso al 31 dicembre", vals: { "2024": 44598.86, "2025": 137310.45 }, note: "Utile netto certificato d'esercizio asseverato dal commercialista CRC" },
-            { code: "2.3.2.01.003", name: "Distribuições e Destinações de Resultados", nature: "Distribuzione dividendi / rettifiche autorizzate", vals: { "2024": 0.00, "2025": -803929.75 }, note: "Distribuzione proventi a soci e compensazioni approvate in assemblea" }
+            { code: "2.3.2.01.001", name: "Saldo Anterior de Lucros Acumulados", nature: "Utili di esercizi precedenti riportati a nuovo", vals: { "2024": 922164.65, "2025": 966763.51, "2026": 1633382.81 }, note: "Riserva utili accumulati all'inizio di ciascun esercizio contabile" },
+            { code: "2.3.2.01.002", name: "Lucro Líquido Apurado no Exercício", nature: "Risultato netto da DRE (2024-2025 CRC; 2026 YTD al 31/10 Excel BB)", vals: { "2024": 44598.86, "2025": 137310.45, "2026": 111900.12 }, note: "2024-2025 asseverati CRC; 2026 provvisorio gen-ott da movimenti bancari Excel BB" },
+            { code: "2.3.2.01.003", name: "Distribuições, Destinações e Ajustes SCP", nature: "Rettifiche e compensazioni patrimoniali approvate", vals: { "2024": 0.00, "2025": 529308.85, "2026": 0.00 }, note: "Rettifica contabile 2025 su saldi SCP/riserve; nessuna distribuzione nel 2026" }
         ]
     }
 ];
 
 // ============================================================
 // BASE DATI: DRE (PERDITE E PROFITTI / CONTO ECONOMICO)
+// 2024 & 2025: da DRE Assinado 31/12/2025
+// 2026: YTD 01/01-31/10/2026 da Excel Banco do Brasil rettificato
 // ============================================================
 const BR_DRE_DATA = [
     // ------------------------------------------------------------
@@ -168,9 +176,9 @@ const BR_DRE_DATA = [
         code: "3.1.1",
         name: "Receita Líquida Operacional (Ricavi delle Vendite)",
         desc: "Vendita unità abitative e ricavi di gestione alberghiera",
-        vals: { "2024": 0.00, "2025": 0.00 },
+        vals: { "2024": 0.00, "2025": 0.00, "2026": 0.00 },
         details: [
-            { code: "3.1.1.01.001", name: "Vendas de Unidades Imobiliárias", nature: "Vendita diretta unità abitative Sombra Resort", vals: { "2024": 0.00, "2025": 0.00 }, note: "Nessun rogito perfezionato nel periodo; unità mantenute a magazzino patrimoniale" }
+            { code: "3.1.1.01.001", name: "Vendas de Unidades Imobiliárias", nature: "Vendita diretta unità abitative Sombra Resort", vals: { "2024": 0.00, "2025": 0.00, "2026": 0.00 }, note: "Nessun rogito perfezionato nel periodo; unità mantenute a magazzino patrimoniale" }
         ]
     },
     {
@@ -179,11 +187,11 @@ const BR_DRE_DATA = [
         code: "3.1.2",
         name: "Receitas Financeiras (Rendimenti Banco do Brasil & Interessi)",
         desc: "Rendimenti lordi fondo liquidità CDI Banco do Brasil e proventi finanziari",
-        vals: { "2024": 81243.96, "2025": 136415.08 },
+        vals: { "2024": 81243.96, "2025": 136415.08, "2026": 156589.49 },
         details: [
-            { code: "3.1.2.01.001", name: "Receita Financeira - Aplicações BB RF Simples", nature: "Fondo d'Investimento BB Renda Fixa Simples LP", vals: { "2024": 80942.61, "2025": 135991.31 }, note: "Interessi lordi maturati sul conto d'investimento BB indicizzato a CDI garantito" },
-            { code: "3.1.2.01.002", name: "Juros Ativos & Proventi Accessori", nature: "Interessi attivi bancari maturati su giacenze", vals: { "2024": 0.00, "2025": 423.77 }, note: "Interessi attivi bancari ordinari" },
-            { code: "3.1.2.01.003", name: "Variação Monetária Ativa", nature: "Rettifiche valutarie e rivalutazioni monetarie attive", vals: { "2024": 301.35, "2025": 0.00 }, note: "Rettifiche attive di cambio e oscillazioni monetarie" }
+            { code: "3.1.2.01.001", name: "Receita Financeira - Aplicações BB RF Simples", nature: "Fondo d'Investimento BB Renda Fixa Simples LP", vals: { "2024": 80942.61, "2025": 135991.31, "2026": 156589.49 }, note: "2026: Somma dei 10 rendimenti lordi mensili (gen-ott 2026) da Conto Investimento Excel BB" },
+            { code: "3.1.2.01.002", name: "Juros Ativos & Proventi Accessori", nature: "Interessi attivi bancari maturati su giacenze", vals: { "2024": 0.00, "2025": 423.77, "2026": 0.00 }, note: "Interessi attivi bancari ordinari" },
+            { code: "3.1.2.01.003", name: "Variação Monetária Ativa", nature: "Rettifiche valutarie e rivalutazioni monetarie attive", vals: { "2024": 301.35, "2025": 0.00, "2026": 0.00 }, note: "Rettifiche attive di cambio e oscillazioni monetarie" }
         ]
     },
     {
@@ -191,10 +199,10 @@ const BR_DRE_DATA = [
         group: "ricavi",
         code: "3.1.3",
         name: "Outras Receitas Operacionais (Proventi Partecipazione SCP)",
-        desc: "Quota risultato positivo e proventi da J.M. Empreendimentos SCP",
-        vals: { "2024": 0.00, "2025": 64734.04 },
+        desc: "Quota risultato positivo e regolamenti da J.M. Empreendimentos SCP",
+        vals: { "2024": 0.00, "2025": 64734.04, "2026": 0.01 },
         details: [
-            { code: "3.1.3.01.001", name: "Resultado Positivo de Participação em SCP", nature: "Sociedade em Conta de Participação (Socio Partecipante 100%)", vals: { "2024": 0.00, "2025": 64734.04 }, note: "Attribuzione quota utili e proventi da SCP J.M. Empreendimentos Imobiliários" }
+            { code: "3.1.3.01.001", name: "Resultado Positivo / Regolamento SCP", nature: "Sociedade em Conta de Participação (Socio Partecipante)", vals: { "2024": 0.00, "2025": 64734.04, "2026": 0.01 }, note: "2025: utili SCP maturati. 2026: incassi ago-ott (R$ 64.734,05 in 3 rate da R$ 21.578) a estinzione credito Bilancio 2025 (R$ 64.734,04); +R$ 0,01 arrotondamento" }
         ]
     },
 
@@ -206,16 +214,16 @@ const BR_DRE_DATA = [
         group: "costi",
         code: "3.2.1",
         name: "Despesas Operacionais & Administrativas",
-        desc: "Spese legali, notai, manutenzione software, servizi PJ e onorari contabili",
-        vals: { "2024": -14798.93, "2025": -29585.61 },
+        desc: "Spese legali, notai, domiciliazione, servizi PJ e onorari contabili",
+        vals: { "2024": -14798.93, "2025": -29585.61, "2026": -24791.70 },
         details: [
-            { code: "3.2.1.01.002", name: "Cartórios, Certidões e Registri", nature: "Cartório Notarile di Tibau do Sul e Goianinha", vals: { "2024": 0.00, "2025": -1049.08 }, note: "Certificati di vigenza societaria, autentiche e atti notarili" },
-            { code: "3.2.1.01.005", name: "Softwares, Sistemi & Connettività", nature: "Licenze informatiche, domini e sistemi gestionali", vals: { "2024": 0.00, "2025": -7621.60 }, note: "Piattaforme di sicurezza, gestione documentale cloud e servizi web" },
-            { code: "3.2.1.01.008", name: "Serviços Prestados PJ", nature: "Consulenze e servizi professionali da persone giuridiche", vals: { "2024": -15007.20, "2025": -184.00 }, note: "Prestazioni specialistiche di supporto societario e tecnico" },
-            { code: "3.2.1.01.009", name: "Serviços de Terceiros", nature: "Servizi operativi e manutenzioni esterne", vals: { "2024": 0.00, "2025": -5944.25 }, note: "Servizi di manutenzione e forniture ordinarie sede e cantiere" },
-            { code: "3.2.1.01.010", name: "Honorários Contábeis & Fiscais", nature: "Studio Commercialista e Revisione Contabile (CRC)", vals: { "2024": -9178.00, "2025": -14786.68 }, note: "Redazione bilancio d'esercizio, dichiarazioni fiscali federali SPED/ECF" },
-            { code: "3.2.1.02.001", name: "Material de Manutenção e Reparo", nature: "Opere di custodia ordinaria e conservazione beni", vals: { "2024": -4657.97, "2025": 0.00 }, note: "Spese di custodia sostenute nel 2024 (nel 2025 gestite tramite SCP)" },
-            { code: "3.2.1.03.001", name: "Depreciação & Ammortamenti", nature: "Ammortamento attrezzature e arredi", vals: { "2024": -742.44, "2025": 0.00 }, note: "Arredi e dotazioni completati di ammortamento patrimoniale" }
+            { code: "3.2.1.01.002", name: "Cartórios, Certidões e Registri", nature: "Cartório Notarile di Tibau do Sul e Goianinha", vals: { "2024": -1049.08, "2025": 0.00, "2026": 0.00 }, note: "Certificati di vigenza societaria, autentiche e atti notarili" },
+            { code: "3.2.1.01.005", name: "Manutenção/Licença de Software", nature: "Licenze informatiche, domini e sistemi gestionali", vals: { "2024": -7621.60, "2025": 0.00, "2026": 0.00 }, note: "Piattaforme di sicurezza, gestione documentale cloud e servizi web" },
+            { code: "3.2.1.01.008", name: "Serviços Prestados PJ & Domiciliação", nature: "Consulenze PJ e domiciliazione sede (2026: Seahub Coworking)", vals: { "2024": -184.00, "2025": -15007.20, "2026": -935.39 }, note: "2026: Seahub Coworking domiciliazione societaria (R$ 935,39 il 17/06/2026)" },
+            { code: "3.2.1.01.009", name: "Serviços de Terceiros & Manutenzione", nature: "Servizi operativi esterni (2026: Art Korten Design)", vals: { "2024": -5944.25, "2025": 0.00, "2026": -2313.00 }, note: "2026: Art Korten Design - Placa istituzionale (R$ 2.313,00 il 29/10/2026)" },
+            { code: "3.2.1.01.010", name: "Honorários Contábeis & Gestão Empresarial", nature: "Essencial/LT Soluções & JJ Assessoria Contábil", vals: { "2024": 0.00, "2025": -9178.00, "2026": -21543.31 }, note: "2026: R$ 23.767,31 pagati in C/C gen-ott al netto di R$ 2.224,00 a saldo Fornecedores 31/12/2025" },
+            { code: "3.2.1.02.001", name: "Material de Manutenção e Reparo", nature: "Opere di custodia ordinaria e conservazione beni", vals: { "2024": 0.00, "2025": -4657.97, "2026": 0.00 }, note: "Spese di manutenzione ordinaria sostenute nell'esercizio 2025" },
+            { code: "3.2.1.03.001", name: "Depreciação & Ammortamenti", nature: "Ammortamento attrezzature e arredi", vals: { "2024": 0.00, "2025": -742.44, "2026": 0.00 }, note: "Quota ammortamento 2025 (2026 da contabilizzare a chiusura esercizio)" }
         ]
     },
     {
@@ -224,10 +232,10 @@ const BR_DRE_DATA = [
         code: "3.2.2",
         name: "Despesas Tributárias Comunali & Tasse Locali",
         desc: "Tasse municipali, licenze di funzionamento ed oneri tributari comunali",
-        vals: { "2024": -1463.63, "2025": -378.61 },
+        vals: { "2024": -1463.63, "2025": -378.61, "2026": -398.75 },
         details: [
-            { code: "3.2.2.01.001", name: "Impostos e Taxas Municipais", nature: "Prefeitura Municipal de Tibau do Sul (RN)", vals: { "2024": -363.63, "2025": -378.61 }, note: "Tassa di localizzazione ed esercizio e diritti di segreteria amministrativa" },
-            { code: "3.2.2.01.003", name: "Multas Fiscais e Ravvedimenti", nature: "Receita Federal / Enti Locali", vals: { "2024": -1100.00, "2025": 0.00 }, note: "Sanzioni per ritardo adempimenti estinte nel 2024; nessuna sanzione nel 2025" }
+            { code: "3.2.2.01.001", name: "Impostos e Taxas Municipais", nature: "Prefeitura Municipal de Natal / Tibau do Sul (RN)", vals: { "2024": -363.63, "2025": -378.61, "2026": -398.75 }, note: "2026: Taxa de Localização 2026 pagata il 10/03/2026 (R$ 398,75)" },
+            { code: "3.2.2.01.003", name: "Multas Fiscais e Ravvedimenti", nature: "Receita Federal / Enti Locali", vals: { "2024": -1100.00, "2025": 0.00, "2026": 0.00 }, note: "Sanzioni estinte nel 2024; nessuna sanzione nel 2025 e 2026" }
         ]
     },
     {
@@ -236,22 +244,22 @@ const BR_DRE_DATA = [
         code: "3.2.3",
         name: "Despesas Financeiras & Oneri Bancari",
         desc: "Spese tenuta conto, bonifici Banco do Brasil e imposta IOF",
-        vals: { "2024": -884.01, "2025": -1134.81 },
+        vals: { "2024": -884.01, "2025": -1134.81, "2026": -884.20 },
         details: [
-            { code: "3.2.3.01.001", name: "Despesas Bancárias (Tarifas BB)", nature: "Canoni tenuta conto e bonifici Banco do Brasil", vals: { "2024": -729.00, "2025": -925.60 }, note: "Costi di gestione conto corrente e commissioni per operazioni bancarie" },
-            { code: "3.2.3.02.001", name: "Juros e Multas Passivi / IOF", nature: "Imposta sulle operazioni finanziarie e oneri", vals: { "2024": -155.01, "2025": -209.21 }, note: "IOF e oneri accessori trattenuti su movimentazioni bancarie" }
+            { code: "3.2.3.01.001", name: "Despesas Bancárias (Tarifas BB)", nature: "Canoni tenuta conto Banco do Brasil (4x81,40 + 6x93,10)", vals: { "2024": -729.00, "2025": -925.60, "2026": -884.20 }, note: "2026: Tarifa Pacote de Serviços gen-ott 2026 da estratto Excel BB" },
+            { code: "3.2.3.02.001", name: "Juros e Multas Passivi / IOF", nature: "Imposta sulle operazioni finanziarie e oneri", vals: { "2024": -155.01, "2025": -209.21, "2026": 0.00 }, note: "IOF e oneri accessori trattenuti su movimentazioni bancarie" }
         ]
     },
     {
         id: "trib_lucro",
         group: "costi",
         code: "3.2.4",
-        name: "Provisões Tributárias s/ Lucro (IRPJ & CSLL)",
-        desc: "Imposte federali sul reddito societario (Receita Federal do Brasil)",
-        vals: { "2024": -19498.53, "2025": -32739.64 },
+        name: "Provisões & Retenções Tributárias s/ Lucro (IRPJ / CSLL / IRRF)",
+        desc: "Imposte federali sul reddito e ritenute IRRF Banco do Brasil",
+        vals: { "2024": -19498.53, "2025": -32739.64, "2026": -18614.73 },
         details: [
-            { code: "3.2.4.01.001", name: "Provisão para IRPJ (Imposto de Renda Pessoa Jurídica)", nature: "Receita Federal do Brasil (15% base imponibile)", vals: { "2024": -12186.58, "2025": -20462.28 }, note: "Imposta federale sul reddito d'impresa calcolata sul risultato prima imposte" },
-            { code: "3.2.4.01.002", name: "Provisão para CSLL (Contribuição Social s/ Lucro)", nature: "Receita Federal do Brasil (9% base imponibile)", vals: { "2024": -7311.95, "2025": -12277.36 }, note: "Contributo sociale statale sull'utile netto aziendale" }
+            { code: "3.2.4.01.001", name: "IRPJ / IRRF Retido na Fonte (BB RF)", nature: "2024-2025: Provisão IRPJ; 2026: IRRF trattenuto BB sul Fondo RF", vals: { "2024": -12186.58, "2025": -20462.28, "2026": -18614.73 }, note: "2026: Ritenute IRRF addebitate da BB (incl. come-cotas mag R$ 18.558,85) fino a conguaglio annuale" },
+            { code: "3.2.4.01.002", name: "Provisão para CSLL (Contribuição Social s/ Lucro)", nature: "Receita Federal do Brasil (9% base imponibile)", vals: { "2024": -7311.95, "2025": -12277.36, "2026": 0.00 }, note: "Contributo sociale calcolato a chiusura d'esercizio dal commercialista CRC" }
         ]
     },
 
@@ -263,13 +271,13 @@ const BR_DRE_DATA = [
         group: "risultato",
         code: "3.3",
         name: "LUCRO LÍQUIDO DO EXERCÍCIO (UTILE NETTO)",
-        desc: "Risultato netto certificato da Contador e Amministratore (DRE Asseverato)",
-        vals: { "2024": 44598.86, "2025": 137310.45 },
+        desc: "Risultato netto (2024-2025 DRE Asseverato CRC; 2026 YTD al 31/10 da Excel BB)",
+        vals: { "2024": 44598.86, "2025": 137310.45, "2026": 111900.12 },
         details: [
-            { code: "3.3.01", name: "Totale Ricavi e Proventi d'Esercizio", nature: "Somma ricavi vendite, proventi finanziari e proventi SCP", vals: { "2024": 81243.96, "2025": 201149.12 }, note: "Tutti i proventi economici accreditati di competenza" },
-            { code: "3.3.02", name: "(-) Totale Costi, Oneri e Imposte", nature: "Somma spese amministrative, tributi, oneri bancari e IRPJ/CSLL", vals: { "2024": -36645.10, "2025": -63838.67 }, note: "Tutti i costi e imposte addebitati di competenza" },
-            { code: "3.3.03", name: "Risultato Operativo / LAIR (Prima delle Imposte)", nature: "Risultato lordo aziendale prima di IRPJ e CSLL", vals: { "2024": 64097.39, "2025": 170050.09 }, note: "Base imponibile asseverata nel DRE ufficiale" },
-            { code: "3.3.04", name: "LUCRO LÍQUIDO FINALE DO EXERCÍCIO", nature: "Utile netto d'esercizio asseverato da Contadora CRC", vals: { "2024": 44598.86, "2025": 137310.45 }, note: "Risultato finale asseverato al 31/12/2025 (DRE - Sombra Resort Brasil Unipessoal Ltda)" }
+            { code: "3.3.01", name: "Totale Ricavi e Proventi d'Esercizio", nature: "Somma ricavi vendite, proventi finanziari e proventi SCP", vals: { "2024": 81243.96, "2025": 201149.12, "2026": 156589.50 }, note: "2026: rendimenti lordi BB RF gen-ott (R$ 156.589,49) + arrotondamento SCP (R$ 0,01)" },
+            { code: "3.3.02", name: "(-) Totale Costi, Oneri e Imposte", nature: "Somma spese amministrative, tributi, oneri bancari e IRPJ/CSLL/IRRF", vals: { "2024": -36645.10, "2025": -63838.67, "2026": -44689.38 }, note: "2026: costi di competenza gen-ott (R$ 26.074,65) + IRRF BB (R$ 18.614,73)" },
+            { code: "3.3.03", name: "Risultato Operativo / LAIR (Prima delle Imposte)", nature: "Risultato lordo aziendale prima di IRPJ, CSLL e IRRF", vals: { "2024": 64097.39, "2025": 170050.09, "2026": 130514.85 }, note: "2024-2025 da DRE ufficiale; 2026 provvisorio gen-ott ante imposte" },
+            { code: "3.3.04", name: "LUCRO LÍQUIDO FINALE DO EXERCÍCIO", nature: "Utile netto d'esercizio", vals: { "2024": 44598.86, "2025": 137310.45, "2026": 111900.12 }, note: "2024-2025 asseverati CRC; 2026 YTD al 31/10/2026 da movimenti Excel BB rettificati per competenze 2025" }
         ]
     }
 ];
@@ -567,24 +575,29 @@ const BR_ITEM_I18N = {
         en: { name: "Non-Current Assets - Investments & Fixed Assets", desc: "Equity stake in SCP J.M. Empreendimentos & Office Furniture" }
     },
     "forn": {
-        pt: { name: "Passivo Circulante - Fornecedores a Pagar", desc: "Fornecedores locais de tecnologia e assessoria contábil" },
-        fr: { name: "Passif Circulant - Fournisseurs à Payer", desc: "Fournisseurs de services technologiques et cabinet comptable" },
-        en: { name: "Current Liabilities - Accounts Payable / Suppliers", desc: "Local service providers and accounting advisory firm" }
+        pt: { name: "Passivo Circulante - Fornecedores & Obrigações Fiscais", desc: "Fornecedores locais e impostos correntes/diferidos a recolher" },
+        fr: { name: "Passif Circulant - Fournisseurs & Impôts à Payer", desc: "Fournisseurs locaux et impôts courants/différés" },
+        en: { name: "Current Liabilities - Suppliers & Tax Obligations", desc: "Local suppliers and current/deferred corporate taxes" }
     },
-    "trib": {
-        pt: { name: "Passivo Circulante - Obrigações Tributárias", desc: "Receita Federal do Brasil (IRPJ / CSLL) e Tributos Municipais" },
-        fr: { name: "Passif Circulant - Dettes Fiscales", desc: "Receita Federal du Brésil (IRPJ / CSLL) et Taxes Municipales" },
-        en: { name: "Current Liabilities - Tax Liabilities", desc: "Brazilian Federal Revenue (IRPJ / CSLL) and Municipal Taxes" }
+    "rel": {
+        pt: { name: "Passivo Circulante - Partes Relacionadas (SCP J.M.)", desc: "Débitos de acerto intercompany com J.M. Empreendimentos SCP" },
+        fr: { name: "Passif Circulant - Parties Liées (SCP J.M.)", desc: "Dettes intercompany envers J.M. Empreendimentos SCP" },
+        en: { name: "Current Liabilities - Related Parties (SCP J.M.)", desc: "Intercompany settlement payables to J.M. Empreendimentos SCP" }
     },
-    "opass": {
-        pt: { name: "Passivo Circulante - Outras Obrigações (Intercompany SCP)", desc: "J.M. Empreendimentos Imobiliários SCP e outras contas a pagar" },
-        fr: { name: "Passif Circulant - Autres Passifs (Intercompany SCP)", desc: "J.M. Empreendimentos Imobiliários SCP et autres dettes courantes" },
-        en: { name: "Current Liabilities - Other Obligations (Intercompany SCP)", desc: "J.M. Empreendimentos Imobiliários SCP and other payables" }
+    "pnc": {
+        pt: { name: "Passivo Não Circulante - Financiamento Sócios (Holding Lux)", desc: "Mútuo de longo prazo de Sombra e Agua Fresca Resort S.à r.l." },
+        fr: { name: "Passif Non Circulant - Prêt d'Associé (Holding Lux)", desc: "Financement long terme de Sombra e Agua Fresca Resort S.à r.l." },
+        en: { name: "Non-Current Liabilities - Shareholder Loan (Holding Lux)", desc: "Long-term loan from Sombra e Agua Fresca Resort S.à r.l." }
     },
-    "pl": {
-        pt: { name: "Patrimônio Líquido - Capital & Lucros Acumulados", desc: "Capital Social subscrito estrangeiro R$ 3.000.525,45 e Lucros Acumulados" },
-        fr: { name: "Capitaux Propres - Capital & Réserves / Bénéfices", desc: "Capital Social souscrit étranger R$ 3.000.525,45 et Bénéfices Reportés" },
-        en: { name: "Shareholders' Equity - Share Capital & Retained Earnings", desc: "Foreign subscribed Share Capital R$ 3,000,525.45 and Retained Earnings" }
+    "cap": {
+        pt: { name: "Patrimônio Líquido - Capital Social Subscrito Estrangeiro", desc: "100% detido por Sombra e Agua Fresca Resort S.à r.l." },
+        fr: { name: "Capitaux Propres - Capital Social Souscrit Étranger", desc: "Détenu à 100% par Sombra e Agua Fresca Resort S.à r.l." },
+        en: { name: "Shareholders' Equity - Foreign Subscribed Share Capital", desc: "100% held by Sombra e Agua Fresca Resort S.à r.l." }
+    },
+    "luc": {
+        pt: { name: "Patrimônio Líquido - Lucros Acumulados & Reservas", desc: "Resultados acumulados de exercícios anteriores e lucro líquido do período" },
+        fr: { name: "Capitaux Propres - Bénéfices Reportés & Réserves", desc: "Résultats cumulés reportés et bénéfice net de l'exercice" },
+        en: { name: "Shareholders' Equity - Retained Earnings & Reserves", desc: "Prior retained earnings and net profit for the period" }
     },
     // DRE
     "rec": {
@@ -688,11 +701,12 @@ function renderBalancoTable() {
 
     // Render THEAD
     if (isSingle) {
+        const saldoLabel = getBrUIText('bp_th_saldo').replace('31/12/', '') + getBrDateLabel(y);
         thead.innerHTML = `
             <tr>
                 <th>${getBrUIText('bp_th_rubrica')}</th>
                 <th>${getBrUIText('bp_th_natura')}</th>
-                <th class="text-right" style="width: 200px;">${getBrUIText('bp_th_saldo')}${y} (R$)</th>
+                <th class="text-right" style="width: 200px;">${saldoLabel} (R$)</th>
                 <th class="text-right" style="width: 140px;">${getBrUIText('bp_th_peso')}</th>
             </tr>
         `;
@@ -701,22 +715,28 @@ function renderBalancoTable() {
             <tr>
                 <th>${getBrUIText('bp_th_rubrica')}</th>
                 <th>${getBrUIText('bp_th_natura')}</th>
-                <th class="text-right" style="width: 160px;">31/12/${y1} (R$)</th>
-                <th class="text-right" style="width: 160px;">31/12/${y2} (R$)</th>
+                <th class="text-right" style="width: 160px;">${getBrDateLabel(y1)} (R$)</th>
+                <th class="text-right" style="width: 160px;">${getBrDateLabel(y2)} (R$)</th>
                 <th class="text-right" style="width: 150px;">${getBrUIText('bp_th_var')}</th>
                 <th class="text-right" style="width: 110px;">${getBrUIText('bp_th_var_pct')}</th>
             </tr>
         `;
     }
 
-    // Totali calcolati
+    // Totali calcolati dinamicamente da BR_BALANCO_DATA
+    const sumCat = (prefix, yr) => BR_BALANCO_DATA
+        .filter(it => it.category.startsWith(prefix))
+        .reduce((acc, it) => acc + (it.vals[yr] || 0), 0);
+
     const totAtivo = {
-        "2024": 5348180.83,
-        "2025": 5298710.03
+        "2024": sumCat('ativo', '2024'),
+        "2025": sumCat('ativo', '2025'),
+        "2026": sumCat('ativo', '2026')
     };
     const totPassivo = {
-        "2024": 5348180.83,
-        "2025": 5298710.03
+        "2024": sumCat('passivo', '2024') + sumCat('pl', '2024'),
+        "2025": sumCat('passivo', '2025') + sumCat('pl', '2025'),
+        "2026": sumCat('passivo', '2026') + sumCat('pl', '2026')
     };
 
     let html = '';
@@ -937,89 +957,71 @@ function updateBalancoKpis(isSingle, y, y1, y2) {
     if (!kpiAtivo) return;
 
     const lang = getBrLang();
+    const sumByCat = (cat, yr) => BR_BALANCO_DATA
+        .filter(it => it.category === cat)
+        .reduce((acc, it) => acc + (it.vals[yr] || 0), 0);
+
+    const targetYr = isSingle ? y : y2;
+    const atTot = sumByCat('ativo_circ', targetYr) + sumByCat('ativo_nc', targetYr);
+    const atCirc = sumByCat('ativo_circ', targetYr);
+    const psCirc = sumByCat('passivo_circ', targetYr);
+    const plTot = sumByCat('pl', targetYr);
+    const dispVal = BR_BALANCO_DATA.find(it => it.id === 'disp')?.vals[targetYr] || 0;
+    const lucVal = BR_BALANCO_DATA.find(it => it.id === 'luc')?.vals[targetYr] || 0;
+
+    kpiAtivo.innerText = formatBRL(atTot);
+    kpiCirc.innerText = formatBRL(atCirc);
+    kpiPass.innerText = formatBRL(psCirc);
+    kpiPl.innerText = formatBRL(plTot);
+
+    const dateTarget = getBrDateLabel(targetYr);
+    const isProvisional2026 = (targetYr === '2026');
 
     if (isSingle) {
-        if (y === '2025') {
-            kpiAtivo.innerText = "R$ 5.298.710,03";
-            kpiCirc.innerText = "R$ 5.278.448,74";
-            kpiPass.innerText = "R$ 631.421,07";
-            kpiPl.innerText = "R$ 3.967.288,96";
-
-            if (lang === 'pt') {
-                kpiAtivoSub.innerText = "Ativo Total Certificado em 31/12/2025";
-                kpiCircSub.innerText = "Disponibilidades R$ 976k + Imóveis R$ 3,6M";
-                kpiPassSub.innerText = "Fornecedores R$ 88 + SCP R$ 583k + Impostos";
-                kpiPlSub.innerText = "Capital R$ 3.000.525,45 + Lucros R$ 966k";
-            } else if (lang === 'en') {
-                kpiAtivoSub.innerText = "Certified Total Assets as of 31/12/2025";
-                kpiCircSub.innerText = "Cash R$ 976k + Real Estate R$ 3.6M";
-                kpiPassSub.innerText = "Suppliers R$ 88 + SCP R$ 583k + Taxes";
-                kpiPlSub.innerText = "Capital R$ 3,000,525.45 + Retained R$ 966k";
-            } else if (lang === 'it') {
-                kpiAtivoSub.innerText = "Attivo Totale Certificato al 31/12/2025";
-                kpiCircSub.innerText = "Disponibilità R$ 976k + Immobili R$ 3,6M";
-                kpiPassSub.innerText = "Fornitori R$ 88 + SCP R$ 583k + Imposte";
-                kpiPlSub.innerText = "Capitale R$ 3.000.525,45 + Utili R$ 966k";
-            } else {
-                kpiAtivoSub.innerText = "Actif Total Certifié au 31/12/2025";
-                kpiCircSub.innerText = "Disponibilités R$ 976k + Immobilier R$ 3,6M";
-                kpiPassSub.innerText = "Fournisseurs R$ 88 + SCP R$ 583k + Impôts";
-                kpiPlSub.innerText = "Capital R$ 3.000.525,45 + Bénéfices R$ 966k";
-            }
+        if (lang === 'pt') {
+            kpiAtivoSub.innerText = isProvisional2026 ? `Provisório em ${dateTarget} (Excel BB)` : `Ativo Total Certificado em ${dateTarget}`;
+            kpiCircSub.innerText = `Disponibilidades ${formatBRL(dispVal)} + Imóveis R$ 3,6M`;
+            kpiPassSub.innerText = targetYr === '2024' ? "Fornecedores + SCP R$ 584k + Impostos" : (targetYr === '2025' ? "Fornecedores R$ 2,2k + Impostos R$ 74k" : "Fornecedores R$ 0 + Impostos R$ 74k");
+            kpiPlSub.innerText = `Capital R$ 3.000.525,45 + Lucros ${formatBRL(lucVal)}`;
+        } else if (lang === 'en') {
+            kpiAtivoSub.innerText = isProvisional2026 ? `Provisional as of ${dateTarget} (Excel BB)` : `Certified Total Assets as of ${dateTarget}`;
+            kpiCircSub.innerText = `Cash ${formatBRL(dispVal)} + Real Estate R$ 3.6M`;
+            kpiPassSub.innerText = targetYr === '2024' ? "Suppliers + SCP R$ 584k + Taxes" : (targetYr === '2025' ? "Suppliers R$ 2.2k + Taxes R$ 74k" : "Suppliers R$ 0 + Taxes R$ 74k");
+            kpiPlSub.innerText = `Capital R$ 3,000,525.45 + Retained ${formatBRL(lucVal)}`;
+        } else if (lang === 'it') {
+            kpiAtivoSub.innerText = isProvisional2026 ? `Provvisorio al ${dateTarget} (Excel BB)` : `Attivo Totale Certificato al ${dateTarget}`;
+            kpiCircSub.innerText = `Disponibilità ${formatBRL(dispVal)} + Immobili R$ 3,6M`;
+            kpiPassSub.innerText = targetYr === '2024' ? "Fornitori + SCP R$ 584k + Imposte" : (targetYr === '2025' ? "Fornitori R$ 2,2k + Imposte R$ 74k" : "Fornitori R$ 0 + Imposte R$ 74k");
+            kpiPlSub.innerText = `Capitale R$ 3.000.525,45 + Utili ${formatBRL(lucVal)}`;
         } else {
-            kpiAtivo.innerText = "R$ 5.348.180,83";
-            kpiCirc.innerText = "R$ 5.335.550,12";
-            kpiPass.innerText = "R$ 76.272,57";
-            kpiPl.innerText = "R$ 4.633.908,26";
-
-            if (lang === 'pt') {
-                kpiAtivoSub.innerText = "Ativo Total Certificado em 31/12/2024";
-                kpiCircSub.innerText = "Disponibilidades R$ 1,60M + Imóveis R$ 3,6M";
-                kpiPassSub.innerText = "Fornecedores R$ 2,2k + Impostos diferidos R$ 74k";
-                kpiPlSub.innerText = "Capital R$ 3.000.525,45 + Lucros R$ 1,63M";
-            } else if (lang === 'en') {
-                kpiAtivoSub.innerText = "Certified Total Assets as of 31/12/2024";
-                kpiCircSub.innerText = "Cash R$ 1.60M + Real Estate R$ 3.6M";
-                kpiPassSub.innerText = "Suppliers R$ 2.2k + Deferred Taxes R$ 74k";
-                kpiPlSub.innerText = "Capital R$ 3,000,525.45 + Retained R$ 1.63M";
-            } else if (lang === 'it') {
-                kpiAtivoSub.innerText = "Attivo Totale Certificato al 31/12/2024";
-                kpiCircSub.innerText = "Disponibilità R$ 1,60M + Immobili R$ 3,6M";
-                kpiPassSub.innerText = "Fornitori R$ 2,2k + Imposte differite R$ 74k";
-                kpiPlSub.innerText = "Capitale R$ 3.000.525,45 + Utili R$ 1,63M";
-            } else {
-                kpiAtivoSub.innerText = "Actif Total Certifié au 31/12/2024";
-                kpiCircSub.innerText = "Disponibilités R$ 1,60M + Immobilier R$ 3,6M";
-                kpiPassSub.innerText = "Fournisseurs R$ 2,2k + Impôts différés R$ 74k";
-                kpiPlSub.innerText = "Capital R$ 3.000.525,45 + Bénéfices R$ 1,63M";
-            }
+            kpiAtivoSub.innerText = isProvisional2026 ? `Provisoire au ${dateTarget} (Excel BB)` : `Actif Total Certifié au ${dateTarget}`;
+            kpiCircSub.innerText = `Disponibilités ${formatBRL(dispVal)} + Immobilier R$ 3,6M`;
+            kpiPassSub.innerText = targetYr === '2024' ? "Fournisseurs + SCP R$ 584k + Impôts" : (targetYr === '2025' ? "Fournisseurs R$ 2,2k + Impôts R$ 74k" : "Fournisseurs R$ 0 + Impôts R$ 74k");
+            kpiPlSub.innerText = `Capital R$ 3.000.525,45 + Bénéfices ${formatBRL(lucVal)}`;
         }
     } else {
-        kpiAtivo.innerText = "R$ 5.298.710,03";
-        kpiCirc.innerText = "R$ 5.278.448,74";
-        kpiPass.innerText = "R$ 631.421,07";
-        kpiPl.innerText = "R$ 3.967.288,96";
-
+        const at1 = sumByCat('ativo_circ', y1) + sumByCat('ativo_nc', y1);
+        const pctStr = formatBRLPercent(at1, atTot);
         if (lang === 'pt') {
-            kpiAtivoSub.innerText = `Comparativo ${y1} (R$ 5.348k) vs ${y2} (-0,9%)`;
-            kpiCircSub.innerText = "Disponibilidades BB + Terreno & 9 Vilas Resort";
-            kpiPassSub.innerText = "Intercompany SCP + Fornecedores locais";
-            kpiPlSub.innerText = "Patrimônio Líquido após distribuições";
+            kpiAtivoSub.innerText = `Comparativo ${y1} (${formatBRL(at1)}) vs ${y2} (${pctStr})`;
+            kpiCircSub.innerText = `Disponibilidades ${formatBRL(dispVal)} + Imóveis R$ 3,6M`;
+            kpiPassSub.innerText = y2 === '2026' ? "Forn. R$ 0 (saldos jan/26) + Tributos R$ 74k" : "Fornecedores locais + Obrigações fiscais";
+            kpiPlSub.innerText = `Capital + Lucros Acumulados ${formatBRL(lucVal)}`;
         } else if (lang === 'en') {
-            kpiAtivoSub.innerText = `Comparison ${y1} (R$ 5,348k) vs ${y2} (-0.9%)`;
-            kpiCircSub.innerText = "Cash BB + Land & 9 Resort Villas";
-            kpiPassSub.innerText = "Intercompany SCP + Local Suppliers";
-            kpiPlSub.innerText = "Net Equity post-distributions";
+            kpiAtivoSub.innerText = `Comparison ${y1} (${formatBRL(at1)}) vs ${y2} (${pctStr})`;
+            kpiCircSub.innerText = `Cash ${formatBRL(dispVal)} + Real Estate R$ 3.6M`;
+            kpiPassSub.innerText = y2 === '2026' ? "Suppliers R$ 0 (paid Jan/26) + Taxes R$ 74k" : "Local Suppliers + Tax Liabilities";
+            kpiPlSub.innerText = `Share Capital + Retained ${formatBRL(lucVal)}`;
         } else if (lang === 'it') {
-            kpiAtivoSub.innerText = `Confronto ${y1} (R$ 5.348k) vs ${y2} (-0,9%)`;
-            kpiCircSub.innerText = "Liquidità BB + Terreno & 9 Ville Resort";
-            kpiPassSub.innerText = "Intercompany SCP + Fornitori locali";
-            kpiPlSub.innerText = "Patrimonio Netto post-distribuzioni";
+            kpiAtivoSub.innerText = `Confronto ${y1} (${formatBRL(at1)}) vs ${y2} (${pctStr})`;
+            kpiCircSub.innerText = `Disponibilità ${formatBRL(dispVal)} + Immobili R$ 3,6M`;
+            kpiPassSub.innerText = y2 === '2026' ? "Fornitori R$ 0 (saldati gen/26) + Imposte R$ 74k" : "Fornitori locali + Debiti fiscali";
+            kpiPlSub.innerText = `Capitale + Utili Accumulati ${formatBRL(lucVal)}`;
         } else {
-            kpiAtivoSub.innerText = `Comparaison ${y1} (R$ 5.348k) vs ${y2} (-0,9%)`;
-            kpiCircSub.innerText = "Liquidités BB + Terrain & 9 Villas Resort";
-            kpiPassSub.innerText = "Intercompany SCP + Fournisseurs locaux";
-            kpiPlSub.innerText = "Capitaux Propres après distributions";
+            kpiAtivoSub.innerText = `Comparaison ${y1} (${formatBRL(at1)}) vs ${y2} (${pctStr})`;
+            kpiCircSub.innerText = `Disponibilités ${formatBRL(dispVal)} + Immobilier R$ 3,6M`;
+            kpiPassSub.innerText = y2 === '2026' ? "Fournisseurs R$ 0 (payés jan/26) + Impôts R$ 74k" : "Fournisseurs locaux + Dettes fiscales";
+            kpiPlSub.innerText = `Capital + Bénéfices Reportés ${formatBRL(lucVal)}`;
         }
     }
 }
@@ -1039,12 +1041,14 @@ function renderDreTable() {
     const y2 = brCompareY2;
     const colSpan = isSingle ? 4 : 6;
 
+    const dreYrLabel = yr => yr === '2026' ? '2026 (YTD 31/10)' : yr;
+
     if (isSingle) {
         thead.innerHTML = `
             <tr>
                 <th>${getBrUIText('dre_th_voce')}</th>
                 <th>${getBrUIText('dre_th_cat')}</th>
-                <th class="text-right" style="width: 200px;">${getBrUIText('dre_th_importo')} ${y} (R$)</th>
+                <th class="text-right" style="width: 220px;">${getBrUIText('dre_th_importo')} ${dreYrLabel(y)} (R$)</th>
                 <th class="text-right" style="width: 140px;">${getBrUIText('dre_th_natura')}</th>
             </tr>
         `;
@@ -1053,8 +1057,8 @@ function renderDreTable() {
             <tr>
                 <th>${getBrUIText('dre_th_voce')}</th>
                 <th>${getBrUIText('dre_th_cat')}</th>
-                <th class="text-right" style="width: 160px;">${y1} (R$)</th>
-                <th class="text-right" style="width: 160px;">${y2} (R$)</th>
+                <th class="text-right" style="width: 170px;">${dreYrLabel(y1)} (R$)</th>
+                <th class="text-right" style="width: 170px;">${dreYrLabel(y2)} (R$)</th>
                 <th class="text-right" style="width: 150px;">${getBrUIText('dre_th_var')}</th>
                 <th class="text-right" style="width: 110px;">${getBrUIText('dre_th_var_pct')}</th>
             </tr>
@@ -1319,14 +1323,42 @@ function updateDreKpis(isSingle, y, y1, y2) {
     if (!kpiRec) return;
 
     const lang = getBrLang();
+    const sumGrp = (grp, yr) => BR_DRE_DATA
+        .filter(it => it.group === grp)
+        .reduce((acc, it) => acc + (it.vals[yr] || 0), 0);
+    const getVal = (id, yr) => BR_DRE_DATA.find(it => it.id === id)?.vals[yr] || 0;
+
+    const targetYr = isSingle ? y : y2;
+    const recTot = sumGrp('ricavi', targetYr);
+    const despTot = sumGrp('costi', targetYr);
+    const finNet = getVal('rec_fin', targetYr) + getVal('desp_fin', targetYr);
+    const lucroNet = getVal('lucro', targetYr);
+
+    kpiRec.innerText = formatBRLSigned(recTot);
+    kpiDesp.innerText = formatBRLSigned(despTot);
+    kpiFin.innerText = formatBRLSigned(finNet);
+    kpiLucro.innerText = formatBRLSigned(lucroNet);
 
     if (isSingle) {
-        if (y === '2025') {
-            kpiRec.innerText = "+ R$ 201.149,12";
-            kpiDesp.innerText = "- R$ 63.838,67";
-            kpiFin.innerText = "+ R$ 135.280,27";
-            kpiLucro.innerText = "+ R$ 137.310,45";
-
+        if (targetYr === '2026') {
+            if (lang === 'pt') {
+                if (kpiRecSub) kpiRecSub.innerText = "Rendimentos brutos BB RF (jan-out 2026)";
+                if (kpiDespSub) kpiDespSub.innerText = "Despesas adm. R$ 24,8k, IRRF BB R$ 18,6k, taxas R$ 1,3k";
+                if (kpiLucroSub) kpiLucroSub.innerText = "Lucro líquido provisório YTD 31/10/2026 (Excel BB)";
+            } else if (lang === 'en') {
+                if (kpiRecSub) kpiRecSub.innerText = "Gross BB RF yields (Jan-Oct 2026)";
+                if (kpiDespSub) kpiDespSub.innerText = "Admin exp. R$ 24.8k, BB IRRF R$ 18.6k, fees R$ 1.3k";
+                if (kpiLucroSub) kpiLucroSub.innerText = "Provisional Net Profit YTD 31/10/2026 (Excel BB)";
+            } else if (lang === 'it') {
+                if (kpiRecSub) kpiRecSub.innerText = "Rendimenti lordi BB RF (gen-ott 2026)";
+                if (kpiDespSub) kpiDespSub.innerText = "Spese amm. R$ 24,8k, IRRF BB R$ 18,6k, oneri R$ 1,3k";
+                if (kpiLucroSub) kpiLucroSub.innerText = "Utile netto provvisorio YTD 31/10/2026 (Excel BB)";
+            } else {
+                if (kpiRecSub) kpiRecSub.innerText = "Rendements bruts BB RF (janv-oct 2026)";
+                if (kpiDespSub) kpiDespSub.innerText = "Dépenses adm. R$ 24,8k, IRRF BB R$ 18,6k, frais R$ 1,3k";
+                if (kpiLucroSub) kpiLucroSub.innerText = "Bénéfice net provisoire YTD 31/10/2026 (Excel BB)";
+            }
+        } else if (targetYr === '2025') {
             if (lang === 'pt') {
                 if (kpiRecSub) kpiRecSub.innerText = "Rendimentos BB (R$ 136k) + Proventos SCP (R$ 64k)";
                 if (kpiDespSub) kpiDespSub.innerText = "Despesas adm. R$ 29,6k, tributos R$ 33,1k, bancárias R$ 1,1k";
@@ -1345,11 +1377,6 @@ function updateDreKpis(isSingle, y, y1, y2) {
                 if (kpiLucroSub) kpiLucroSub.innerText = "Bénéfice net d'exercice certifié CRC";
             }
         } else {
-            kpiRec.innerText = "+ R$ 81.243,96";
-            kpiDesp.innerText = "- R$ 36.645,10";
-            kpiFin.innerText = "+ R$ 80.359,95";
-            kpiLucro.innerText = "+ R$ 44.598,86";
-
             if (lang === 'pt') {
                 if (kpiRecSub) kpiRecSub.innerText = "Rendimentos brutos da conta de liquidez BB";
                 if (kpiDespSub) kpiDespSub.innerText = "Despesas adm. R$ 14,8k, impostos R$ 19,5k, tarifas R$ 2,3k";
@@ -1369,27 +1396,31 @@ function updateDreKpis(isSingle, y, y1, y2) {
             }
         }
     } else {
-        kpiRec.innerText = "+ R$ 201.149,12";
-        kpiDesp.innerText = "- R$ 63.838,67";
-        kpiFin.innerText = "+ R$ 135.280,27";
-        kpiLucro.innerText = "+ R$ 137.310,45";
+        const rec1 = sumGrp('ricavi', y1);
+        const desp1 = sumGrp('costi', y1);
+        const lucro1 = getVal('lucro', y1);
+        const recPct = formatBRLPercent(rec1, recTot);
+        const despPct = formatBRLPercent(Math.abs(desp1), Math.abs(despTot));
+        const lucroPct = formatBRLPercent(lucro1, lucroNet);
+        const lucroDiff = formatBRLSigned(lucroNet - lucro1);
+        const periodLabel = y2 === '2026' ? 'YTD 31/10/2026 vs ' + y1 : y2 + ' vs ' + y1;
 
         if (lang === 'pt') {
-            if (kpiRecSub) kpiRecSub.innerText = "Incremento das receitas totais: +147,6%";
-            if (kpiDespSub) kpiDespSub.innerText = "Variação dos custos totais: +74,2%";
-            if (kpiLucroSub) kpiLucroSub.innerText = "Crescimento do lucro líquido: +207,9% (+ R$ 92.711,59)";
+            if (kpiRecSub) kpiRecSub.innerText = `Variação receitas (${periodLabel}): ${recPct}`;
+            if (kpiDespSub) kpiDespSub.innerText = `Variação custos totais (${periodLabel}): ${despPct}`;
+            if (kpiLucroSub) kpiLucroSub.innerText = `Variação lucro líquido: ${lucroPct} (${lucroDiff})`;
         } else if (lang === 'en') {
-            if (kpiRecSub) kpiRecSub.innerText = "Total revenue increase: +147.6%";
-            if (kpiDespSub) kpiDespSub.innerText = "Total costs variance: +74.2%";
-            if (kpiLucroSub) kpiLucroSub.innerText = "Net profit growth: +207.9% (+ R$ 92,711.59)";
+            if (kpiRecSub) kpiRecSub.innerText = `Revenue variance (${periodLabel}): ${recPct}`;
+            if (kpiDespSub) kpiDespSub.innerText = `Total costs variance (${periodLabel}): ${despPct}`;
+            if (kpiLucroSub) kpiLucroSub.innerText = `Net profit variance: ${lucroPct} (${lucroDiff})`;
         } else if (lang === 'it') {
-            if (kpiRecSub) kpiRecSub.innerText = "Incremento proventi totali: +147,6%";
-            if (kpiDespSub) kpiDespSub.innerText = "Variazione costi totali: +74,2%";
-            if (kpiLucroSub) kpiLucroSub.innerText = "Crescita utile netto: +207,9% (+ R$ 92.711,59)";
+            if (kpiRecSub) kpiRecSub.innerText = `Variazione proventi (${periodLabel}): ${recPct}`;
+            if (kpiDespSub) kpiDespSub.innerText = `Variazione costi totali (${periodLabel}): ${despPct}`;
+            if (kpiLucroSub) kpiLucroSub.innerText = `Variazione utile netto: ${lucroPct} (${lucroDiff})`;
         } else {
-            if (kpiRecSub) kpiRecSub.innerText = "Augmentation des produits totaux : +147,6%";
-            if (kpiDespSub) kpiDespSub.innerText = "Variation des charges totales : +74,2%";
-            if (kpiLucroSub) kpiLucroSub.innerText = "Croissance du bénéfice net : +207,9% (+ R$ 92.711,59)";
+            if (kpiRecSub) kpiRecSub.innerText = `Variation produits (${periodLabel}) : ${recPct}`;
+            if (kpiDespSub) kpiDespSub.innerText = `Variation charges totales (${periodLabel}) : ${despPct}`;
+            if (kpiLucroSub) kpiLucroSub.innerText = `Variation bénéfice net : ${lucroPct} (${lucroDiff})`;
         }
     }
 }
